@@ -3,13 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		11B1DD1B241F94A300A5296C /* BowArch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B1DD11241F94A200A5296C /* BowArch.framework */; };
 		11B1DD20241F94A300A5296C /* BowArchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD1F241F94A300A5296C /* BowArchTests.swift */; };
 		11B1DD22241F94A300A5296C /* BowArch.h in Headers */ = {isa = PBXBuildFile; fileRef = 11B1DD14241F94A200A5296C /* BowArch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		11B1DD2D241F985C00A5296C /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 11B1DD2C241F985C00A5296C /* BowOptics */; };
+		11B1DD2F241F985C00A5296C /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 11B1DD2E241F985C00A5296C /* BowEffects */; };
+		11B1DD31241F985C00A5296C /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 11B1DD30241F985C00A5296C /* Bow */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11B1DD31241F985C00A5296C /* Bow in Frameworks */,
+				11B1DD2F241F985C00A5296C /* BowEffects in Frameworks */,
+				11B1DD2D241F985C00A5296C /* BowOptics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +120,11 @@
 			dependencies = (
 			);
 			name = BowArch;
+			packageProductDependencies = (
+				11B1DD2C241F985C00A5296C /* BowOptics */,
+				11B1DD2E241F985C00A5296C /* BowEffects */,
+				11B1DD30241F985C00A5296C /* Bow */,
+			);
 			productName = BowArch;
 			productReference = 11B1DD11241F94A200A5296C /* BowArch.framework */;
 			productType = "com.apple.product-type.framework";
@@ -163,6 +174,9 @@
 				Base,
 			);
 			mainGroup = 11B1DD07241F94A200A5296C;
+			packageReferences = (
+				11B1DD2B241F985C00A5296C /* XCRemoteSwiftPackageReference "bow" */,
+			);
 			productRefGroup = 11B1DD12241F94A200A5296C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -450,6 +464,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		11B1DD2B241F985C00A5296C /* XCRemoteSwiftPackageReference "bow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bow-swift/bow.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		11B1DD2C241F985C00A5296C /* BowOptics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11B1DD2B241F985C00A5296C /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowOptics;
+		};
+		11B1DD2E241F985C00A5296C /* BowEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11B1DD2B241F985C00A5296C /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowEffects;
+		};
+		11B1DD30241F985C00A5296C /* Bow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11B1DD2B241F985C00A5296C /* XCRemoteSwiftPackageReference "bow" */;
+			productName = Bow;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 11B1DD08241F94A200A5296C /* Project object */;
 }

@@ -62,3 +62,19 @@ public extension EffectReducer where Environment == Any {
         sendingTo(handler, environment: ())
     }
 }
+
+// MARK: Instance of Semigroup for Reducer
+
+extension EffectReducer: Semigroup {
+    public func combine(_ other: EffectReducer<Eff, M, Environment, Input>) -> EffectReducer<Eff, M, Environment, Input> {
+        EffectReducer { input, handler in
+            let fst = Kleisli<Eff, Environment, [Input]>.var()
+            let snd = Kleisli<Eff, Environment, [Input]>.var()
+            
+            return binding(
+                fst <- self.reduce(input, handler),
+                snd <- other.reduce(input, handler),
+                yield: fst.get + snd.get)^
+        }
+    }
+}

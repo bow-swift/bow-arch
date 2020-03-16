@@ -78,3 +78,11 @@ extension EffectReducer: Semigroup {
         }
     }
 }
+
+// MARK: Instance of Monoid for Reducer
+
+extension EffectReducer: Monoid {
+    public static func empty() -> EffectReducer<Eff, M, Environment, Input> {
+        EffectReducer { _, _ in Kleisli.pure([])^ }
+    }
+}

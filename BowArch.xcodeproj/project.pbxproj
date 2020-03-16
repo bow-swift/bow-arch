@@ -94,6 +94,7 @@
 				11B1DD34241F998A00A5296C /* Handler.swift */,
 				11B1DD36241F9A3D00A5296C /* Reducer.swift */,
 				11B1DD32241F990300A5296C /* UI.swift */,
+				11B1DD3C241FA26200A5296C /* StateStore */,
 			);
 			path = BowArch;
 			sourceTree = "<group>";
@@ -105,6 +106,13 @@
 				11B1DD21241F94A300A5296C /* Info.plist */,
 			);
 			path = BowArchTests;
+			sourceTree = "<group>";
+		};
+		11B1DD3C241FA26200A5296C /* StateStore */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = StateStore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

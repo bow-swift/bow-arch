@@ -16,6 +16,7 @@
 		11B1DD33241F990300A5296C /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD32241F990300A5296C /* UI.swift */; };
 		11B1DD35241F998A00A5296C /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD34241F998A00A5296C /* Handler.swift */; };
 		11B1DD37241F9A3D00A5296C /* Reducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD36241F9A3D00A5296C /* Reducer.swift */; };
+		11B1DD39241F9C9600A5296C /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD38241F9C9600A5296C /* Component.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		11B1DD32241F990300A5296C /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
 		11B1DD34241F998A00A5296C /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
 		11B1DD36241F9A3D00A5296C /* Reducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reducer.swift; sourceTree = "<group>"; };
+		11B1DD38241F9C9600A5296C /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			children = (
 				11B1DD14241F94A200A5296C /* BowArch.h */,
 				11B1DD15241F94A200A5296C /* Info.plist */,
+				11B1DD38241F9C9600A5296C /* Component.swift */,
 				11B1DD34241F998A00A5296C /* Handler.swift */,
 				11B1DD36241F9A3D00A5296C /* Reducer.swift */,
 				11B1DD32241F990300A5296C /* UI.swift */,
@@ -220,6 +223,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11B1DD35241F998A00A5296C /* Handler.swift in Sources */,
+				11B1DD39241F9C9600A5296C /* Component.swift in Sources */,
 				11B1DD33241F990300A5296C /* UI.swift in Sources */,
 				11B1DD37241F9A3D00A5296C /* Reducer.swift in Sources */,
 			);

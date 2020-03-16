@@ -18,3 +18,9 @@ public class EffectHandler<Eff: Async, M: Monad, Environment, Input> {
         }
     }
 }
+
+public extension EffectHandler where Environment == Any {
+    convenience init(_ f: @escaping (Kind<Eff, Kind<M, Void>>) -> Kind<Eff, Void>) {
+        self.init { kleisli in f(kleisli.run(())) }
+    }
+}

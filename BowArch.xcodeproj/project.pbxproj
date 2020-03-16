@@ -74,11 +74,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		11B1DD07241F94A200A5296C = {
+		11246923241FACAF00EB4F0F /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				11B1DD38241F9C9600A5296C /* Component.swift */,
+				11B1DD3A241F9DD400A5296C /* ComponentView.swift */,
+				11B1DD34241F998A00A5296C /* Handler.swift */,
+				11B1DD36241F9A3D00A5296C /* Reducer.swift */,
+				11B1DD32241F990300A5296C /* UI.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		11246924241FACDC00EB4F0F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				11B1DD13241F94A200A5296C /* BowArch */,
-				11B1DD1E241F94A300A5296C /* BowArchTests */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		11B1DD07241F94A200A5296C = {
+			isa = PBXGroup;
+			children = (
+				11246924241FACDC00EB4F0F /* Sources */,
+				11ECF9E7241FAD070066F039 /* Tests */,
 				11B1DD12241F94A200A5296C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,11 +117,7 @@
 			children = (
 				11B1DD14241F94A200A5296C /* BowArch.h */,
 				11B1DD15241F94A200A5296C /* Info.plist */,
-				11B1DD38241F9C9600A5296C /* Component.swift */,
-				11B1DD3A241F9DD400A5296C /* ComponentView.swift */,
-				11B1DD34241F998A00A5296C /* Handler.swift */,
-				11B1DD36241F9A3D00A5296C /* Reducer.swift */,
-				11B1DD32241F990300A5296C /* UI.swift */,
+				11246923241FACAF00EB4F0F /* Core */,
 				11B1DD43241FA36300A5296C /* IO */,
 				11B1DD3C241FA26200A5296C /* StateStore */,
 			);
@@ -133,6 +149,14 @@
 				11B1DD44241FA39000A5296C /* Arch+IO.swift */,
 			);
 			path = IO;
+			sourceTree = "<group>";
+		};
+		11ECF9E7241FAD070066F039 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				11B1DD1E241F94A300A5296C /* BowArchTests */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -413,7 +437,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = BowArch/Info.plist;
+				INFOPLIST_FILE = Sources/BowArch/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -439,7 +463,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = BowArch/Info.plist;
+				INFOPLIST_FILE = Sources/BowArch/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -460,7 +484,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = BowArchTests/Info.plist;
+				INFOPLIST_FILE = Tests/BowArchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -478,7 +502,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = BowArchTests/Info.plist;
+				INFOPLIST_FILE = Tests/BowArchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -13,6 +13,7 @@
 		11B1DD2D241F985C00A5296C /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 11B1DD2C241F985C00A5296C /* BowOptics */; };
 		11B1DD2F241F985C00A5296C /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 11B1DD2E241F985C00A5296C /* BowEffects */; };
 		11B1DD31241F985C00A5296C /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 11B1DD30241F985C00A5296C /* Bow */; };
+		11B1DD33241F990300A5296C /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD32241F990300A5296C /* UI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		11B1DD1A241F94A300A5296C /* BowArchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BowArchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		11B1DD1F241F94A300A5296C /* BowArchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BowArchTests.swift; sourceTree = "<group>"; };
 		11B1DD21241F94A300A5296C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		11B1DD32241F990300A5296C /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				11B1DD14241F94A200A5296C /* BowArch.h */,
 				11B1DD15241F94A200A5296C /* Info.plist */,
+				11B1DD32241F990300A5296C /* UI.swift */,
 			);
 			path = BowArch;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 				TargetAttributes = {
 					11B1DD10241F94A200A5296C = {
 						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
 					};
 					11B1DD19241F94A300A5296C = {
 						CreatedOnToolsVersion = 11.3.1;
@@ -209,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11B1DD33241F990300A5296C /* UI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +359,7 @@
 		11B1DD26241F94A300A5296C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -370,6 +376,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bow-swift.BowArch";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -378,6 +385,7 @@
 		11B1DD27241F94A300A5296C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -402,6 +410,7 @@
 		11B1DD29241F94A300A5296C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BowArchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -419,6 +428,7 @@
 		11B1DD2A241F94A300A5296C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BowArchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

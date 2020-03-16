@@ -90,10 +90,10 @@
 				11B1DD14241F94A200A5296C /* BowArch.h */,
 				11B1DD15241F94A200A5296C /* Info.plist */,
 				11B1DD38241F9C9600A5296C /* Component.swift */,
+				11B1DD3A241F9DD400A5296C /* ComponentView.swift */,
 				11B1DD34241F998A00A5296C /* Handler.swift */,
 				11B1DD36241F9A3D00A5296C /* Reducer.swift */,
 				11B1DD32241F990300A5296C /* UI.swift */,
-				11B1DD3A241F9DD400A5296C /* ComponentView.swift */,
 			);
 			path = BowArch;
 			sourceTree = "<group>";

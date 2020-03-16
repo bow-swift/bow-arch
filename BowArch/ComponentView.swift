@@ -21,3 +21,19 @@ public struct EffectComponentView<Eff: Async, W: Comonad, M: Monad, V: View>: Vi
         EffectComponentView(self.component.onEffectAction(eff))
     }
 }
+
+public extension EffectComponentView {
+    init<A>(_ wa: Kind<W, UI<Eff, M, V>>)
+        where W == StorePartial<A>,
+              M == StatePartial<A> {
+        self.init(EffectComponent(wa, Pairing.pairStateStore()))
+    }
+    
+    init<A, WW: Comonad, MM: Monad>(
+        _ wa: Kind<W, UI<Eff, M, V>>,
+        _ pairing: Pairing<MM, WW>)
+        where W == StoreTPartial<A, WW>,
+              M == StateTPartial<MM, A> {
+        self.init(EffectComponent(wa, Pairing.pairStateTStoreT(pairing)))
+    }
+}

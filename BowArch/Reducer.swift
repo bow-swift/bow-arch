@@ -36,3 +36,29 @@ public struct EffectReducer<Eff: Async & UnsafeRun, M: Monad, Environment, Input
                 .flatMap { inputs in self.reflow(inputs, handler) }^
     }
 }
+
+public extension EffectReducer where Environment == Any {
+    init(noEnvironment f: @escaping (Input, EffectHandler<Eff, M, Environment, Input>) -> Kind<Eff, [Input]>) {
+        self.f = { input, handler in
+            Kleisli { _ in f(input, handler) }
+        }
+    }
+    
+    init(_ f: @escaping (Input) -> Kind<Eff, [Input]>) {
+        self.f = { input, handler in
+            Kleisli { _ in f(input) }
+        }
+    }
+    
+    init(_ f: @escaping (Input) -> Kind<M, Void>) {
+        self.f = { input, handler in
+            Kleisli { _ in
+                handler.handle(Kleisli { _ in Eff.pure(f(input)) }).as([])
+            }
+        }
+    }
+    
+    func sendingTo(_ handler: EffectHandler<Eff, M, Environment, Input>) -> (Input) -> Void {
+        sendingTo(handler, environment: ())
+    }
+}

@@ -32,3 +32,26 @@ public extension EffectStoreTComponent {
                   render: render)
     }
 }
+
+public extension EffectStoreComponent {
+    init<E, A, I>(initialState: A,
+                  environment: E,
+                  render: @escaping (A, EffectStateHandler<Eff, E, A, I>) -> V)
+        where W == StorePartial<A>,
+              M == StatePartial<A> {
+        self.init(Store(initialState) { state in
+            UI { send in
+                render(state, EffectStateHandler(send).map(constant(environment)))
+            }
+        })
+    }
+    
+    init<A, I>(initialState: A,
+               render: @escaping (A, EffectStateHandler<Eff, Any, A, I>) -> V)
+        where W == StorePartial<A>,
+              M == StatePartial<A> {
+        self.init(initialState: initialState,
+                  environment: () as Any,
+                  render: render)
+    }
+}

@@ -14,6 +14,7 @@
 		11B1DD2F241F985C00A5296C /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 11B1DD2E241F985C00A5296C /* BowEffects */; };
 		11B1DD31241F985C00A5296C /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 11B1DD30241F985C00A5296C /* Bow */; };
 		11B1DD33241F990300A5296C /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD32241F990300A5296C /* UI.swift */; };
+		11B1DD35241F998A00A5296C /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD34241F998A00A5296C /* Handler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		11B1DD1F241F94A300A5296C /* BowArchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BowArchTests.swift; sourceTree = "<group>"; };
 		11B1DD21241F94A300A5296C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11B1DD32241F990300A5296C /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
+		11B1DD34241F998A00A5296C /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			children = (
 				11B1DD14241F94A200A5296C /* BowArch.h */,
 				11B1DD15241F94A200A5296C /* Info.plist */,
+				11B1DD34241F998A00A5296C /* Handler.swift */,
 				11B1DD32241F990300A5296C /* UI.swift */,
 			);
 			path = BowArch;
@@ -213,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11B1DD35241F998A00A5296C /* Handler.swift in Sources */,
 				11B1DD33241F990300A5296C /* UI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

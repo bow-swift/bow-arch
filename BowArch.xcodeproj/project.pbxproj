@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1193FE2724220E4300D27AFB /* WriterHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1193FE2624220E4300D27AFB /* WriterHandler.swift */; };
+		1193FE2924220EEF00D27AFB /* WriterReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1193FE2824220EEF00D27AFB /* WriterReducer.swift */; };
+		1193FE2B2422109B00D27AFB /* TracedComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1193FE2A2422109B00D27AFB /* TracedComponent.swift */; };
 		11B1DD1B241F94A300A5296C /* BowArch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B1DD11241F94A200A5296C /* BowArch.framework */; };
 		11B1DD20241F94A300A5296C /* BowArchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD1F241F94A300A5296C /* BowArchTests.swift */; };
 		11B1DD22241F94A300A5296C /* BowArch.h in Headers */ = {isa = PBXBuildFile; fileRef = 11B1DD14241F94A200A5296C /* BowArch.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -35,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1193FE2624220E4300D27AFB /* WriterHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterHandler.swift; sourceTree = "<group>"; };
+		1193FE2824220EEF00D27AFB /* WriterReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterReducer.swift; sourceTree = "<group>"; };
+		1193FE2A2422109B00D27AFB /* TracedComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracedComponent.swift; sourceTree = "<group>"; };
 		11B1DD11241F94A200A5296C /* BowArch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BowArch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		11B1DD14241F94A200A5296C /* BowArch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BowArch.h; sourceTree = "<group>"; };
 		11B1DD15241F94A200A5296C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -94,6 +100,16 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		1193FE2524220E2700D27AFB /* WriterTraced */ = {
+			isa = PBXGroup;
+			children = (
+				1193FE2624220E4300D27AFB /* WriterHandler.swift */,
+				1193FE2824220EEF00D27AFB /* WriterReducer.swift */,
+				1193FE2A2422109B00D27AFB /* TracedComponent.swift */,
+			);
+			path = WriterTraced;
+			sourceTree = "<group>";
+		};
 		11B1DD07241F94A200A5296C = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +136,7 @@
 				11246923241FACAF00EB4F0F /* Core */,
 				11B1DD43241FA36300A5296C /* IO */,
 				11B1DD3C241FA26200A5296C /* StateStore */,
+				1193FE2524220E2700D27AFB /* WriterTraced */,
 			);
 			path = BowArch;
 			sourceTree = "<group>";
@@ -281,9 +298,12 @@
 				11B1DD35241F998A00A5296C /* Handler.swift in Sources */,
 				11B1DD3B241F9DD400A5296C /* ComponentView.swift in Sources */,
 				11B1DD39241F9C9600A5296C /* Component.swift in Sources */,
+				1193FE2924220EEF00D27AFB /* WriterReducer.swift in Sources */,
 				11B1DD40241FA30100A5296C /* StateReducer.swift in Sources */,
+				1193FE2B2422109B00D27AFB /* TracedComponent.swift in Sources */,
 				11B1DD33241F990300A5296C /* UI.swift in Sources */,
 				11B1DD3E241FA2D600A5296C /* StateHandler.swift in Sources */,
+				1193FE2724220E4300D27AFB /* WriterHandler.swift in Sources */,
 				11B1DD37241F9A3D00A5296C /* Reducer.swift in Sources */,
 				11B1DD42241FA33100A5296C /* StoreComponent.swift in Sources */,
 			);

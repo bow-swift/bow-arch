@@ -36,4 +36,18 @@ public extension EffectComponentView {
               M == StateTPartial<MM, A> {
         self.init(EffectComponent(wa, Pairing.pairStateTStoreT(pairing)))
     }
+    
+    init<A: Monoid>(_ wa: Kind<W, UI<Eff, M, V>>)
+        where W == TracedPartial<A>,
+              M == WriterPartial<A> {
+        self.init(EffectComponent(wa, Pairing.pairWriterTraced()))
+    }
+    
+    init<A: Monoid, WW: Comonad, MM: Monad>(
+        _ wa: Kind<W, UI<Eff, M, V>>,
+        _ pairing: Pairing<MM, WW>)
+        where W == TracedTPartial<A, WW>,
+              M == WriterTPartial<MM, A> {
+        self.init(EffectComponent(wa, Pairing.pairWriterTTracedT(pairing)))
+    }
 }

@@ -9,15 +9,25 @@ public extension EffectTracedTComponent {
     init<Environment, State: Monoid, Input, WW: Comonad & Applicative, MM: Monad>(
         environment: Environment,
         pairing: Pairing<MM, WW>,
-        render: @escaping (State, EffectWriterTHandler<Eff, MM, Environment, State, Input>) -> V
-    ) where W == TracedTPartial<State, WW>,
-            M == WriterTPartial<MM, State> {
+        render: @escaping (State, EffectWriterTHandler<Eff, MM, Environment, State, Input>) -> V)
+        where W == TracedTPartial<State, WW>,
+              M == WriterTPartial<MM, State> {
         self.init(TracedT(WW.pure({ state in
             UI { send in
                 render(state,
                        EffectWriterTHandler(send).map(constant(environment)))
             }
         })), pairing)
+    }
+    
+    init<State: Monoid, Input, WW: Comonad & Applicative, MM: Monad>(
+        pairing: Pairing<MM, WW>,
+        render: @escaping (State, EffectWriterTHandler<Eff, MM, Any, State, Input>) -> V)
+        where W == TracedTPartial<State, WW>,
+              M == WriterTPartial<MM, State> {
+        self.init(environment: () as Any,
+                  pairing: pairing,
+                  render: render)
     }
 }
 
@@ -27,10 +37,18 @@ public extension EffectTracedComponent {
         render: @escaping (State, EffectWriterHandler<Eff, Environment, State, Input>) -> V)
         where W == TracedPartial<State>,
               M == WriterPartial<State> {
-                self.init(Traced { state in
-                    UI { send in
-                        render(state, EffectWriterHandler(send).map(constant(environment)))
-                    }
-                })
+        self.init(Traced { state in
+            UI { send in
+                render(state, EffectWriterHandler(send).map(constant(environment)))
+            }
+        })
+    }
+    
+    init<State: Monoid, Input>(
+        render: @escaping (State, EffectWriterHandler<Eff, Any, State, Input>) -> V)
+        where W == TracedPartial<State>,
+              M == WriterPartial<State> {
+        self.init(environment: () as Any,
+                  render: render)
     }
 }

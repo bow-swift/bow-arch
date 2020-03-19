@@ -56,7 +56,7 @@ public extension EffectStoreComponent {
     }
 }
 
-extension EffectStoreTComponent {
+public extension EffectStoreTComponent {
     func storeT<A, WW: Comonad, MM: Monad>() -> StoreT<A, WW, UI<Eff, M, V>>
         where W == StoreTPartial<A, WW>,
               M == StateTPartial<MM, A> {
@@ -64,7 +64,7 @@ extension EffectStoreTComponent {
     }
 }
 
-extension EffectStoreComponent {
+public extension EffectStoreComponent {
     func store<A>() -> Store<A, UI<Eff, M, V>>
         where W == StorePartial<A>,
               M == StatePartial<A> {

@@ -52,3 +52,19 @@ public extension EffectTracedComponent {
                   render: render)
     }
 }
+
+extension EffectTracedTComponent {
+    func tracedT<A, WW: Comonad, MM: Monad>() -> TracedT<A, WW, UI<Eff, M, V>>
+        where W == TracedTPartial<A, WW>,
+              M == WriterTPartial<MM, A> {
+        self.component.wui^
+    }
+}
+
+extension EffectStoreComponent {
+    func traced<A>() -> Traced<A, UI<Eff, M, V>>
+        where W == TracedPartial<A>,
+              M == WriterPartial<A> {
+        self.component.wui^
+    }
+}

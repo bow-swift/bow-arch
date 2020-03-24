@@ -27,6 +27,7 @@
 		11B1DD45241FA39000A5296C /* Arch+IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD44241FA39000A5296C /* Arch+IO.swift */; };
 		11E358E6242A0BA600C8B8E5 /* ActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E358E5242A0BA600C8B8E5 /* ActionHandler.swift */; };
 		11E358E8242A0C3900C8B8E5 /* ActionDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E358E7242A0C3900C8B8E5 /* ActionDispatcher.swift */; };
+		11E358EA242A0CE800C8B8E5 /* MooreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E358E9242A0CE800C8B8E5 /* MooreComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		11B1DD44241FA39000A5296C /* Arch+IO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Arch+IO.swift"; sourceTree = "<group>"; };
 		11E358E5242A0BA600C8B8E5 /* ActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionHandler.swift; sourceTree = "<group>"; };
 		11E358E7242A0C3900C8B8E5 /* ActionDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionDispatcher.swift; sourceTree = "<group>"; };
+		11E358E9242A0CE800C8B8E5 /* MooreComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MooreComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 			children = (
 				11E358E5242A0BA600C8B8E5 /* ActionHandler.swift */,
 				11E358E7242A0C3900C8B8E5 /* ActionDispatcher.swift */,
+				11E358E9242A0CE800C8B8E5 /* MooreComponent.swift */,
 			);
 			path = ActionMoore;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				11E358E6242A0BA600C8B8E5 /* ActionHandler.swift in Sources */,
 				1193FE2924220EEF00D27AFB /* WriterDispatcher.swift in Sources */,
 				11B1DD40241FA30100A5296C /* StateDispatcher.swift in Sources */,
+				11E358EA242A0CE800C8B8E5 /* MooreComponent.swift in Sources */,
 				1193FE2B2422109B00D27AFB /* TracedComponent.swift in Sources */,
 				11B1DD33241F990300A5296C /* UI.swift in Sources */,
 				11B1DD3E241FA2D600A5296C /* StateHandler.swift in Sources */,

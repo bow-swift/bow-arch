@@ -25,3 +25,11 @@ public typealias WriterDispatcher<Environment, State: Monoid, Input> = EffectWri
 
 public typealias TracedTComponent<W: Comonad, M: Monad, State: Monoid, V: View> = EffectTracedTComponent<IOPartial<Error>, W, M, State, V>
 public typealias TracedComponent<State: Monoid, V: View> = EffectTracedComponent<IOPartial<Error>, State, V>
+
+// MARK: Action-Moore
+
+public typealias ActionHandler<Environment, Action, Input> = EffectActionHandler<IOPartial<Error>, Environment, Action, Input>
+
+public typealias ActionDispatcher<Environment, Action, Input> = EffectActionDispatcher<IOPartial<Error>, Environment, Action, Input>
+
+public typealias MooreComponent<Action, V: View> = EffectMooreComponent<IOPartial<Error>, Action, V>

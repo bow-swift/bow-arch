@@ -26,6 +26,7 @@
 		11B1DD42241FA33100A5296C /* StoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD41241FA33100A5296C /* StoreComponent.swift */; };
 		11B1DD45241FA39000A5296C /* Arch+IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD44241FA39000A5296C /* Arch+IO.swift */; };
 		11E358E6242A0BA600C8B8E5 /* ActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E358E5242A0BA600C8B8E5 /* ActionHandler.swift */; };
+		11E358E8242A0C3900C8B8E5 /* ActionDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E358E7242A0C3900C8B8E5 /* ActionDispatcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		11B1DD41241FA33100A5296C /* StoreComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreComponent.swift; sourceTree = "<group>"; };
 		11B1DD44241FA39000A5296C /* Arch+IO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Arch+IO.swift"; sourceTree = "<group>"; };
 		11E358E5242A0BA600C8B8E5 /* ActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionHandler.swift; sourceTree = "<group>"; };
+		11E358E7242A0C3900C8B8E5 /* ActionDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionDispatcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				11E358E5242A0BA600C8B8E5 /* ActionHandler.swift */,
+				11E358E7242A0C3900C8B8E5 /* ActionDispatcher.swift */,
 			);
 			path = ActionMoore;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 			files = (
 				11B1DD45241FA39000A5296C /* Arch+IO.swift in Sources */,
 				11B1DD35241F998A00A5296C /* Handler.swift in Sources */,
+				11E358E8242A0C3900C8B8E5 /* ActionDispatcher.swift in Sources */,
 				11B1DD3B241F9DD400A5296C /* ComponentView.swift in Sources */,
 				11B1DD39241F9C9600A5296C /* Component.swift in Sources */,
 				11E358E6242A0BA600C8B8E5 /* ActionHandler.swift in Sources */,

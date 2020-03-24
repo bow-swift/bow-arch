@@ -23,6 +23,8 @@ public struct EffectComponentView<Eff: Async, W: Comonad, M: Monad, V: View>: Vi
 }
 
 public extension EffectComponentView {
+    // MARK: Initializers for Store-State
+    
     init<A>(_ wa: Kind<W, UI<Eff, M, V>>)
         where W == StorePartial<A>,
               M == StatePartial<A> {
@@ -37,6 +39,8 @@ public extension EffectComponentView {
         self.init(EffectComponent(wa, Pairing.pairStateTStoreT(pairing)))
     }
     
+    // MARK: Initializers for Traced-Writer
+    
     init<A: Monoid>(_ wa: Kind<W, UI<Eff, M, V>>)
         where W == TracedPartial<A>,
               M == WriterPartial<A> {
@@ -49,5 +53,13 @@ public extension EffectComponentView {
         where W == TracedTPartial<A, WW>,
               M == WriterTPartial<MM, A> {
         self.init(EffectComponent(wa, Pairing.pairWriterTTracedT(pairing)))
+    }
+    
+    // MARK: Initializers for Moore-Action
+    
+    init<A>(_ wa: Kind<W, UI<Eff, M, V>>)
+        where W == MoorePartial<A>,
+        M == ActionPartial<A> {
+        self.init(EffectComponent(wa, Pairing.pairActionMoore()))
     }
 }

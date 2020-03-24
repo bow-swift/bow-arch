@@ -25,6 +25,7 @@
 		11B1DD40241FA30100A5296C /* StateDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD3F241FA30100A5296C /* StateDispatcher.swift */; };
 		11B1DD42241FA33100A5296C /* StoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD41241FA33100A5296C /* StoreComponent.swift */; };
 		11B1DD45241FA39000A5296C /* Arch+IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD44241FA39000A5296C /* Arch+IO.swift */; };
+		11E358E6242A0BA600C8B8E5 /* ActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E358E5242A0BA600C8B8E5 /* ActionHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		11B1DD3F241FA30100A5296C /* StateDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateDispatcher.swift; sourceTree = "<group>"; };
 		11B1DD41241FA33100A5296C /* StoreComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreComponent.swift; sourceTree = "<group>"; };
 		11B1DD44241FA39000A5296C /* Arch+IO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Arch+IO.swift"; sourceTree = "<group>"; };
+		11E358E5242A0BA600C8B8E5 /* ActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 			children = (
 				11B1DD14241F94A200A5296C /* BowArch.h */,
 				11B1DD15241F94A200A5296C /* Info.plist */,
+				11E358E4242A0B7900C8B8E5 /* ActionMoore */,
 				11246923241FACAF00EB4F0F /* Core */,
 				11B1DD43241FA36300A5296C /* IO */,
 				11B1DD3C241FA26200A5296C /* StateStore */,
@@ -166,6 +169,14 @@
 				11B1DD44241FA39000A5296C /* Arch+IO.swift */,
 			);
 			path = IO;
+			sourceTree = "<group>";
+		};
+		11E358E4242A0B7900C8B8E5 /* ActionMoore */ = {
+			isa = PBXGroup;
+			children = (
+				11E358E5242A0BA600C8B8E5 /* ActionHandler.swift */,
+			);
+			path = ActionMoore;
 			sourceTree = "<group>";
 		};
 		11ECF9E7241FAD070066F039 /* Tests */ = {
@@ -298,6 +309,7 @@
 				11B1DD35241F998A00A5296C /* Handler.swift in Sources */,
 				11B1DD3B241F9DD400A5296C /* ComponentView.swift in Sources */,
 				11B1DD39241F9C9600A5296C /* Component.swift in Sources */,
+				11E358E6242A0BA600C8B8E5 /* ActionHandler.swift in Sources */,
 				1193FE2924220EEF00D27AFB /* WriterDispatcher.swift in Sources */,
 				11B1DD40241FA30100A5296C /* StateDispatcher.swift in Sources */,
 				1193FE2B2422109B00D27AFB /* TracedComponent.swift in Sources */,

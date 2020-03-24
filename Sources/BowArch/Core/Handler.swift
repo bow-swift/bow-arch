@@ -8,6 +8,10 @@ public class EffectHandler<Eff: Async, M: Monad, Environment, Input> {
         self.f = f
     }
     
+    public init(_ f: @escaping (Kind<Eff, Kind<M, Void>>) -> Kind<Eff, Void>, environment: Environment) {
+        self.f = { kleisli in f(kleisli.run(environment)) }
+    }
+    
     public func handle(_ env: Kleisli<Eff, Environment, Kind<M, Void>>) -> Kind<Eff, Void> {
         f(env)
     }
@@ -32,11 +36,5 @@ public class EffectHandler<Eff: Async, M: Monad, Environment, Input> {
     
     public func send(effect: Kleisli<Eff, Environment, Kind<M, Void>>) -> Kleisli<Eff, Environment, [Input]> {
         Kleisli { _ in self.handle(effect).as([]) }
-    }
-}
-
-public extension EffectHandler where Environment == Any {
-    convenience init(_ f: @escaping (Kind<Eff, Kind<M, Void>>) -> Kind<Eff, Void>) {
-        self.init { kleisli in f(kleisli.run(())) }
     }
 }

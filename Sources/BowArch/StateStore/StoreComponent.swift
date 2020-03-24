@@ -15,7 +15,8 @@ public extension EffectStoreTComponent {
               M == StateTPartial<MM, A> {
         self.init(StoreT(initialState, WW.pure({ state in
             UI { send in
-                render(state, EffectStateTHandler(send).map(constant(environment)))
+                render(state,
+                       EffectStateTHandler(send, environment: environment))
             }
         })), pairing)
     }
@@ -41,7 +42,7 @@ public extension EffectStoreComponent {
               M == StatePartial<A> {
         self.init(Store(initialState) { state in
             UI { send in
-                render(state, EffectStateHandler(send).map(constant(environment)))
+                render(state, EffectStateHandler(send, environment: environment))
             }
         })
     }

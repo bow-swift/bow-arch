@@ -1,7 +1,7 @@
 import Bow
 import BowEffects
 
-public struct EffectReducer<Eff: Async & UnsafeRun, M: Monad, Environment, Input> {
+public struct EffectDispatcher<Eff: Async & UnsafeRun, M: Monad, Environment, Input> {
     private let f: (Input, EffectHandler<Eff, M, Environment, Input>) -> Kleisli<Eff, Environment, [Input]>
     
     public init(from f: @escaping (Input, EffectHandler<Eff, M, Environment, Input>) -> Kleisli<Eff, Environment, [Input]>) {
@@ -37,7 +37,7 @@ public struct EffectReducer<Eff: Async & UnsafeRun, M: Monad, Environment, Input
     }
 }
 
-public extension EffectReducer where Environment == Any {
+public extension EffectDispatcher where Environment == Any {
     init(noEnvironment f: @escaping (Input, EffectHandler<Eff, M, Environment, Input>) -> Kind<Eff, [Input]>) {
         self.f = { input, handler in
             Kleisli { _ in f(input, handler) }
@@ -63,11 +63,11 @@ public extension EffectReducer where Environment == Any {
     }
 }
 
-// MARK: Instance of Semigroup for Reducer
+// MARK: Instance of Semigroup for Dispatcher
 
-extension EffectReducer: Semigroup {
-    public func combine(_ other: EffectReducer<Eff, M, Environment, Input>) -> EffectReducer<Eff, M, Environment, Input> {
-        EffectReducer { input, handler in
+extension EffectDispatcher: Semigroup {
+    public func combine(_ other: EffectDispatcher<Eff, M, Environment, Input>) -> EffectDispatcher<Eff, M, Environment, Input> {
+        EffectDispatcher { input, handler in
             let fst = Kleisli<Eff, Environment, [Input]>.var()
             let snd = Kleisli<Eff, Environment, [Input]>.var()
             
@@ -79,10 +79,10 @@ extension EffectReducer: Semigroup {
     }
 }
 
-// MARK: Instance of Monoid for Reducer
+// MARK: Instance of Monoid for Dispatcher
 
-extension EffectReducer: Monoid {
-    public static func empty() -> EffectReducer<Eff, M, Environment, Input> {
-        EffectReducer { _, _ in Kleisli.pure([])^ }
+extension EffectDispatcher: Monoid {
+    public static func empty() -> EffectDispatcher<Eff, M, Environment, Input> {
+        EffectDispatcher { _, _ in Kleisli.pure([])^ }
     }
 }

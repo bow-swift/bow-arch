@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1193FE2724220E4300D27AFB /* WriterHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1193FE2624220E4300D27AFB /* WriterHandler.swift */; };
-		1193FE2924220EEF00D27AFB /* WriterReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1193FE2824220EEF00D27AFB /* WriterReducer.swift */; };
+		1193FE2924220EEF00D27AFB /* WriterDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1193FE2824220EEF00D27AFB /* WriterDispatcher.swift */; };
 		1193FE2B2422109B00D27AFB /* TracedComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1193FE2A2422109B00D27AFB /* TracedComponent.swift */; };
 		11B1DD1B241F94A300A5296C /* BowArch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B1DD11241F94A200A5296C /* BowArch.framework */; };
 		11B1DD20241F94A300A5296C /* BowArchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD1F241F94A300A5296C /* BowArchTests.swift */; };
@@ -18,11 +18,11 @@
 		11B1DD31241F985C00A5296C /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 11B1DD30241F985C00A5296C /* Bow */; };
 		11B1DD33241F990300A5296C /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD32241F990300A5296C /* UI.swift */; };
 		11B1DD35241F998A00A5296C /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD34241F998A00A5296C /* Handler.swift */; };
-		11B1DD37241F9A3D00A5296C /* Reducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD36241F9A3D00A5296C /* Reducer.swift */; };
+		11B1DD37241F9A3D00A5296C /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD36241F9A3D00A5296C /* Dispatcher.swift */; };
 		11B1DD39241F9C9600A5296C /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD38241F9C9600A5296C /* Component.swift */; };
 		11B1DD3B241F9DD400A5296C /* ComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD3A241F9DD400A5296C /* ComponentView.swift */; };
 		11B1DD3E241FA2D600A5296C /* StateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD3D241FA2D600A5296C /* StateHandler.swift */; };
-		11B1DD40241FA30100A5296C /* StateReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD3F241FA30100A5296C /* StateReducer.swift */; };
+		11B1DD40241FA30100A5296C /* StateDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD3F241FA30100A5296C /* StateDispatcher.swift */; };
 		11B1DD42241FA33100A5296C /* StoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD41241FA33100A5296C /* StoreComponent.swift */; };
 		11B1DD45241FA39000A5296C /* Arch+IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD44241FA39000A5296C /* Arch+IO.swift */; };
 /* End PBXBuildFile section */
@@ -39,7 +39,7 @@
 
 /* Begin PBXFileReference section */
 		1193FE2624220E4300D27AFB /* WriterHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterHandler.swift; sourceTree = "<group>"; };
-		1193FE2824220EEF00D27AFB /* WriterReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterReducer.swift; sourceTree = "<group>"; };
+		1193FE2824220EEF00D27AFB /* WriterDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterDispatcher.swift; sourceTree = "<group>"; };
 		1193FE2A2422109B00D27AFB /* TracedComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracedComponent.swift; sourceTree = "<group>"; };
 		11B1DD11241F94A200A5296C /* BowArch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BowArch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		11B1DD14241F94A200A5296C /* BowArch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BowArch.h; sourceTree = "<group>"; };
@@ -49,11 +49,11 @@
 		11B1DD21241F94A300A5296C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11B1DD32241F990300A5296C /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
 		11B1DD34241F998A00A5296C /* Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
-		11B1DD36241F9A3D00A5296C /* Reducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reducer.swift; sourceTree = "<group>"; };
+		11B1DD36241F9A3D00A5296C /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
 		11B1DD38241F9C9600A5296C /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		11B1DD3A241F9DD400A5296C /* ComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentView.swift; sourceTree = "<group>"; };
 		11B1DD3D241FA2D600A5296C /* StateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateHandler.swift; sourceTree = "<group>"; };
-		11B1DD3F241FA30100A5296C /* StateReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateReducer.swift; sourceTree = "<group>"; };
+		11B1DD3F241FA30100A5296C /* StateDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateDispatcher.swift; sourceTree = "<group>"; };
 		11B1DD41241FA33100A5296C /* StoreComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreComponent.swift; sourceTree = "<group>"; };
 		11B1DD44241FA39000A5296C /* Arch+IO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Arch+IO.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,7 +86,7 @@
 				11B1DD38241F9C9600A5296C /* Component.swift */,
 				11B1DD3A241F9DD400A5296C /* ComponentView.swift */,
 				11B1DD34241F998A00A5296C /* Handler.swift */,
-				11B1DD36241F9A3D00A5296C /* Reducer.swift */,
+				11B1DD36241F9A3D00A5296C /* Dispatcher.swift */,
 				11B1DD32241F990300A5296C /* UI.swift */,
 			);
 			path = Core;
@@ -104,7 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				1193FE2624220E4300D27AFB /* WriterHandler.swift */,
-				1193FE2824220EEF00D27AFB /* WriterReducer.swift */,
+				1193FE2824220EEF00D27AFB /* WriterDispatcher.swift */,
 				1193FE2A2422109B00D27AFB /* TracedComponent.swift */,
 			);
 			path = WriterTraced;
@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				11B1DD3D241FA2D600A5296C /* StateHandler.swift */,
-				11B1DD3F241FA30100A5296C /* StateReducer.swift */,
+				11B1DD3F241FA30100A5296C /* StateDispatcher.swift */,
 				11B1DD41241FA33100A5296C /* StoreComponent.swift */,
 			);
 			path = StateStore;
@@ -298,13 +298,13 @@
 				11B1DD35241F998A00A5296C /* Handler.swift in Sources */,
 				11B1DD3B241F9DD400A5296C /* ComponentView.swift in Sources */,
 				11B1DD39241F9C9600A5296C /* Component.swift in Sources */,
-				1193FE2924220EEF00D27AFB /* WriterReducer.swift in Sources */,
-				11B1DD40241FA30100A5296C /* StateReducer.swift in Sources */,
+				1193FE2924220EEF00D27AFB /* WriterDispatcher.swift in Sources */,
+				11B1DD40241FA30100A5296C /* StateDispatcher.swift in Sources */,
 				1193FE2B2422109B00D27AFB /* TracedComponent.swift in Sources */,
 				11B1DD33241F990300A5296C /* UI.swift in Sources */,
 				11B1DD3E241FA2D600A5296C /* StateHandler.swift in Sources */,
 				1193FE2724220E4300D27AFB /* WriterHandler.swift in Sources */,
-				11B1DD37241F9A3D00A5296C /* Reducer.swift in Sources */,
+				11B1DD37241F9A3D00A5296C /* Dispatcher.swift in Sources */,
 				11B1DD42241FA33100A5296C /* StoreComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

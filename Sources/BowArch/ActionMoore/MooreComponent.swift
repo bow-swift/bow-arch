@@ -35,3 +35,14 @@ public extension EffectMooreComponent {
             render: render)
     }
 }
+
+public extension EffectMooreComponent {
+    func lift<A, B, Environment, Input>(
+        _ handler: EffectActionHandler<Eff, Environment, B, Input>,
+        _ f: @escaping (A) -> B
+    ) -> EffectMooreComponent<Eff, A, V>
+        where W == MoorePartial<A>,
+              M == ActionPartial<A> {
+        EffectMooreComponent(self.component.lift(handler.focus(f)))
+    }
+}

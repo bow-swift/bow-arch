@@ -163,8 +163,8 @@
 		11B1DD3C241FA26200A5296C /* StateStore */ = {
 			isa = PBXGroup;
 			children = (
-				11B1DD3D241FA2D600A5296C /* StateHandler.swift */,
 				11B1DD3F241FA30100A5296C /* StateDispatcher.swift */,
+				11B1DD3D241FA2D600A5296C /* StateHandler.swift */,
 				11B1DD41241FA33100A5296C /* StoreComponent.swift */,
 			);
 			path = StateStore;

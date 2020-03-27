@@ -8,7 +8,7 @@ public struct EffectDispatcher<Eff: Async & UnsafeRun, M: Monad, Environment, In
         self.f = f
     }
     
-    public func reduce(
+    public func dispatch(
         _ input: Input,
         _ handler: EffectHandler<Eff, M, Environment, Input>
     ) -> Kleisli<Eff, Environment, [Input]> {
@@ -32,7 +32,7 @@ public struct EffectDispatcher<Eff: Async & UnsafeRun, M: Monad, Environment, In
         _ handler: EffectHandler<Eff, M, Environment, Input>
     ) -> Kleisli<Eff, Environment, Void> {
         inputs.isEmpty ? Kleisli.pure(())^
-            : inputs.flatTraverse { input in self.reduce(input, handler) }^
+            : inputs.flatTraverse { input in self.dispatch(input, handler) }^
                 .flatMap { inputs in self.reflow(inputs, handler) }^
     }
 }
@@ -72,8 +72,8 @@ extension EffectDispatcher: Semigroup {
             let snd = Kleisli<Eff, Environment, [Input]>.var()
             
             return binding(
-                fst <- self.reduce(input, handler),
-                snd <- other.reduce(input, handler),
+                fst <- self.dispatch(input, handler),
+                snd <- other.dispatch(input, handler),
                 yield: fst.get + snd.get)^
         }
     }

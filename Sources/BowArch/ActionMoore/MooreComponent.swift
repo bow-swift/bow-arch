@@ -12,13 +12,26 @@ public extension EffectMooreComponent {
         render: @escaping (S, EffectActionHandler<Eff, E, A, I>) -> V)
         where W == MoorePartial<A>,
               M == ActionPartial<A> {
-    self.init(Moore.from(
-        initialState: initialState,
-        render: { state in
-            UI { send in
-                render(state, EffectActionHandler(send, environment: environment))
-            }
-    },
-        update: reducer.run))
+        self.init(Moore.from(
+            initialState: initialState,
+            render: { state in
+                UI { send in
+                    render(state, EffectActionHandler(send, environment: environment))
+                }
+        },
+            update: reducer.run))
+    }
+    
+    init<A, S, I>(
+        initialState: S,
+        reducer: Reducer<S, A>,
+        render: @escaping (S, EffectActionHandler<Eff, Any, A, I>) -> V)
+        where W == MoorePartial<A>,
+              M == ActionPartial<A> {
+        self.init(
+            initialState: initialState,
+            environment: () as Any,
+            reducer: reducer,
+            render: render)
     }
 }

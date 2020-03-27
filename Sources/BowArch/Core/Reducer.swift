@@ -56,3 +56,18 @@ public struct Reducer<State, Input> {
         focus(.identity, ParentInput.prism(for: embed))
     }
 }
+
+extension Reducer: Semigroup {
+    public func combine(_ other: Reducer<State, Input>) -> Reducer<State, Input> {
+        Reducer { state, input in
+            let newState = self.run(state, input)
+            return other.run(newState, input)
+        }
+    }
+}
+
+extension Reducer: Monoid {
+    public static func empty() -> Reducer<State, Input> {
+        Reducer { state, _ in state }
+    }
+}

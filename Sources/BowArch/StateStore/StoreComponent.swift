@@ -1,6 +1,7 @@
 import SwiftUI
 import Bow
 import BowEffects
+import BowOptics
 
 public typealias EffectStoreTComponent<Eff: Async, WW: Comonad, MM: Monad, S, V: View> = EffectComponentView<Eff, StoreTPartial<S, WW>, StateTPartial<MM, S>, V>
 public typealias EffectStoreComponent<Eff: Async, S, V: View> = EffectStoreTComponent<Eff, ForId, ForId, S, V>
@@ -70,5 +71,17 @@ public extension EffectStoreComponent {
         where W == StorePartial<A>,
               M == StatePartial<A> {
         self.component.wui^
+    }
+}
+
+public extension EffectStoreComponent {
+    func lift<A, B, Environment, Input>(
+        _ handler: EffectStateHandler<Eff, Environment, B, Input>,
+        _ lens: Lens<B, A>
+    ) -> EffectStoreComponent<Eff, A, V>
+        where W == StorePartial<A>,
+              M == StatePartial<A> {
+        
+        EffectStoreComponent(self.component.lift(handler.focus(lens)))
     }
 }

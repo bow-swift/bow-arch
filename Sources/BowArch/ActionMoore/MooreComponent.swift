@@ -37,6 +37,14 @@ public extension EffectMooreComponent {
 }
 
 public extension EffectMooreComponent {
+    func moore<A>() -> Moore<A, UI<Eff, M, V>>
+        where W == MoorePartial<A>,
+              M == ActionPartial<A> {
+        self.component.wui^
+    }
+}
+
+public extension EffectMooreComponent {
     func lift<A, B, Environment, Input>(
         _ handler: EffectActionHandler<Eff, Environment, B, Input>,
         _ f: @escaping (A) -> B

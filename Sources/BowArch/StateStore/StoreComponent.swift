@@ -74,14 +74,14 @@ public extension EffectStoreComponent {
     }
 }
 
-public extension EffectStoreComponent {
-    func lift<A, B, Environment, Input>(
-        _ handler: EffectStateHandler<Eff, Environment, B, Input>,
+public extension EffectStoreTComponent {
+    func lift<A, B, WW: Comonad, MM: Monad, Environment, Input>(
+        _ handler: EffectStateTHandler<Eff, MM, Environment, B, Input>,
         _ lens: Lens<B, A>
-    ) -> EffectStoreComponent<Eff, A, V>
-        where W == StorePartial<A>,
-              M == StatePartial<A> {
+    ) -> EffectStoreTComponent<Eff, WW, MM, A, V>
+        where W == StoreTPartial<A, WW>,
+              M == StateTPartial<MM, A> {
         
-        EffectStoreComponent(self.component.lift(handler.focus(lens)))
+        EffectStoreTComponent(self.component.lift(handler.focus(lens)))
     }
 }

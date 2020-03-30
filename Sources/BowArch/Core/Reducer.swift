@@ -1,88 +1,73 @@
 import Bow
-import BowEffects
+import BowOptics
 
-public struct EffectReducer<Eff: Async & UnsafeRun, M: Monad, Environment, Input> {
-    private let f: (Input, EffectHandler<Eff, M, Environment, Input>) -> Kleisli<Eff, Environment, [Input]>
+public struct Reducer<State, Input> {
+    let f: (State, Input) -> State
     
-    public init(from f: @escaping (Input, EffectHandler<Eff, M, Environment, Input>) -> Kleisli<Eff, Environment, [Input]>) {
+    public init(_ f: @escaping (State, Input) -> State) {
         self.f = f
     }
     
-    public func reduce(
-        _ input: Input,
-        _ handler: EffectHandler<Eff, M, Environment, Input>
-    ) -> Kleisli<Eff, Environment, [Input]> {
-        self.f(input, handler)
+    public func run(_ state: State, _ input: Input) -> State {
+        f(state, input)
     }
     
-    public func sendingTo(
-        _ handler: EffectHandler<Eff, M, Environment, Input>,
-        environment: Environment
-    ) -> (Input) -> Void {
-        { input in
-            self.f(input, handler)
-                .flatMap { inputs in self.reflow(inputs, handler) }^
-                .run(environment)
-                .runNonBlocking(on: .global(qos: .background))
-        }
-    }
-    
-    private func reflow(
-        _ inputs: [Input],
-        _ handler: EffectHandler<Eff, M, Environment, Input>
-    ) -> Kleisli<Eff, Environment, Void> {
-        inputs.isEmpty ? Kleisli.pure(())^
-            : inputs.flatTraverse { input in self.reduce(input, handler) }^
-                .flatMap { inputs in self.reflow(inputs, handler) }^
-    }
-}
-
-public extension EffectReducer where Environment == Any {
-    init(noEnvironment f: @escaping (Input, EffectHandler<Eff, M, Environment, Input>) -> Kind<Eff, [Input]>) {
-        self.f = { input, handler in
-            Kleisli { _ in f(input, handler) }
-        }
-    }
-    
-    init(_ f: @escaping (Input) -> Kind<Eff, [Input]>) {
-        self.f = { input, handler in
-            Kleisli { _ in f(input) }
-        }
-    }
-    
-    init(_ f: @escaping (Input) -> Kind<M, Void>) {
-        self.f = { input, handler in
-            Kleisli { _ in
-                handler.handle(Kleisli { _ in Eff.pure(f(input)) }).as([])
+    public func focus<ParentState, ParentInput>(
+        _ lens: Lens<ParentState, State>,
+        _ prism: Prism<ParentInput, Input>
+    ) -> Reducer<ParentState, ParentInput> {
+        Reducer<ParentState, ParentInput> { state, input in
+            guard let childInput = prism.getOptional(input) else {
+                return state
             }
+            let newState = self.run(lens.get(state), childInput)
+            return lens.set(state, newState)
         }
     }
     
-    func sendingTo(_ handler: EffectHandler<Eff, M, Environment, Input>) -> (Input) -> Void {
-        sendingTo(handler, environment: ())
+    public func focus<ParentState: AutoLens, ParentInput: AutoPrism>(
+        _ keyPath: WritableKeyPath<ParentState, State>,
+        _ embed: @escaping (Input) -> ParentInput
+    ) -> Reducer<ParentState, ParentInput> {
+        focus(ParentState.lens(for: keyPath), ParentInput.prism(for: embed))
+    }
+    
+    public func focus<ParentState>(
+        _ lens: Lens<ParentState, State>
+    ) -> Reducer<ParentState, Input> {
+        focus(lens, .identity)
+    }
+    
+    public func focus<ParentState: AutoLens>(
+        _ keyPath: WritableKeyPath<ParentState, State>
+    ) -> Reducer<ParentState, Input> {
+        focus(ParentState.lens(for: keyPath), .identity)
+    }
+    
+    public func focus<ParentInput>(
+        _ prism: Prism<ParentInput, Input>
+    ) -> Reducer<State, ParentInput> {
+        focus(.identity, prism)
+    }
+    
+    public func focus<ParentInput: AutoPrism>(
+        _ embed: @escaping (Input) -> ParentInput
+    ) -> Reducer<State, ParentInput> {
+        focus(.identity, ParentInput.prism(for: embed))
     }
 }
 
-// MARK: Instance of Semigroup for Reducer
-
-extension EffectReducer: Semigroup {
-    public func combine(_ other: EffectReducer<Eff, M, Environment, Input>) -> EffectReducer<Eff, M, Environment, Input> {
-        EffectReducer { input, handler in
-            let fst = Kleisli<Eff, Environment, [Input]>.var()
-            let snd = Kleisli<Eff, Environment, [Input]>.var()
-            
-            return binding(
-                fst <- self.reduce(input, handler),
-                snd <- other.reduce(input, handler),
-                yield: fst.get + snd.get)^
+extension Reducer: Semigroup {
+    public func combine(_ other: Reducer<State, Input>) -> Reducer<State, Input> {
+        Reducer { state, input in
+            let newState = self.run(state, input)
+            return other.run(newState, input)
         }
     }
 }
 
-// MARK: Instance of Monoid for Reducer
-
-extension EffectReducer: Monoid {
-    public static func empty() -> EffectReducer<Eff, M, Environment, Input> {
-        EffectReducer { _, _ in Kleisli.pure([])^ }
+extension Reducer: Monoid {
+    public static func empty() -> Reducer<State, Input> {
+        Reducer { state, _ in state }
     }
 }

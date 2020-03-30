@@ -15,7 +15,7 @@ public extension EffectTracedTComponent {
         self.init(TracedT(WW.pure({ state in
             UI { send in
                 render(state,
-                       EffectWriterTHandler(send).map(constant(environment)))
+                       EffectWriterTHandler(send, environment: environment))
             }
         })), pairing)
     }
@@ -39,7 +39,8 @@ public extension EffectTracedComponent {
               M == WriterPartial<State> {
         self.init(Traced { state in
             UI { send in
-                render(state, EffectWriterHandler(send).map(constant(environment)))
+                render(state,
+                       EffectWriterHandler(send, environment: environment))
             }
         })
     }

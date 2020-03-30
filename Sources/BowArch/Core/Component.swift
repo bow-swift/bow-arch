@@ -68,6 +68,14 @@ public final class EffectComponent<Eff: Async, W: Comonad, M: Monad, A>: Observa
             })
         }
     }
+
+    public func lift<Environment, Input>(
+        _ handler: EffectHandler<Eff, M, Environment, Input>
+    ) -> EffectComponent<Eff, W, M, A> {
+        EffectComponent(self.wui.map { ui in
+            ui.handling(with: handler)
+        }, pairing)
+    }
 }
 
 public func ==<Eff: Monad, W: Comonad, M: Monad, A>(

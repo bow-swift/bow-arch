@@ -1,6 +1,7 @@
 import SwiftUI
 import Bow
 import BowEffects
+import BowOptics
 
 public typealias EffectStoreTComponent<Eff: Async, WW: Comonad, MM: Monad, S, V: View> = EffectComponentView<Eff, StoreTPartial<S, WW>, StateTPartial<MM, S>, V>
 public typealias EffectStoreComponent<Eff: Async, S, V: View> = EffectStoreTComponent<Eff, ForId, ForId, S, V>
@@ -15,7 +16,8 @@ public extension EffectStoreTComponent {
               M == StateTPartial<MM, A> {
         self.init(StoreT(initialState, WW.pure({ state in
             UI { send in
-                render(state, EffectStateTHandler(send).map(constant(environment)))
+                render(state,
+                       EffectStateTHandler(send, environment: environment))
             }
         })), pairing)
     }
@@ -41,7 +43,7 @@ public extension EffectStoreComponent {
               M == StatePartial<A> {
         self.init(Store(initialState) { state in
             UI { send in
-                render(state, EffectStateHandler(send).map(constant(environment)))
+                render(state, EffectStateHandler(send, environment: environment))
             }
         })
     }
@@ -69,5 +71,17 @@ public extension EffectStoreComponent {
         where W == StorePartial<A>,
               M == StatePartial<A> {
         self.component.wui^
+    }
+}
+
+public extension EffectStoreTComponent {
+    func lift<A, B, WW: Comonad, MM: Monad, Environment, Input>(
+        _ handler: EffectStateTHandler<Eff, MM, Environment, B, Input>,
+        _ lens: Lens<B, A>
+    ) -> EffectStoreTComponent<Eff, WW, MM, A, V>
+        where W == StoreTPartial<A, WW>,
+              M == StateTPartial<MM, A> {
+        
+        EffectStoreTComponent(self.component.lift(handler.focus(lens)))
     }
 }

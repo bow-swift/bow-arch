@@ -37,13 +37,7 @@ public struct EffectDispatcher<Eff: Async & UnsafeRun, M: Monad, Environment, In
     }
 }
 
-public extension EffectDispatcher where Environment == Any {
-    init(noEnvironment f: @escaping (Input, EffectHandler<Eff, M, Environment, Input>) -> Kind<Eff, [Input]>) {
-        self.f = { input, handler in
-            Kleisli { _ in f(input, handler) }
-        }
-    }
-    
+public extension EffectDispatcher where Environment == Any {    
     init(_ f: @escaping (Input) -> Kind<Eff, [Input]>) {
         self.f = { input, handler in
             Kleisli { _ in f(input) }

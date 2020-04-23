@@ -9,14 +9,14 @@ public extension EffectMooreComponent {
         initialState: S,
         environment: E,
         reducer: Reducer<S, A>,
-        render: @escaping (S, EffectActionHandler<Eff, E, A, I>) -> V)
+        render: @escaping (S, EffectActionHandler<Eff, A, I>) -> V)
         where W == MoorePartial<A>,
               M == ActionPartial<A> {
         self.init(Moore.from(
             initialState: initialState,
             render: { state in
                 UI { send in
-                    render(state, EffectActionHandler(send, environment: environment))
+                    render(state, EffectActionHandler(send))
                 }
         },
             update: reducer.run))
@@ -25,12 +25,12 @@ public extension EffectMooreComponent {
     init<A, S, I>(
         initialState: S,
         reducer: Reducer<S, A>,
-        render: @escaping (S, EffectActionHandler<Eff, Any, A, I>) -> V)
+        render: @escaping (S, EffectActionHandler<Eff, A, I>) -> V)
         where W == MoorePartial<A>,
               M == ActionPartial<A> {
         self.init(
             initialState: initialState,
-            environment: () as Any,
+            environment: (),
             reducer: reducer,
             render: render)
     }
@@ -44,13 +44,13 @@ public extension EffectMooreComponent {
     }
 }
 
-public extension EffectMooreComponent {
-    func lift<A, B, Environment, Input>(
-        _ handler: EffectActionHandler<Eff, Environment, B, Input>,
-        _ f: @escaping (A) -> B
-    ) -> EffectMooreComponent<Eff, A, V>
-        where W == MoorePartial<A>,
-              M == ActionPartial<A> {
-        EffectMooreComponent(self.component.lift(handler.focus(f)))
-    }
-}
+//public extension EffectMooreComponent {
+//    func lift<A, B, Input>(
+//        _ handler: EffectActionHandler<Eff, B, Input>,
+//        _ f: @escaping (A) -> B
+//    ) -> EffectMooreComponent<Eff, A, V>
+//        where W == MoorePartial<A>,
+//              M == ActionPartial<A> {
+//        EffectMooreComponent(self.component.lift(handler.focus(f)))
+//    }
+//}

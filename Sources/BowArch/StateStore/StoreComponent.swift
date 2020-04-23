@@ -11,13 +11,13 @@ public extension EffectStoreTComponent {
         initialState: A,
         environment: E,
         pairing: Pairing<MM, WW>,
-        render: @escaping (A, EffectStateTHandler<Eff, MM, E, A, I>) -> V)
+        render: @escaping (A, EffectStateTHandler<Eff, MM, A, I>) -> V)
         where W == StoreTPartial<A, WW>,
               M == StateTPartial<MM, A> {
         self.init(StoreT(initialState, WW.pure({ state in
             UI { send in
                 render(state,
-                       EffectStateTHandler(send, environment: environment))
+                       EffectStateTHandler(send))
             }
         })), pairing)
     }
@@ -25,11 +25,11 @@ public extension EffectStoreTComponent {
     init<A, WW: Comonad & Applicative, MM: Monad, I>(
         initialState: A,
         pairing: Pairing<MM, WW>,
-        render: @escaping (A, EffectStateTHandler<Eff, MM, Any, A, I>) -> V)
+        render: @escaping (A, EffectStateTHandler<Eff, MM, A, I>) -> V)
         where W == StoreTPartial<A, WW>,
               M == StateTPartial<MM, A> {
         self.init(initialState: initialState,
-                  environment: () as Any,
+                  environment: (),
                   pairing: pairing,
                   render: render)
     }
@@ -38,22 +38,22 @@ public extension EffectStoreTComponent {
 public extension EffectStoreComponent {
     init<E, A, I>(initialState: A,
                   environment: E,
-                  render: @escaping (A, EffectStateHandler<Eff, E, A, I>) -> V)
+                  render: @escaping (A, EffectStateHandler<Eff, A, I>) -> V)
         where W == StorePartial<A>,
               M == StatePartial<A> {
         self.init(Store(initialState) { state in
             UI { send in
-                render(state, EffectStateHandler(send, environment: environment))
+                render(state, EffectStateHandler(send))
             }
         })
     }
     
     init<A, I>(initialState: A,
-               render: @escaping (A, EffectStateHandler<Eff, Any, A, I>) -> V)
+               render: @escaping (A, EffectStateHandler<Eff, A, I>) -> V)
         where W == StorePartial<A>,
               M == StatePartial<A> {
         self.init(initialState: initialState,
-                  environment: () as Any,
+                  environment: (),
                   render: render)
     }
 }
@@ -74,14 +74,14 @@ public extension EffectStoreComponent {
     }
 }
 
-public extension EffectStoreTComponent {
-    func lift<A, B, WW: Comonad, MM: Monad, Environment, Input>(
-        _ handler: EffectStateTHandler<Eff, MM, Environment, B, Input>,
-        _ lens: Lens<B, A>
-    ) -> EffectStoreTComponent<Eff, WW, MM, A, V>
-        where W == StoreTPartial<A, WW>,
-              M == StateTPartial<MM, A> {
-        
-        EffectStoreTComponent(self.component.lift(handler.focus(lens)))
-    }
-}
+//public extension EffectStoreTComponent {
+//    func lift<A, B, WW: Comonad, MM: Monad, Environment, Input>(
+//        _ handler: EffectStateTHandler<Eff, MM, B, Input>,
+//        _ lens: Lens<B, A>
+//    ) -> EffectStoreTComponent<Eff, WW, MM, A, V>
+//        where W == StoreTPartial<A, WW>,
+//              M == StateTPartial<MM, A> {
+//
+//        EffectStoreTComponent(self.component.lift(handler.focus(lens)))
+//    }
+//}

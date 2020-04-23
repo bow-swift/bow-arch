@@ -1,40 +1,26 @@
 import Bow
 import BowEffects
 
-public class EffectHandler<Eff: Async, M: Monad, Environment, Input> {
-    private let f: (Kleisli<Eff, Environment, Kind<M, Void>>) -> Kind<Eff, Void>
+public class EffectHandler<Eff: Async, M: Monad, Input> {
+    private let f: (Kind<Eff, Kind<M, Void>>) -> Kind<Eff, Void>
     
-    public init(_ f: @escaping (Kleisli<Eff, Environment, Kind<M, Void>>) -> Kind<Eff, Void>) {
+    public init(_ f: @escaping (Kind<Eff, Kind<M, Void>>) -> Kind<Eff, Void>) {
         self.f = f
     }
     
-    public init(_ f: @escaping (Kind<Eff, Kind<M, Void>>) -> Kind<Eff, Void>, environment: Environment) {
-        self.f = { kleisli in f(kleisli.run(environment)) }
+    public func handle(_ eff: Kind<Eff, Kind<M, Void>>) -> Kind<Eff, Void> {
+        f(eff)
     }
     
-    public func handle(_ env: Kleisli<Eff, Environment, Kind<M, Void>>) -> Kind<Eff, Void> {
-        f(env)
-    }
-    
-    public func map<LocalEnvironment>(_ f: @escaping (Environment) -> LocalEnvironment) -> EffectHandler<Eff, M, LocalEnvironment, Input> {
-        EffectHandler<Eff, M, LocalEnvironment, Input> { kleisli in
-            self.f(kleisli.contramap(f))
-        }
-    }
-    
-    public func noOp() -> Kleisli<Eff, Environment, [Input]> {
+    public func noOp() -> Kind<Eff, [Input]> {
         send(action: .pure(()))
     }
     
-    public func send(action: Kind<M, Void>) -> Kleisli<Eff, Environment, [Input]> {
+    public func send(action: Kind<M, Void>) -> Kind<Eff, [Input]> {
         send(effect: Eff.pure(action))
     }
     
-    public func send(effect: Kind<Eff, Kind<M, Void>>) -> Kleisli<Eff, Environment, [Input]> {
-        send(effect: Kleisli { _ in effect })
-    }
-    
-    public func send(effect: Kleisli<Eff, Environment, Kind<M, Void>>) -> Kleisli<Eff, Environment, [Input]> {
-        Kleisli { _ in self.handle(effect).as([]) }
+    public func send(effect: Kind<Eff, Kind<M, Void>>) -> Kind<Eff, [Input]> {
+        handle(effect).as([])
     }
 }

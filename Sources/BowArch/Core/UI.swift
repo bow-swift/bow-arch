@@ -20,11 +20,11 @@ public final class UI<Eff: Async, M: Monad, A> {
         }
     }
     
-    public func handling<E, I>(with handler: EffectHandler<Eff, M, E, I>) -> UI<Eff, M, A> {
-        UI { send in
-            self.makeView { action in
-                send(action).followedBy(handler.handle(Kleisli { _ in action }))
-            }
-        }
-    }
+//    public func handling<I>(with handler: EffectHandler<Eff, M, I>) -> UI<Eff, M, A> {
+//        UI { send in
+//            self.makeView { action in
+//                send(action).followedBy(handler.handle(Kleisli { _ in action }))
+//            }
+//        }
+//    }
 }

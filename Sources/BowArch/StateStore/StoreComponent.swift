@@ -4,97 +4,24 @@ import BowEffects
 import BowOptics
 
 public typealias EffectStoreTComponent<Eff: Async, WW: Comonad, MM: Monad, S, V: View> = EffectComponentView<Eff, StoreTPartial<S, WW>, StateTPartial<MM, S>, V>
-//public typealias EffectStoreComponent<Eff: Async, S, V: View> = EffectStoreTComponent<Eff, ForId, ForId, S, V>
+public typealias EffectStoreComponent<Eff: Async, S, V: View> = EffectStoreTComponent<Eff, ForId, ForId, S, V>
 
-public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: View {
-    private let initialState: S
-    private let environment: E
-    private let dispatcher: EffectStateDispatcher<Eff, E, S, I>
-    private let render: (S, @escaping (I) -> Void) -> V
-    private let f: (I) -> Void
-    private let component: EffectComponentView<Eff, StorePartial<S>, StatePartial<S>, V>
-    
-    public init(
+public extension EffectStoreComponent {
+    init<S>(
         initialState: S,
-        environment: E,
-        dispatcher: EffectStateDispatcher<Eff, E, S, I>,
-        render: @escaping (S, @escaping (I) -> Void) -> V
-    ) {
+        render: @escaping (S, EffectStateHandler<Eff, S>) -> V
+    ) where M == StatePartial<S>,
+            W == StorePartial<S> {
         self.init(
-            initialState: initialState,
-            environment: environment,
-            dispatcher: dispatcher,
-            f: { _ in },
-            render: render)
-    }
-    
-    private init(
-        initialState: S,
-        environment: E,
-        dispatcher: EffectStateDispatcher<Eff, E, S, I>,
-        f: @escaping (I) -> Void,
-        render: @escaping (S, @escaping (I) -> Void) -> V
-    ) {
-        self.initialState = initialState
-        self.environment = environment
-        self.dispatcher = dispatcher
-        self.f = f
-        self.render = render
-        self.component = EffectComponentView(
             EffectComponent(
                 Store(initialState) { state in
                     UI { handler in
-                        render(state) { i in
-                            dispatcher.sendingTo(handler, environment: environment)(i)
-                            f(i)
-                        }
+                        render(state, handler)
                     }
                 },
             Pairing.pairStateStore()))
     }
     
-    public var body: some View {
-        self.component
-    }
-    
-    public func forwarding(to: @escaping (I) -> Void) -> EffectStoreComponent {
-        EffectStoreComponent(
-            initialState: self.initialState,
-            environment: self.environment,
-            dispatcher: self.dispatcher,
-            f: { i in self.f(i); to(i) },
-            render: self.render)
-    }
-    
-    public func lift<S2, E2, I2>(
-        initialState: S2,
-        environment: E2,
-        _ transformEnvironment: @escaping (E2) -> E,
-        _ transformState: Lens<S2, S>,
-        _ transformInput: Prism<I2, I>
-    ) -> EffectStoreComponent<Eff, E2, S2, I2, V> {
-        
-        let newDispatcher: EffectStateDispatcher<Eff, E2, S2, I2> = self.dispatcher.lift(
-        transformEnvironment,
-        transformState,
-        transformInput.getOptional)
-        
-        return EffectStoreComponent<Eff, E2, S2, I2, V>(
-            initialState: initialState,
-            environment: environment,
-            dispatcher: newDispatcher) { state, handle in
-                self.render(transformState.get(state),
-                            { i2 in handle(transformInput.reverseGet(i2)) })
-            }
-    }
-    
-    public func dispatching(to dispatcher: EffectStateDispatcher<Eff, E, S, I>) -> EffectStoreComponent<Eff, E, S, I, V> {
-        EffectStoreComponent(
-            initialState: self.initialState,
-            environment: self.environment,
-            dispatcher: self.dispatcher.combine(dispatcher),
-            render: self.render)
-    }
 //    init<E, A, I, WW: Comonad & Applicative, MM: Monad>(
 //        initialState: A,
 //        environment: E,
@@ -155,8 +82,10 @@ public extension EffectStoreTComponent {
 }
 
 public extension EffectStoreComponent {
-    func store() -> Store<S, UI<Eff, StatePartial<S>, V>> {
-        self.component.component.wui^
+    func store<S>() -> Store<S, UI<Eff, M, V>>
+        where M == StatePartial<S>,
+              W == StorePartial<S> {
+        self.component.wui^
     }
 }
 

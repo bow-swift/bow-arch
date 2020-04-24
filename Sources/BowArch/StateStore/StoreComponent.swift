@@ -6,56 +6,76 @@ import BowOptics
 public typealias EffectStoreTComponent<Eff: Async, WW: Comonad, MM: Monad, S, V: View> = EffectComponentView<Eff, StoreTPartial<S, WW>, StateTPartial<MM, S>, V>
 public typealias EffectStoreComponent<Eff: Async, S, V: View> = EffectStoreTComponent<Eff, ForId, ForId, S, V>
 
-public extension EffectStoreTComponent {
-    init<E, A, I, WW: Comonad & Applicative, MM: Monad>(
-        initialState: A,
+public extension EffectStoreComponent {
+    init<E, S, I>(
+        initialState: S,
         environment: E,
-        pairing: Pairing<MM, WW>,
-        render: @escaping (A, EffectStateTHandler<Eff, MM, A, I>) -> V)
-        where W == StoreTPartial<A, WW>,
-              M == StateTPartial<MM, A> {
-        self.init(StoreT(initialState, WW.pure({ state in
-            UI { send in
-                render(state,
-                       EffectStateTHandler(send))
-            }
-        })), pairing)
+        dispatcher: EffectStateDispatcher<Eff, E, S, I>,
+        render: @escaping (S, @escaping (I) -> Void) -> V
+    ) where M == StatePartial<S>,
+            W == StorePartial<S> {
+        self.init(
+            EffectComponent(
+                Store(initialState) { state in
+                    UI { handler in
+                        render(state) { i in
+                            dispatcher.sendingTo(handler, environment: environment)(i)
+                        }
+                    }
+                },
+            Pairing.pairStateStore())
+        )
     }
     
-    init<A, WW: Comonad & Applicative, MM: Monad, I>(
-        initialState: A,
-        pairing: Pairing<MM, WW>,
-        render: @escaping (A, EffectStateTHandler<Eff, MM, A, I>) -> V)
-        where W == StoreTPartial<A, WW>,
-              M == StateTPartial<MM, A> {
-        self.init(initialState: initialState,
-                  environment: (),
-                  pairing: pairing,
-                  render: render)
-    }
+//    init<E, A, I, WW: Comonad & Applicative, MM: Monad>(
+//        initialState: A,
+//        environment: E,
+//        pairing: Pairing<MM, WW>,
+//        render: @escaping (A, EffectStateTHandler<Eff, MM, A, I>) -> V)
+//        where W == StoreTPartial<A, WW>,
+//              M == StateTPartial<MM, A> {
+//        self.init(StoreT(initialState, WW.pure({ state in
+//            UI { send in
+//                render(state,
+//                       EffectStateTHandler(send))
+//            }
+//        })), pairing)
+//    }
+//
+//    init<A, WW: Comonad & Applicative, MM: Monad, I>(
+//        initialState: A,
+//        pairing: Pairing<MM, WW>,
+//        render: @escaping (A, EffectStateTHandler<Eff, MM, A, I>) -> V)
+//        where W == StoreTPartial<A, WW>,
+//              M == StateTPartial<MM, A> {
+//        self.init(initialState: initialState,
+//                  environment: (),
+//                  pairing: pairing,
+//                  render: render)
+//    }
 }
 
 public extension EffectStoreComponent {
-    init<E, A, I>(initialState: A,
-                  environment: E,
-                  render: @escaping (A, EffectStateHandler<Eff, A, I>) -> V)
-        where W == StorePartial<A>,
-              M == StatePartial<A> {
-        self.init(Store(initialState) { state in
-            UI { send in
-                render(state, EffectStateHandler(send))
-            }
-        })
-    }
-    
-    init<A, I>(initialState: A,
-               render: @escaping (A, EffectStateHandler<Eff, A, I>) -> V)
-        where W == StorePartial<A>,
-              M == StatePartial<A> {
-        self.init(initialState: initialState,
-                  environment: (),
-                  render: render)
-    }
+//    init<E, A, I>(initialState: A,
+//                  environment: E,
+//                  render: @escaping (A, EffectStateHandler<Eff, A, I>) -> V)
+//        where W == StorePartial<A>,
+//              M == StatePartial<A> {
+//        self.init(Store(initialState) { state in
+//            UI { send in
+//                render(state, EffectStateHandler(send))
+//            }
+//        })
+//    }
+//    
+//    init<A, I>(initialState: A,
+//               render: @escaping (A, EffectStateHandler<Eff, A, I>) -> V)
+//        where W == StorePartial<A>,
+//              M == StatePartial<A> {
+//        self.init(initialState: initialState,
+//                  environment: (),
+//                  render: render)
+//    }
 }
 
 public extension EffectStoreTComponent {

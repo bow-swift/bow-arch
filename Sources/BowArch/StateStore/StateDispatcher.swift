@@ -9,7 +9,7 @@ public extension EffectStateTDispatcher {
     func lift<S1, S2, E2, I2, MM: Monad>(
         _ transformEnvironment: @escaping (E2) -> Environment,
         _ transformState: Lens<S2, S1>,
-        _ transformInput: @escaping (I2) -> Input
+        _ transformInput: @escaping (I2) -> Input?
     ) -> EffectStateTDispatcher<Eff, MM, E2, S2, I2>
     where M == StateTPartial<MM, S1> {
         self.lift(

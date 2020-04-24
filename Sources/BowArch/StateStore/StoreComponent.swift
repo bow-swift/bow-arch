@@ -39,6 +39,35 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
         self.component
     }
     
+    public func lift<S2, E2, I2>(
+        initialState: S2,
+        environment: E2,
+        _ transformEnvironment: @escaping (E2) -> E,
+        _ transformState: Lens<S2, S>,
+        _ transformInput: Prism<I2, I>
+    ) -> EffectStoreComponent<Eff, E2, S2, I2, V> {
+        
+        let newDispatcher: EffectStateDispatcher<Eff, E2, S2, I2> = self.dispatcher.lift(
+        transformEnvironment,
+        transformState,
+        transformInput.getOptional)
+        
+        return EffectStoreComponent<Eff, E2, S2, I2, V>(
+            initialState: initialState,
+            environment: environment,
+            dispatcher: newDispatcher) { state, handle in
+                self.render(transformState.get(state),
+                            { i2 in handle(transformInput.reverseGet(i2)) })
+            }
+    }
+    
+    public func dispatching(to dispatcher: EffectStateDispatcher<Eff, E, S, I>) -> EffectStoreComponent<Eff, E, S, I, V> {
+        EffectStoreComponent(
+            initialState: self.initialState,
+            environment: self.environment,
+            dispatcher: self.dispatcher.combine(dispatcher),
+            render: self.render)
+    }
 //    init<E, A, I, WW: Comonad & Applicative, MM: Monad>(
 //        initialState: A,
 //        environment: E,

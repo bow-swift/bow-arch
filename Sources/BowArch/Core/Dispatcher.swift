@@ -29,12 +29,15 @@ public struct EffectDispatcher<Eff: Async & UnsafeRun, M: Monad, Environment, In
     public func lift<MM: Monad, E2, I2>(
         _ transformEnvironment: @escaping (E2) -> Environment,
         _ transformAction: @escaping (Kind<M, Void>) -> Kind<MM, Void>,
-        _ transformInput: @escaping (I2) -> Input
+        _ transformInput: @escaping (I2) -> Input?
     ) -> EffectDispatcher<Eff, MM, E2, I2> {
         EffectDispatcher<Eff, MM, E2, I2> { input, handler in
-            let newInput = transformInput(input)
-            let newHandler = handler.lift(transformAction)
-            return self.dispatch(newInput, newHandler).contramap(transformEnvironment)
+            if let newInput = transformInput(input) {
+                let newHandler = handler.lift(transformAction)
+                return self.dispatch(newInput, newHandler).contramap(transformEnvironment)
+            } else {
+                return handler.noOp()
+            }
         }
     }
 }

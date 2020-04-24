@@ -62,7 +62,7 @@ public extension EffectTracedTComponent {
     }
 }
 
-public extension EffectStoreComponent {
+public extension EffectTracedComponent {
     func traced<A>() -> Traced<A, UI<Eff, M, V>>
         where W == TracedPartial<A>,
               M == WriterPartial<A> {

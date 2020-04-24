@@ -4,17 +4,26 @@ import BowEffects
 import BowOptics
 
 public typealias EffectStoreTComponent<Eff: Async, WW: Comonad, MM: Monad, S, V: View> = EffectComponentView<Eff, StoreTPartial<S, WW>, StateTPartial<MM, S>, V>
-public typealias EffectStoreComponent<Eff: Async, S, V: View> = EffectStoreTComponent<Eff, ForId, ForId, S, V>
+//public typealias EffectStoreComponent<Eff: Async, S, V: View> = EffectStoreTComponent<Eff, ForId, ForId, S, V>
 
-public extension EffectStoreComponent {
-    init<E, S, I>(
+public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: View {
+    private let initialState: S
+    private let environment: E
+    private let dispatcher: EffectStateDispatcher<Eff, E, S, I>
+    private let render: (S, @escaping (I) -> Void) -> V
+    private let component: EffectComponentView<Eff, StorePartial<S>, StatePartial<S>, V>
+    
+    public init(
         initialState: S,
         environment: E,
         dispatcher: EffectStateDispatcher<Eff, E, S, I>,
         render: @escaping (S, @escaping (I) -> Void) -> V
-    ) where M == StatePartial<S>,
-            W == StorePartial<S> {
-        self.init(
+    ) {
+        self.initialState = initialState
+        self.environment = environment
+        self.dispatcher = dispatcher
+        self.render = render
+        self.component = EffectComponentView(
             EffectComponent(
                 Store(initialState) { state in
                     UI { handler in
@@ -23,8 +32,11 @@ public extension EffectStoreComponent {
                         }
                     }
                 },
-            Pairing.pairStateStore())
-        )
+            Pairing.pairStateStore()))
+    }
+    
+    public var body: some View {
+        self.component
     }
     
 //    init<E, A, I, WW: Comonad & Applicative, MM: Monad>(
@@ -87,10 +99,8 @@ public extension EffectStoreTComponent {
 }
 
 public extension EffectStoreComponent {
-    func store<A>() -> Store<A, UI<Eff, M, V>>
-        where W == StorePartial<A>,
-              M == StatePartial<A> {
-        self.component.wui^
+    func store() -> Store<S, UI<Eff, StatePartial<S>, V>> {
+        self.component.component.wui^
     }
 }
 

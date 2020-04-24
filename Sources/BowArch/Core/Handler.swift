@@ -12,16 +12,16 @@ public class EffectHandler<Eff: Async, M: Monad> {
         f(eff)
     }
     
-    public func noOp() -> Kind<Eff, Void> {
+    public func noOp<E>() -> Kleisli<Eff, E, Void> {
         send(action: .pure(()))
     }
     
-    public func send(action: Kind<M, Void>) -> Kind<Eff, Void> {
+    public func send<E>(action: Kind<M, Void>) -> Kleisli<Eff, E, Void> {
         send(effect: .pure(action))
     }
     
-    public func send(effect: Kind<Eff, Kind<M, Void>>) -> Kind<Eff, Void> {
-        handle(effect)
+    public func send<E>(effect: Kind<Eff, Kind<M, Void>>) -> Kleisli<Eff, E, Void> {
+        Kleisli { _ in self.handle(effect) }
     }
     
     public func lift<MM: Monad>(_ f: @escaping (Kind<MM, Void>) -> Kind<M, Void>) -> EffectHandler<Eff, MM> {

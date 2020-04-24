@@ -6,7 +6,7 @@ public typealias EffectActionDispatcher<Eff: Async & UnsafeRun, Environment, Act
 public extension EffectActionDispatcher where M == ActionPartial<Input> {
     static func `default`() -> EffectActionDispatcher<Eff, Environment, Input, Input> {
         EffectActionDispatcher { input, handler in
-            Kleisli { _ in handler.send(action: Action.from(input)) }
+            handler.send(action: Action.from(input))
         }
     }
 }

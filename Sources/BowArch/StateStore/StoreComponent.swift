@@ -11,6 +11,7 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
     private let environment: E
     private let dispatcher: EffectStateDispatcher<Eff, E, S, I>
     private let render: (S, @escaping (I) -> Void) -> V
+    private let f: (I) -> Void
     private let component: EffectComponentView<Eff, StorePartial<S>, StatePartial<S>, V>
     
     public init(
@@ -19,9 +20,25 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
         dispatcher: EffectStateDispatcher<Eff, E, S, I>,
         render: @escaping (S, @escaping (I) -> Void) -> V
     ) {
+        self.init(
+            initialState: initialState,
+            environment: environment,
+            dispatcher: dispatcher,
+            f: { _ in },
+            render: render)
+    }
+    
+    private init(
+        initialState: S,
+        environment: E,
+        dispatcher: EffectStateDispatcher<Eff, E, S, I>,
+        f: @escaping (I) -> Void,
+        render: @escaping (S, @escaping (I) -> Void) -> V
+    ) {
         self.initialState = initialState
         self.environment = environment
         self.dispatcher = dispatcher
+        self.f = f
         self.render = render
         self.component = EffectComponentView(
             EffectComponent(
@@ -29,6 +46,7 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
                     UI { handler in
                         render(state) { i in
                             dispatcher.sendingTo(handler, environment: environment)(i)
+                            f(i)
                         }
                     }
                 },
@@ -37,6 +55,15 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
     
     public var body: some View {
         self.component
+    }
+    
+    public func forwarding(to: @escaping (I) -> Void) -> EffectStoreComponent {
+        EffectStoreComponent(
+            initialState: self.initialState,
+            environment: self.environment,
+            dispatcher: self.dispatcher,
+            f: { i in self.f(i); to(i) },
+            render: self.render)
     }
     
     public func lift<S2, E2, I2>(

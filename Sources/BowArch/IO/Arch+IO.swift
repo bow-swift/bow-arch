@@ -7,7 +7,7 @@ public typealias ComponentView<W: Comonad, M: Monad, V: View> = EffectComponentV
 // MARK: State-Store
 
 public typealias StateTHandler<M: Monad, State> = EffectStateTHandler<IOPartial<Error>, M, State>
-public typealias StateHandler<State, Input> = EffectStateHandler<IOPartial<Error>, State>
+public typealias StateHandler<State> = EffectStateHandler<IOPartial<Error>, State>
 
 public typealias StateTDispatcher<M: Monad, Environment, State, Input> = EffectStateTDispatcher<IOPartial<Error>, M, Environment, State, Input>
 public typealias StateDispatcher<Environment, State, Input> = EffectStateDispatcher<IOPartial<Error>, Environment, State, Input>
@@ -28,7 +28,7 @@ public typealias TracedComponent<State: Monoid, V: View> = EffectTracedComponent
 
 // MARK: Action-Moore
 
-public typealias ActionHandler<Action, Input> = EffectActionHandler<IOPartial<Error>, Action>
+public typealias ActionHandler<Action> = EffectActionHandler<IOPartial<Error>, Action>
 
 public typealias ActionDispatcher<Environment, Action, Input> = EffectActionDispatcher<IOPartial<Error>, Environment, Action, Input>
 

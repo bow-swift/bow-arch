@@ -2,7 +2,7 @@ import SwiftUI
 import Bow
 import BowEffects
 
-public final class EffectComponent<Eff: Async, W: Comonad, M: Monad, A>: ObservableObject, Equatable {
+public final class EffectComponent<Eff: Async & UnsafeRun, W: Comonad, M: Monad, A>: ObservableObject, Equatable {
     @Published var wui: Kind<W, UI<Eff, M, A>>
     let pairing: Pairing<M, W>
     
@@ -23,6 +23,27 @@ public final class EffectComponent<Eff: Async, W: Comonad, M: Monad, A>: Observa
                 write(EffectComponent(self.pairing.select(action, self.wui.duplicate()), self.pairing))
             }
         }
+    }
+    
+    public func lift<MM: Monad, WW: Comonad>(
+        _ wf: FunctionK<W, WW>,
+        _ mf: FunctionK<M, MM>,
+        _ pairing: Pairing<MM, WW>
+    ) -> EffectComponent<Eff, WW, MM, A> {
+        EffectComponent<Eff, WW, MM, A>(
+            wf.invoke(self.wui.map { ui in
+                ui.lift(mf.invoke)
+            }),
+            pairing
+        )
+    }
+    
+    public func handling(
+        with handler: EffectHandler<Eff, M>
+    ) -> EffectComponent<Eff, W, M, A> {
+        EffectComponent(self.wui.map { ui in
+            ui.handling(with: handler)
+        }, self.pairing)
     }
     
     public func onEffect(_ eff: @escaping (EffectComponent<Eff, W, M, A>) -> Kind<Eff, Void>) -> EffectComponent<Eff, W, M, A> {

@@ -1,7 +1,7 @@
 import Bow
 import BowEffects
 
-public final class UI<Eff: Async, M: Monad, A> {
+public final class UI<Eff: Async & UnsafeRun, M: Monad, A> {
     let makeView: (EffectHandler<Eff, M>) -> A
     
     public init(_ makeView: @escaping (EffectHandler<Eff, M>) -> A) {
@@ -22,5 +22,15 @@ public final class UI<Eff: Async, M: Monad, A> {
     
     public func make(_ f: @escaping (Kind<Eff, Kind<M, Void>>) -> Kind<Eff, Void>) -> A {
         self.makeView(EffectHandler(f))
+    }
+    
+    public func handling(
+        with handler: EffectHandler<Eff, M>
+    ) -> UI<Eff, M, A> {
+        UI { _ in
+            self.make { action in
+                handler.handle(action)
+            }
+        }
     }
 }

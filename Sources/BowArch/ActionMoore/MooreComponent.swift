@@ -2,7 +2,7 @@ import SwiftUI
 import Bow
 import BowEffects
 
-public typealias EffectMooreComponent<Eff: Async, Action, V: View> = EffectComponentView<Eff, MoorePartial<Action>, ActionPartial<Action>, V>
+public typealias EffectMooreComponent<Eff: Async & UnsafeRun, Action, I, V: View> = EffectComponentView<Eff, MoorePartial<Action>, ActionPartial<Action>, I, V>
 
 public extension EffectMooreComponent {
 //    init<E, A, S, I>(

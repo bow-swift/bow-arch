@@ -3,23 +3,92 @@ import Bow
 import BowEffects
 import BowOptics
 
-public typealias EffectStoreTComponent<Eff: Async, WW: Comonad, MM: Monad, S, V: View> = EffectComponentView<Eff, StoreTPartial<S, WW>, StateTPartial<MM, S>, V>
-public typealias EffectStoreComponent<Eff: Async, S, V: View> = EffectStoreTComponent<Eff, ForId, ForId, S, V>
+public typealias EffectStoreTComponent<Eff: Async & UnsafeRun, WW: Comonad, MM: Monad, S, I, V: View> = EffectComponentView<Eff, StoreTPartial<S, WW>, StateTPartial<MM, S>, I, V>
+public typealias EffectStoreComponent<Eff: Async & UnsafeRun, S, I, V: View> = EffectStoreTComponent<Eff, ForId, ForId, S, I, V>
+
+private class StateFunction<S1, S2>: FunctionK<StatePartial<S1>, StatePartial<S2>> {
+    let lens: Lens<S2, S1>
+    
+    init(_ lens: Lens<S2, S1>) {
+        self.lens = lens
+    }
+    
+    override func invoke<A>(_ fa: StateOf<S1, A>) -> StateOf<S2, A> {
+        fa^.focus(lens)
+    }
+}
+
+private class StoreFunction<S1, S2>: FunctionK<StoreTPartial<S1, ForId>, StoreTPartial<S2, ForId>> {
+    let state: S2
+    let g: (S2) -> S1
+    
+    init(_ state: S2, _ g: @escaping (S2) -> S1) {
+        self.state = state
+        self.g = g
+    }
+    
+    override func invoke<A>(_ fa: StoreOf<S1, A>) -> StoreOf<S2, A> {
+        Store(state) { s2 in
+            fa^.render^.value(self.g(s2))
+        }
+    }
+}
+
+extension EffectComponent {
+    func lift<S1, S2>(
+        _ state: S2,
+        _ lens: Lens<S2, S1>
+    ) -> EffectComponent<Eff, StorePartial<S2>, StatePartial<S2>, A>
+    where M == StatePartial<S1>,
+          W == StorePartial<S1> {
+        self.lift(StoreFunction<S1, S2>(state, { s in lens.get(s) }),
+                  StateFunction<S1, S2>(lens),
+                  Pairing.pairStateStore())
+    }
+}
 
 public extension EffectStoreComponent {
     init<S>(
         initialState: S,
-        render: @escaping (S, EffectStateHandler<Eff, S>) -> V
+        dispatcher: EffectDispatcher<Eff, M, I>,
+        render: @escaping (S, @escaping (I) -> Void) -> V
     ) where M == StatePartial<S>,
             W == StorePartial<S> {
-        self.init(
+        self.init(dispatcher) { dispatcher in
             EffectComponent(
                 Store(initialState) { state in
                     UI { handler in
-                        render(state, handler)
+                        render(state, dispatcher.dispatch(to: handler))
                     }
                 },
-            Pairing.pairStateStore()))
+            Pairing.pairStateStore())
+        }
+    }
+    
+    func scope<S1, S2, I2>(
+        state: S2,
+        dispatcher: EffectStateDispatcher<Eff, S2, I2>,
+        handler: EffectStateHandler<Eff, S2>,
+        lens: Lens<S2, S1>,
+        prism: Prism<I2, I>
+    ) -> EffectStoreComponent<Eff, S2, I2, V>
+    where M == StatePartial<S1>,
+          W == StorePartial<S1> {
+        EffectStoreComponent<Eff, S2, I2, V>(
+            self.dispatcher.scope(prism.getOptional, lens).combine(dispatcher),
+            
+            { dispatcher in
+                self.makeComponent(
+                    EffectStateDispatcher { input in
+                        dispatcher.on(prism.reverseGet(input)).map { eff in
+                            eff.map { _ in
+                                .modify { $0 }
+                            }
+                        }
+                    }
+                ).lift(state, lens).handling(with: handler)
+            }
+        )
     }
     
 //    init<E, A, I, WW: Comonad & Applicative, MM: Monad>(

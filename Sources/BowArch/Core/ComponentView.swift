@@ -2,23 +2,33 @@ import SwiftUI
 import Bow
 import BowEffects
 
-public struct EffectComponentView<Eff: Async, W: Comonad, M: Monad, V: View>: View {
+public struct EffectComponentView<Eff: Async & UnsafeRun, W: Comonad, M: Monad, I, V: View>: View {
     @ObservedObject var component: EffectComponent<Eff, W, M, V>
+    internal let dispatcher: EffectDispatcher<Eff, M, I>
+    internal let makeComponent: (EffectDispatcher<Eff, M, I>) -> EffectComponent<Eff, W, M, V>
     
-    public init(_ component: EffectComponent<Eff, W, M, V>) {
-        self.component = component
+    public init(
+        _ dispatcher: EffectDispatcher<Eff, M, I>,
+        _ makeComponent: @escaping (EffectDispatcher<Eff, M, I>) -> EffectComponent<Eff, W, M, V>) {
+        self.dispatcher = dispatcher
+        self.makeComponent = makeComponent
+        self.component = makeComponent(dispatcher)
     }
     
     public var body: some View {
         component.explore()
     }
     
-    public func onEffect(_ eff: @escaping (EffectComponent<Eff, W, M, V>) -> Kind<Eff, Void>) -> EffectComponentView<Eff, W, M, V> {
-        EffectComponentView(self.component.onEffect(eff))
+    public func onEffect(_ eff: @escaping (EffectComponent<Eff, W, M, V>) -> Kind<Eff, Void>) -> EffectComponentView<Eff, W, M, I, V> {
+        EffectComponentView(
+            self.dispatcher,
+            self.makeComponent >>> { component in component.onEffect(eff) })
     }
     
-    public func onEffectAction(_ eff: @escaping (EffectComponent<Eff, W, M, V>, Kind<M, Void>) -> Kind<Eff, Void>) -> EffectComponentView<Eff, W, M, V> {
-        EffectComponentView(self.component.onEffectAction(eff))
+    public func onEffectAction(_ eff: @escaping (EffectComponent<Eff, W, M, V>, Kind<M, Void>) -> Kind<Eff, Void>) -> EffectComponentView<Eff, W, M, I, V> {
+        EffectComponentView(
+            self.dispatcher,
+            self.makeComponent >>> { component in component.onEffectAction(eff) })
     }
 }
 

@@ -2,8 +2,8 @@ import SwiftUI
 import Bow
 import BowEffects
 
-public typealias EffectTracedTComponent<Eff: Async, WW: Comonad, MM: Monad, State: Monoid, V: View> = EffectComponentView<Eff, TracedTPartial<State, WW>, WriterTPartial<MM, State>, V>
-public typealias EffectTracedComponent<Eff: Async, State: Monoid, V: View> = EffectTracedTComponent<Eff, ForId, ForId, State, V>
+public typealias EffectTracedTComponent<Eff: Async & UnsafeRun, WW: Comonad, MM: Monad, State: Monoid, I, V: View> = EffectComponentView<Eff, TracedTPartial<State, WW>, WriterTPartial<MM, State>, I, V>
+public typealias EffectTracedComponent<Eff: Async & UnsafeRun, State: Monoid, I, V: View> = EffectTracedTComponent<Eff, ForId, ForId, State, I, V>
 
 public extension EffectTracedTComponent {
 //    init<Environment, State: Monoid, Input, WW: Comonad & Applicative, MM: Monad>(
@@ -54,18 +54,18 @@ public extension EffectTracedComponent {
 //    }
 }
 
-public extension EffectTracedTComponent {
-    func tracedT<A, WW: Comonad, MM: Monad>() -> TracedT<A, WW, UI<Eff, M, V>>
-        where W == TracedTPartial<A, WW>,
-              M == WriterTPartial<MM, A> {
-        self.component.wui^
-    }
-}
-
-public extension EffectTracedComponent {
-    func traced<A>() -> Traced<A, UI<Eff, M, V>>
-        where W == TracedPartial<A>,
-              M == WriterPartial<A> {
-        self.component.wui^
-    }
-}
+//public extension EffectTracedTComponent {
+//    func tracedT<A, WW: Comonad, MM: Monad>() -> TracedT<A, WW, UI<Eff, M, V>>
+//        where W == TracedTPartial<A, WW>,
+//              M == WriterTPartial<MM, A> {
+//        self.component.wui^
+//    }
+//}
+//
+//public extension EffectTracedComponent {
+//    func traced<A>() -> Traced<A, UI<Eff, M, V>>
+//        where W == TracedPartial<A>,
+//              M == WriterPartial<A> {
+//        self.component.wui^
+//    }
+//}

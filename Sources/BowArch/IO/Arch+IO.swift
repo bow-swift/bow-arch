@@ -12,7 +12,7 @@ public typealias StateHandler<State> = EffectStateHandler<IOPartial<Error>, Stat
 public typealias StateTDispatcher<M: Monad, State, Input> = EffectStateTDispatcher<IOPartial<Error>, M, State, Input>
 public typealias StateDispatcher<State, Input> = EffectStateDispatcher<IOPartial<Error>, State, Input>
 
-public typealias StoreTComponent<W: Comonad, M: Monad, S, I, V: View> = EffectStoreTComponent<IOPartial<Error>, W, M, S, I, V>
+//public typealias StoreTComponent<W: Comonad, M: Monad, S, I, V: View> = EffectStoreTComponent<IOPartial<Error>, W, M, S, I, V>
 public typealias StoreComponent<S, I, V: View> = EffectStoreComponent<IOPartial<Error>, S, I, V>
 
 // MARK: Writer-Traced

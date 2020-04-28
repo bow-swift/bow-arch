@@ -2,16 +2,17 @@ import Bow
 import BowOptics
 import BowEffects
 
-public typealias EffectStateTDispatcher<Eff: Async & UnsafeRun, M: Monad, S, I> = EffectDispatcher<Eff, StateTPartial<M, S>, I>
-public typealias EffectStateDispatcher<Eff: Async & UnsafeRun, S, I> = EffectStateTDispatcher<Eff, ForId, S, I>
+public typealias EffectStateTDispatcher<Eff: Async & UnsafeRun, M: Monad, E, S, I> = EffectDispatcher<Eff, StateTPartial<M, S>, E, I>
+public typealias EffectStateDispatcher<Eff: Async & UnsafeRun, E, S, I> = EffectStateTDispatcher<Eff, ForId, E, S, I>
 
 public extension EffectStateDispatcher {
-    func widen<S1, S2, I2>(
+    func widen<S1, S2, I2, E2>(
+        _ f: @escaping (E2) -> E,
         _ lens: Lens<S2, S1>,
         _ prism: Prism<I2, I>
-    ) -> EffectStateDispatcher<Eff, S2, I2>
+    ) -> EffectStateDispatcher<Eff, E2, S2, I2>
     where M == StatePartial<S1> {
-        self.widen({ state in state^.focus(lens) }, prism.getOptional)
+        self.widen(f, { state in state^.focus(lens) }, prism.getOptional)
     }
 }
 

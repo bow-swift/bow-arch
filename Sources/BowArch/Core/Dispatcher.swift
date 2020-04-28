@@ -1,47 +1,48 @@
 import Bow
 import BowEffects
 
-public struct EffectDispatcher<Eff: Async & UnsafeRun, M: Monad, I> {
-    private let f: (I) -> [Kind<Eff, Kind<M, Void>>]
+public struct EffectDispatcher<Eff: Async & UnsafeRun, M: Monad, E, I> {
+    private let f: (I) -> [Kleisli<Eff, E, Kind<M, Void>>]
     
-    public static func pure(_ f: @escaping (I) -> Kind<M, Void>) -> EffectDispatcher<Eff, M, I> {
-        .effectful(f >>> Eff.pure)
+    public static func pure(_ f: @escaping (I) -> Kind<M, Void>) -> EffectDispatcher<Eff, M, E, I> {
+        .effectful { input in Kleisli { _ in Eff.pure(f(input)) } }
     }
     
-    public static func effectful(_ f: @escaping (I) -> Kind<Eff, Kind<M, Void>>) -> EffectDispatcher<Eff, M, I> {
+    public static func effectful(_ f: @escaping (I) -> Kleisli<Eff, E, Kind<M, Void>>) -> EffectDispatcher<Eff, M, E, I> {
         .workflow { input in [f(input)] }
     }
     
-    public static func workflow(_ f: @escaping (I) -> [Kind<Eff, Kind<M, Void>>]) -> EffectDispatcher<Eff, M, I> {
+    public static func workflow(_ f: @escaping (I) -> [Kleisli<Eff, E, Kind<M, Void>>]) -> EffectDispatcher<Eff, M, E, I> {
         EffectDispatcher(f)
     }
     
-    public init(_ f: @escaping (I) -> [Kind<Eff, Kind<M, Void>>]) {
+    public init(_ f: @escaping (I) -> [Kleisli<Eff, E, Kind<M, Void>>]) {
         self.f = f
     }
     
-    public func on(_ input: I) -> [Kind<Eff, Kind<M, Void>>] {
+    public func on(_ input: I) -> [Kleisli<Eff, E, Kind<M, Void>>] {
         f(input)
     }
     
-    public func dispatch(to handler: EffectHandler<Eff, M>) -> (I) -> Void {
+    public func dispatch(to handler: EffectHandler<Eff, M>, environment: E) -> (I) -> Void {
         { input in
             self.on(input).traverse { eff in
-                handler.handle(eff)
+                handler.handle(eff^.run(environment))
             }.void()
             .runNonBlocking(on: .global(qos: .background))
         }
     }
     
-    public func widen<I2, MM: Monad>(
+    public func widen<I2, MM: Monad, E2>(
+        _ h: @escaping (E2) -> E,
         _ g: @escaping (Kind<M, Void>) -> Kind<MM, Void>,
         _ f: @escaping (I2) -> I?
-    ) -> EffectDispatcher<Eff, MM, I2> {
-        self.contramap(f).lift(g)
+    ) -> EffectDispatcher<Eff, MM, E2, I2> {
+        self.contramap(f).lift(g).lift(h)
     }
     
-    public func contramap<I2>(_ f: @escaping (I2) -> I?) -> EffectDispatcher<Eff, M, I2> {
-        EffectDispatcher<Eff, M, I2> { i in
+    public func contramap<I2>(_ f: @escaping (I2) -> I?) -> EffectDispatcher<Eff, M, E, I2> {
+        EffectDispatcher<Eff, M, E, I2> { i in
             if let input = f(i) {
                 return self.on(input)
             } else {
@@ -50,23 +51,31 @@ public struct EffectDispatcher<Eff: Async & UnsafeRun, M: Monad, I> {
         }
     }
     
-    public func lift<MM: Monad>(_ f: @escaping (Kind<M, Void>) -> Kind<MM, Void>) -> EffectDispatcher<Eff, MM, I> {
-        EffectDispatcher<Eff, MM, I> { input in
-            self.on(input).map { eff in
-                eff.map(f)
+    public func lift<MM: Monad>(_ f: @escaping (Kind<M, Void>) -> Kind<MM, Void>) -> EffectDispatcher<Eff, MM, E, I> {
+        EffectDispatcher<Eff, MM, E, I> { input in
+            self.on(input).map { kleisli in
+                kleisli.map(f)^
             }
         }
     }
     
-    public func lift<MM: Monad>(_ f: @escaping (Kind<Eff, Kind<M, Void>>) -> Kind<Eff, Kind<MM, Void>>) -> EffectDispatcher<Eff, MM, I> {
-        EffectDispatcher<Eff, MM, I> { input in
+    public func lift<MM: Monad>(_ f: @escaping (Kleisli<Eff, E, Kind<M, Void>>) -> Kleisli<Eff, E, Kind<MM, Void>>) -> EffectDispatcher<Eff, MM, E, I> {
+        EffectDispatcher<Eff, MM, E, I> { input in
             self.on(input).map(f)
+        }
+    }
+    
+    public func lift<E2>(_ f: @escaping (E2) -> E) -> EffectDispatcher<Eff, M, E2, I> {
+        EffectDispatcher<Eff, M, E2, I> { input in
+            self.on(input).map { kleisli in
+                kleisli.contramap(f)
+            }
         }
     }
 }
 
 extension EffectDispatcher: Semigroup {
-    public func combine(_ other: EffectDispatcher<Eff, M, I>) -> EffectDispatcher<Eff, M, I> {
+    public func combine(_ other: EffectDispatcher<Eff, M, E, I>) -> EffectDispatcher<Eff, M, E, I> {
         EffectDispatcher { input in
             self.on(input) + other.on(input)
         }
@@ -74,7 +83,7 @@ extension EffectDispatcher: Semigroup {
 }
 
 extension EffectDispatcher: Monoid {
-    public static func empty() -> EffectDispatcher<Eff, M, I> {
+    public static func empty() -> EffectDispatcher<Eff, M, E, I> {
         EffectDispatcher { _ in [] }
     }
 }

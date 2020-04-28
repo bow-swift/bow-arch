@@ -1,4 +1,4 @@
 import Bow
 import BowEffects
 
-typealias EffectActionDispatcher<Eff: Async & UnsafeRun, Action, Input> = EffectDispatcher<Eff, ActionPartial<Action>, Input>
+typealias EffectActionDispatcher<Eff: Async & UnsafeRun, E, Action, Input> = EffectDispatcher<Eff, ActionPartial<Action>, E, Input>

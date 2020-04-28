@@ -2,34 +2,34 @@ import Bow
 import BowEffects
 import SwiftUI
 
-public typealias ComponentView<W: Comonad, M: Monad, V: View> = EffectComponentView<IOPartial<Error>, W, M, V>
+public typealias ComponentView<W: Comonad, M: Monad, I, V: View> = EffectComponentView<IOPartial<Error>, W, M, I, V>
 
 // MARK: State-Store
 
-public typealias StateTHandler<M: Monad, Environment, State, Input> = EffectStateTHandler<IOPartial<Error>, M, Environment, State, Input>
-public typealias StateHandler<Environment, State, Input> = EffectStateHandler<IOPartial<Error>, Environment, State, Input>
+public typealias StateTHandler<M: Monad, State> = EffectStateTHandler<IOPartial<Error>, M, State>
+public typealias StateHandler<State> = EffectStateHandler<IOPartial<Error>, State>
 
-public typealias StateTDispatcher<M: Monad, Environment, State, Input> = EffectStateTDispatcher<IOPartial<Error>, M, Environment, State, Input>
-public typealias StateDispatcher<Environment, State, Input> = EffectStateDispatcher<IOPartial<Error>, Environment, State, Input>
+public typealias StateTDispatcher<M: Monad, E, State, Input> = EffectStateTDispatcher<IOPartial<Error>, M, E, State, Input>
+public typealias StateDispatcher<E, State, Input> = EffectStateDispatcher<IOPartial<Error>, E, State, Input>
 
-public typealias StoreTComponent<W: Comonad, M: Monad, S, V: View> = EffectStoreTComponent<IOPartial<Error>, W, M, S, V>
-public typealias StoreComponent<S, V: View> = EffectStoreComponent<IOPartial<Error>, S, V>
+//public typealias StoreTComponent<W: Comonad, M: Monad, S, I, V: View> = EffectStoreTComponent<IOPartial<Error>, W, M, S, I, V>
+public typealias StoreComponent<E, S, I, V: View> = EffectStoreComponent<IOPartial<Error>, E, S, I, V>
 
 // MARK: Writer-Traced
 
-public typealias WriterTHandler<M: Monad, Environment, State: Monoid, Input> = EffectWriterTHandler<IOPartial<Error>, M, Environment, State, Input>
-public typealias WriterHandler<Environment, State: Monoid, Input> = EffectWriterHandler<IOPartial<Error>, Environment, State, Input>
+typealias WriterTHandler<M: Monad, State: Monoid> = EffectWriterTHandler<IOPartial<Error>, M, State>
+typealias WriterHandler<State: Monoid> = EffectWriterHandler<IOPartial<Error>, State>
 
-public typealias WriterTDispatcher<M: Monad, Environment, State: Monoid, Input> = EffectWriterTDispatcher<IOPartial<Error>, M, Environment, State, Input>
-public typealias WriterDispatcher<Environment, State: Monoid, Input> = EffectWriterDispatcher<IOPartial<Error>, Environment, State, Input>
+typealias WriterTDispatcher<M: Monad, E, State: Monoid, Input> = EffectWriterTDispatcher<IOPartial<Error>, M, E, State, Input>
+typealias WriterDispatcher<Environment, E, State: Monoid, Input> = EffectWriterDispatcher<IOPartial<Error>, E, State, Input>
 
-public typealias TracedTComponent<W: Comonad, M: Monad, State: Monoid, V: View> = EffectTracedTComponent<IOPartial<Error>, W, M, State, V>
-public typealias TracedComponent<State: Monoid, V: View> = EffectTracedComponent<IOPartial<Error>, State, V>
+typealias TracedTComponent<W: Comonad, M: Monad, State: Monoid, I, V: View> = EffectTracedTComponent<IOPartial<Error>, W, M, State, I, V>
+typealias TracedComponent<State: Monoid, I, V: View> = EffectTracedComponent<IOPartial<Error>, State, I, V>
 
 // MARK: Action-Moore
 
-public typealias ActionHandler<Environment, Action, Input> = EffectActionHandler<IOPartial<Error>, Environment, Action, Input>
+typealias ActionHandler<Action> = EffectActionHandler<IOPartial<Error>, Action>
 
-public typealias ActionDispatcher<Environment, Action, Input> = EffectActionDispatcher<IOPartial<Error>, Environment, Action, Input>
+typealias ActionDispatcher<E, Action, Input> = EffectActionDispatcher<IOPartial<Error>, E, Action, Input>
 
-public typealias MooreComponent<Action, V: View> = EffectMooreComponent<IOPartial<Error>, Action, V>
+typealias MooreComponent<Action, I, V: View> = EffectMooreComponent<IOPartial<Error>, Action, I, V>

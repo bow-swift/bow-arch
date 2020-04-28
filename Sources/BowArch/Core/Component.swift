@@ -2,7 +2,7 @@ import SwiftUI
 import Bow
 import BowEffects
 
-public final class EffectComponent<Eff: Async, W: Comonad, M: Monad, A>: ObservableObject, Equatable {
+public final class EffectComponent<Eff: Async & UnsafeRun, W: Comonad, M: Monad, A>: ObservableObject, Equatable {
     @Published var wui: Kind<W, UI<Eff, M, A>>
     let pairing: Pairing<M, W>
     
@@ -18,11 +18,32 @@ public final class EffectComponent<Eff: Async, W: Comonad, M: Monad, A>: Observa
     }
     
     public func explore(_ write: @escaping (EffectComponent<Eff, W, M, A>) -> Kind<Eff, Void>) -> A {
-        self.wui.extract().makeView({ base in
+        self.wui.extract().make { base in
             base.flatMap { action in
                 write(EffectComponent(self.pairing.select(action, self.wui.duplicate()), self.pairing))
             }
-        })
+        }
+    }
+    
+    public func lift<MM: Monad, WW: Comonad>(
+        _ wf: FunctionK<W, WW>,
+        _ mf: FunctionK<M, MM>,
+        _ pairing: Pairing<MM, WW>
+    ) -> EffectComponent<Eff, WW, MM, A> {
+        EffectComponent<Eff, WW, MM, A>(
+            wf.invoke(self.wui.map { ui in
+                ui.lift(mf.invoke)
+            }),
+            pairing
+        )
+    }
+    
+    public func handling(
+        with handler: EffectHandler<Eff, M>
+    ) -> EffectComponent<Eff, W, M, A> {
+        EffectComponent(self.wui.map { ui in
+            ui.handling(with: handler)
+        }, self.pairing)
     }
     
     public func onEffect(_ eff: @escaping (EffectComponent<Eff, W, M, A>) -> Kind<Eff, Void>) -> EffectComponent<Eff, W, M, A> {
@@ -40,8 +61,8 @@ public final class EffectComponent<Eff: Async, W: Comonad, M: Monad, A>: Observa
     }
     
     private func effect(_ eff: @escaping (Kind<W, UI<Eff, M, A>>) -> Kind<Eff, Void>) -> UI<Eff, M, A> {
-        UI<Eff, M, A> { send in
-            self.wui.extract().makeView({ base in
+        UI<Eff, M, A> { handler in
+            self.wui.extract().make { base in
                 let action = Kind<Eff, Kind<M, Void>>.var()
                 
                 let event = binding(
@@ -49,14 +70,14 @@ public final class EffectComponent<Eff: Async, W: Comonad, M: Monad, A>: Observa
                     |<-eff(self.pairing.select(action.get, self.wui.duplicate())),
                     yield: action.get)
                 
-                return send(event)
-            })
+                return handler.handle(event)
+            } 
         }
     }
     
     private func effectAction(_ eff: @escaping (Kind<W, UI<Eff, M, A>>, Kind<M, Void>) -> Kind<Eff, Void>) -> UI<Eff, M, A> {
-        UI<Eff, M, A> { send in
-            self.wui.extract().makeView({ base in
+        UI<Eff, M, A> { handler in
+            self.wui.extract().make { base in
                 let action = Kind<Eff, Kind<M, Void>>.var()
                 
                 let event = binding(
@@ -64,17 +85,9 @@ public final class EffectComponent<Eff: Async, W: Comonad, M: Monad, A>: Observa
                     |<-eff(self.pairing.select(action.get, self.wui.duplicate()), action.get),
                     yield: action.get)
                 
-                return send(event)
-            })
+                return handler.handle(event)
+            }
         }
-    }
-
-    public func lift<Environment, Input>(
-        _ handler: EffectHandler<Eff, M, Environment, Input>
-    ) -> EffectComponent<Eff, W, M, A> {
-        EffectComponent(self.wui.map { ui in
-            ui.handling(with: handler)
-        }, pairing)
     }
 }
 

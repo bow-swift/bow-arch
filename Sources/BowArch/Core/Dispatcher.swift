@@ -1,82 +1,89 @@
 import Bow
 import BowEffects
 
-public struct EffectDispatcher<Eff: Async & UnsafeRun, M: Monad, Environment, Input> {
-    private let f: (Input, EffectHandler<Eff, M, Environment, Input>) -> Kleisli<Eff, Environment, [Input]>
+public struct EffectDispatcher<Eff: Async & UnsafeRun, M: Monad, E, I> {
+    private let f: (I) -> [Kleisli<Eff, E, Kind<M, Void>>]
     
-    public init(from f: @escaping (Input, EffectHandler<Eff, M, Environment, Input>) -> Kleisli<Eff, Environment, [Input]>) {
+    public static func pure(_ f: @escaping (I) -> Kind<M, Void>) -> EffectDispatcher<Eff, M, E, I> {
+        .effectful { input in Kleisli { _ in Eff.pure(f(input)) } }
+    }
+    
+    public static func effectful(_ f: @escaping (I) -> Kleisli<Eff, E, Kind<M, Void>>) -> EffectDispatcher<Eff, M, E, I> {
+        .workflow { input in [f(input)] }
+    }
+    
+    public static func workflow(_ f: @escaping (I) -> [Kleisli<Eff, E, Kind<M, Void>>]) -> EffectDispatcher<Eff, M, E, I> {
+        EffectDispatcher(f)
+    }
+    
+    public init(_ f: @escaping (I) -> [Kleisli<Eff, E, Kind<M, Void>>]) {
         self.f = f
     }
     
-    public func dispatch(
-        _ input: Input,
-        _ handler: EffectHandler<Eff, M, Environment, Input>
-    ) -> Kleisli<Eff, Environment, [Input]> {
-        self.f(input, handler)
+    public func on(_ input: I) -> [Kleisli<Eff, E, Kind<M, Void>>] {
+        f(input)
     }
     
-    public func sendingTo(
-        _ handler: EffectHandler<Eff, M, Environment, Input>,
-        environment: Environment
-    ) -> (Input) -> Void {
+    public func dispatch(to handler: EffectHandler<Eff, M>, environment: E) -> (I) -> Void {
         { input in
-            self.f(input, handler)
-                .flatMap { inputs in self.reflow(inputs, handler) }^
-                .run(environment)
-                .runNonBlocking(on: .global(qos: .background))
+            self.on(input).traverse { eff in
+                handler.handle(eff^.run(environment))
+            }.void()
+            .runNonBlocking(on: .global(qos: .background))
         }
     }
     
-    private func reflow(
-        _ inputs: [Input],
-        _ handler: EffectHandler<Eff, M, Environment, Input>
-    ) -> Kleisli<Eff, Environment, Void> {
-        inputs.isEmpty ? Kleisli.pure(())^
-            : inputs.flatTraverse { input in self.dispatch(input, handler) }^
-                .flatMap { inputs in self.reflow(inputs, handler) }^
-    }
-}
-
-public extension EffectDispatcher where Environment == Any {    
-    init(_ f: @escaping (Input) -> Kind<Eff, [Input]>) {
-        self.f = { input, handler in
-            Kleisli { _ in f(input) }
-        }
+    public func widen<I2, MM: Monad, E2>(
+        _ h: @escaping (E2) -> E,
+        _ g: @escaping (Kind<M, Void>) -> Kind<MM, Void>,
+        _ f: @escaping (I2) -> I?
+    ) -> EffectDispatcher<Eff, MM, E2, I2> {
+        self.contramap(f).lift(g).lift(h)
     }
     
-    init(_ f: @escaping (Input) -> Kind<M, Void>) {
-        self.f = { input, handler in
-            Kleisli { _ in
-                handler.handle(Kleisli { _ in Eff.pure(f(input)) }).as([])
+    public func contramap<I2>(_ f: @escaping (I2) -> I?) -> EffectDispatcher<Eff, M, E, I2> {
+        EffectDispatcher<Eff, M, E, I2> { i in
+            if let input = f(i) {
+                return self.on(input)
+            } else {
+                return []
             }
         }
     }
     
-    func sendingTo(_ handler: EffectHandler<Eff, M, Environment, Input>) -> (Input) -> Void {
-        sendingTo(handler, environment: ())
+    public func lift<MM: Monad>(_ f: @escaping (Kind<M, Void>) -> Kind<MM, Void>) -> EffectDispatcher<Eff, MM, E, I> {
+        EffectDispatcher<Eff, MM, E, I> { input in
+            self.on(input).map { kleisli in
+                kleisli.map(f)^
+            }
+        }
     }
-}
-
-// MARK: Instance of Semigroup for Dispatcher
-
-extension EffectDispatcher: Semigroup {
-    public func combine(_ other: EffectDispatcher<Eff, M, Environment, Input>) -> EffectDispatcher<Eff, M, Environment, Input> {
-        EffectDispatcher { input, handler in
-            let fst = Kleisli<Eff, Environment, [Input]>.var()
-            let snd = Kleisli<Eff, Environment, [Input]>.var()
-            
-            return binding(
-                fst <- self.dispatch(input, handler),
-                snd <- other.dispatch(input, handler),
-                yield: fst.get + snd.get)^
+    
+    public func lift<MM: Monad>(_ f: @escaping (Kleisli<Eff, E, Kind<M, Void>>) -> Kleisli<Eff, E, Kind<MM, Void>>) -> EffectDispatcher<Eff, MM, E, I> {
+        EffectDispatcher<Eff, MM, E, I> { input in
+            self.on(input).map(f)
+        }
+    }
+    
+    public func lift<E2>(_ f: @escaping (E2) -> E) -> EffectDispatcher<Eff, M, E2, I> {
+        EffectDispatcher<Eff, M, E2, I> { input in
+            self.on(input).map { kleisli in
+                kleisli.contramap(f)
+            }
         }
     }
 }
 
-// MARK: Instance of Monoid for Dispatcher
+extension EffectDispatcher: Semigroup {
+    public func combine(_ other: EffectDispatcher<Eff, M, E, I>) -> EffectDispatcher<Eff, M, E, I> {
+        EffectDispatcher { input in
+            self.on(input) + other.on(input)
+        }
+    }
+}
 
 extension EffectDispatcher: Monoid {
-    public static func empty() -> EffectDispatcher<Eff, M, Environment, Input> {
-        EffectDispatcher { _, _ in Kleisli.pure([])^ }
+    public static func empty() -> EffectDispatcher<Eff, M, E, I> {
+        EffectDispatcher { _ in [] }
     }
 }

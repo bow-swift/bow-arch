@@ -25,6 +25,8 @@
 		11B1DD40241FA30100A5296C /* StateDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD3F241FA30100A5296C /* StateDispatcher.swift */; };
 		11B1DD42241FA33100A5296C /* StoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD41241FA33100A5296C /* StoreComponent.swift */; };
 		11B1DD45241FA39000A5296C /* Arch+IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B1DD44241FA39000A5296C /* Arch+IO.swift */; };
+		11C95AB224572F5000659C97 /* DispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C95AB024572F4A00659C97 /* DispatcherTests.swift */; };
+		11C95AB524573AA000659C97 /* HandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C95AB324573A9C00659C97 /* HandlerTests.swift */; };
 		11E358E6242A0BA600C8B8E5 /* ActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E358E5242A0BA600C8B8E5 /* ActionHandler.swift */; };
 		11E358E8242A0C3900C8B8E5 /* ActionDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E358E7242A0C3900C8B8E5 /* ActionDispatcher.swift */; };
 		11E358EA242A0CE800C8B8E5 /* MooreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E358E9242A0CE800C8B8E5 /* MooreComponent.swift */; };
@@ -60,6 +62,8 @@
 		11B1DD3F241FA30100A5296C /* StateDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateDispatcher.swift; sourceTree = "<group>"; };
 		11B1DD41241FA33100A5296C /* StoreComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreComponent.swift; sourceTree = "<group>"; };
 		11B1DD44241FA39000A5296C /* Arch+IO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Arch+IO.swift"; sourceTree = "<group>"; };
+		11C95AB024572F4A00659C97 /* DispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatcherTests.swift; sourceTree = "<group>"; };
+		11C95AB324573A9C00659C97 /* HandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerTests.swift; sourceTree = "<group>"; };
 		11E358E5242A0BA600C8B8E5 /* ActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionHandler.swift; sourceTree = "<group>"; };
 		11E358E7242A0C3900C8B8E5 /* ActionDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionDispatcher.swift; sourceTree = "<group>"; };
 		11E358E9242A0CE800C8B8E5 /* MooreComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MooreComponent.swift; sourceTree = "<group>"; };
@@ -154,8 +158,10 @@
 		11B1DD1E241F94A300A5296C /* BowArchTests */ = {
 			isa = PBXGroup;
 			children = (
-				11B1DD1F241F94A300A5296C /* BowArchTests.swift */,
 				11B1DD21241F94A300A5296C /* Info.plist */,
+				11B1DD1F241F94A300A5296C /* BowArchTests.swift */,
+				11C95AB024572F4A00659C97 /* DispatcherTests.swift */,
+				11C95AB324573A9C00659C97 /* HandlerTests.swift */,
 			);
 			path = BowArchTests;
 			sourceTree = "<group>";
@@ -337,6 +343,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11C95AB524573AA000659C97 /* HandlerTests.swift in Sources */,
+				11C95AB224572F5000659C97 /* DispatcherTests.swift in Sources */,
 				11B1DD20241F94A300A5296C /* BowArchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

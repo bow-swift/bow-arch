@@ -2,20 +2,16 @@ import Bow
 import BowEffects
 import BowOptics
 
-public typealias EffectStateTHandler<Eff: Async, M: Monad, Environment, State, Input> = EffectHandler<Eff, StateTPartial<M, State>, Environment, Input>
-public typealias EffectStateHandler<Eff: Async, Environment, State, Input> = EffectStateTHandler<Eff, ForId, Environment, State, Input>
+public typealias EffectStateTHandler<Eff: Async, M: Monad, State> = EffectHandler<Eff, StateTPartial<M, State>>
+public typealias EffectStateHandler<Eff: Async, State> = EffectStateTHandler<Eff, ForId, State>
 
-public extension EffectStateTHandler {
-    func focus<MM: Monad, S, SS>(
-        _ lens: Lens<SS, S>
-    ) -> EffectStateTHandler<Eff, MM, Environment, S, Input>
-        where M == StateTPartial<MM, SS> {
-        EffectStateTHandler(
-            { eff in
-                eff.map { state in
-                    state^.focus(lens)
-                }^
-            } >>> self.handle
-        )
+public extension EffectHandler {
+    func narrow<S, S2>(
+        _ lens: Lens<S, S2>
+    ) -> EffectStateHandler<Eff, S2>
+        where M == StatePartial<S> {
+        self.lift { action in
+            action^.focus(lens)
+        }
     }
 }

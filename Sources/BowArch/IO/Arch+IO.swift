@@ -17,19 +17,19 @@ public typealias StoreComponent<S, I, V: View> = EffectStoreComponent<IOPartial<
 
 // MARK: Writer-Traced
 
-public typealias WriterTHandler<M: Monad, State: Monoid> = EffectWriterTHandler<IOPartial<Error>, M, State>
-public typealias WriterHandler<State: Monoid> = EffectWriterHandler<IOPartial<Error>, State>
+typealias WriterTHandler<M: Monad, State: Monoid> = EffectWriterTHandler<IOPartial<Error>, M, State>
+typealias WriterHandler<State: Monoid> = EffectWriterHandler<IOPartial<Error>, State>
 
-public typealias WriterTDispatcher<M: Monad, State: Monoid, Input> = EffectWriterTDispatcher<IOPartial<Error>, M, State, Input>
-public typealias WriterDispatcher<Environment, State: Monoid, Input> = EffectWriterDispatcher<IOPartial<Error>, State, Input>
+typealias WriterTDispatcher<M: Monad, State: Monoid, Input> = EffectWriterTDispatcher<IOPartial<Error>, M, State, Input>
+typealias WriterDispatcher<Environment, State: Monoid, Input> = EffectWriterDispatcher<IOPartial<Error>, State, Input>
 
-public typealias TracedTComponent<W: Comonad, M: Monad, State: Monoid, I, V: View> = EffectTracedTComponent<IOPartial<Error>, W, M, State, I, V>
-public typealias TracedComponent<State: Monoid, I, V: View> = EffectTracedComponent<IOPartial<Error>, State, I, V>
+typealias TracedTComponent<W: Comonad, M: Monad, State: Monoid, I, V: View> = EffectTracedTComponent<IOPartial<Error>, W, M, State, I, V>
+typealias TracedComponent<State: Monoid, I, V: View> = EffectTracedComponent<IOPartial<Error>, State, I, V>
 
 // MARK: Action-Moore
 
-public typealias ActionHandler<Action> = EffectActionHandler<IOPartial<Error>, Action>
+typealias ActionHandler<Action> = EffectActionHandler<IOPartial<Error>, Action>
 
-public typealias ActionDispatcher<Environment, Action, Input> = EffectActionDispatcher<IOPartial<Error>, Action, Input>
+typealias ActionDispatcher<Environment, Action, Input> = EffectActionDispatcher<IOPartial<Error>, Action, Input>
 
-public typealias MooreComponent<Action, I, V: View> = EffectMooreComponent<IOPartial<Error>, Action, I, V>
+typealias MooreComponent<Action, I, V: View> = EffectMooreComponent<IOPartial<Error>, Action, I, V>

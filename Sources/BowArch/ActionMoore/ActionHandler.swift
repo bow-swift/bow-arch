@@ -1,9 +1,9 @@
 import Bow
 import BowEffects
 
-public typealias EffectActionHandler<Eff: Async, Action> = EffectHandler<Eff, ActionPartial<Action>>
+typealias EffectActionHandler<Eff: Async, Action> = EffectHandler<Eff, ActionPartial<Action>>
 
-public extension EffectActionHandler {
+extension EffectActionHandler {
     func focus<AA, A>(_ f: @escaping (AA) -> A)
         -> EffectActionHandler<Eff, AA>
         where M == ActionPartial<A> {

@@ -2,10 +2,10 @@ import SwiftUI
 import Bow
 import BowEffects
 
-public typealias EffectTracedTComponent<Eff: Async & UnsafeRun, WW: Comonad, MM: Monad, State: Monoid, I, V: View> = EffectComponentView<Eff, TracedTPartial<State, WW>, WriterTPartial<MM, State>, I, V>
-public typealias EffectTracedComponent<Eff: Async & UnsafeRun, State: Monoid, I, V: View> = EffectTracedTComponent<Eff, ForId, ForId, State, I, V>
+typealias EffectTracedTComponent<Eff: Async & UnsafeRun, WW: Comonad, MM: Monad, State: Monoid, I, V: View> = EffectComponentView<Eff, TracedTPartial<State, WW>, WriterTPartial<MM, State>, I, V>
+typealias EffectTracedComponent<Eff: Async & UnsafeRun, State: Monoid, I, V: View> = EffectTracedTComponent<Eff, ForId, ForId, State, I, V>
 
-public extension EffectTracedTComponent {
+extension EffectTracedTComponent {
 //    init<Environment, State: Monoid, Input, WW: Comonad & Applicative, MM: Monad>(
 //        environment: Environment,
 //        pairing: Pairing<MM, WW>,
@@ -31,7 +31,7 @@ public extension EffectTracedTComponent {
 //    }
 }
 
-public extension EffectTracedComponent {
+extension EffectTracedComponent {
 //    init<Environment, State: Monoid, Input>(
 //        environment: Environment,
 //        render: @escaping (State, EffectWriterHandler<Eff, State, Input>) -> V)

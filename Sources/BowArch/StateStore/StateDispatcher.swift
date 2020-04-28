@@ -6,12 +6,12 @@ public typealias EffectStateTDispatcher<Eff: Async & UnsafeRun, M: Monad, S, I> 
 public typealias EffectStateDispatcher<Eff: Async & UnsafeRun, S, I> = EffectStateTDispatcher<Eff, ForId, S, I>
 
 public extension EffectStateDispatcher {
-    func scope<S1, S2, I2>(
-        _ f: @escaping (I2) -> I?,
-        _ lens: Lens<S2, S1>
+    func widen<S1, S2, I2>(
+        _ lens: Lens<S2, S1>,
+        _ prism: Prism<I2, I>
     ) -> EffectStateDispatcher<Eff, S2, I2>
     where M == StatePartial<S1> {
-        self.scope(f, { state in state^.focus(lens) })
+        self.widen({ state in state^.focus(lens) }, prism.getOptional)
     }
 }
 

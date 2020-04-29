@@ -7,9 +7,9 @@ public typealias EffectStateDispatcher<Eff: Async & UnsafeRun, E, S, I> = Effect
 
 public extension EffectStateDispatcher {
     func widen<S1, S2, I2, E2>(
-        _ f: @escaping (E2) -> E,
-        _ lens: Lens<S2, S1>,
-        _ prism: Prism<I2, I>
+        transformEnvironment f: @escaping (E2) -> E,
+        transformState lens: Lens<S2, S1>,
+        transformInput prism: Prism<I2, I>
     ) -> EffectStateDispatcher<Eff, E2, S2, I2>
     where M == StatePartial<S1> {
         self.widen(f, { state in state^.focus(lens) }, prism.getOptional)

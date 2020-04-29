@@ -51,14 +51,17 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
     public func lift<E2, S2, I2>(
         initialState: S2,
         environment: E2,
-        _ f: @escaping (E2) -> E,
-        _ lens: Lens<S2, S>,
-        _ prism: Prism<I2, I>
+        transformEnvironment f: @escaping (E2) -> E,
+        transformState lens: Lens<S2, S>,
+        transformInput prism: Prism<I2, I>
     ) -> EffectStoreComponent<Eff, E2, S2, I2, V> {
         EffectStoreComponent<Eff, E2, S2, I2, V>(
             initialState: initialState,
             environment: environment,
-            dispatcher: self.dispatcher.widen(f, lens, prism),
+            dispatcher: self.dispatcher.widen(
+                transformEnvironment: f,
+                transformState: lens,
+                transformInput: prism),
             render: { state, handle, handler in
                 self.viewBuilder(
                     lens.get(state),

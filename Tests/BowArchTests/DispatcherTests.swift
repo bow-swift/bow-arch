@@ -23,14 +23,14 @@ class DispatcherTests: XCTestCase {
         }
     }
     
-    let dispatcher = StateDispatcher<Int, TestAction>.pure { input in
+    let dispatcher = StateDispatcher<Any, Int, TestAction>.pure { input in
         switch input {
         case .increment: return .modify { x in x + 1 }
         case .decrement: return .modify { x in x - 1 }
         }
     }
     
-    let noOp = StateDispatcher<Int, TestAction>.pure { _ in .modify(id) }
+    let noOp = StateDispatcher<Any, Int, TestAction>.pure { _ in .modify(id) }
     
     func testDispatcher() {
         let result = run(actions: dispatcher.on(.increment), initial: 0)
@@ -39,9 +39,10 @@ class DispatcherTests: XCTestCase {
     }
     
     func testLiftDispatcher() {
-        let lifted = dispatcher.scope(
-            ParentAction.prism(for: ParentAction.test).getOptional,
-            Count.lens
+        let lifted = dispatcher.widen(
+            transformEnvironment: id,
+            transformState: Count.lens,
+            transformInput: ParentAction.prism(for: ParentAction.test)
         )
         
         let result = run(actions: lifted.on(.test(.increment)), initial: Count(count: 0))
@@ -62,12 +63,12 @@ class DispatcherTests: XCTestCase {
     }
     
     func testEmpty() {
-        let empty = StateDispatcher<Int, TestAction>.empty()
+        let empty = StateDispatcher<Any, Int, TestAction>.empty()
         let result = run(actions: empty.on(.increment), initial: 0)
         XCTAssertEqual(result, 0)
     }
     
-    func run<S>(actions: [IOOf<Error, StateOf<S, Void>>], initial: S) -> S {
+    func run<S>(actions: [Kleisli<IOPartial<Error>, Any, StateOf<S, Void>>], initial: S) -> S {
         actions.reduce(initial) { result, next in
             try! next^.map { action in
                 action^.runS(result)

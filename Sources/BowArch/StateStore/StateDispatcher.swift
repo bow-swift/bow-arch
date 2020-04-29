@@ -37,18 +37,67 @@ public extension EffectStateDispatcher {
     where M == StatePartial<S1> {
         self.widen(f, { state in state^.focus(lens) }, prism.getOptional)
     }
+    
+    func widen<S, E2>(
+        transformEnvironment f: @escaping (E2) -> E
+    ) -> EffectStateDispatcher<Eff, E2, S, I>
+    where M == StatePartial<S> {
+        self.widen(
+            transformEnvironment: f,
+            transformState: Lens.identity,
+            transformInput: Prism.identity)
+    }
+    
+    func widen<S1, S2>(
+        transformState lens: Lens<S2, S1>
+    ) -> EffectStateDispatcher<Eff, E, S2, I>
+    where M == StatePartial<S1> {
+        self.widen(
+            transformEnvironment: id,
+            transformState: lens,
+            transformInput: Prism.identity)
+    }
+    
+    func widen<S, I2>(
+        transformInput prism: Prism<I2, I>
+    ) -> EffectStateDispatcher<Eff, E, S, I2>
+    where M == StatePartial<S> {
+        self.widen(
+            transformEnvironment: id,
+            transformState: Lens.identity,
+            transformInput: prism)
+    }
+    
+    func widen<S1, S2, E2>(
+        transformEnvironment f: @escaping (E2) -> E,
+        transformState lens: Lens<S2, S1>
+    ) -> EffectStateDispatcher<Eff, E2, S2, I>
+    where M == StatePartial<S1> {
+        self.widen(
+            transformEnvironment: f,
+            transformState: lens,
+            transformInput: Prism.identity)
+    }
+    
+    func widen<S, I2, E2>(
+        transformEnvironment f: @escaping (E2) -> E,
+        transformInput prism: Prism<I2, I>
+    ) -> EffectStateDispatcher<Eff, E2, S, I2>
+    where M == StatePartial<S> {
+        self.widen(
+            transformEnvironment: f,
+            transformState: Lens.identity,
+            transformInput: prism)
+    }
+    
+    func widen<S1, S2, I2>(
+        transformState lens: Lens<S2, S1>,
+        transformInput prism: Prism<I2, I>
+    ) -> EffectStateDispatcher<Eff, E, S2, I2>
+    where M == StatePartial<S1> {
+        self.widen(
+            transformEnvironment: id,
+            transformState: lens,
+            transformInput: prism)
+    }
 }
-
-//public extension EffectStateTDispatcher {
-//    func lift<S1, S2, E2, I2, MM: Monad>(
-//        _ transformEnvironment: @escaping (E2) -> Environment,
-//        _ transformState: Lens<S2, S1>,
-//        _ transformInput: @escaping (I2) -> Input?
-//    ) -> EffectStateTDispatcher<Eff, MM, E2, S2, I2>
-//    where M == StateTPartial<MM, S1> {
-//        self.lift(
-//            transformEnvironment,
-//            { state in state^.focus(transformState) },
-//            transformInput)
-//    }
-//}

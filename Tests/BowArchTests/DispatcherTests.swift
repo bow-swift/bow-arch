@@ -25,12 +25,14 @@ class DispatcherTests: XCTestCase {
     
     let dispatcher = StateDispatcher<Any, Int, TestAction>.pure { input in
         switch input {
-        case .increment: return .modify { x in x + 1 }
-        case .decrement: return .modify { x in x - 1 }
+        case .increment: return .modify { x in x + 1 }^
+        case .decrement: return .modify { x in x - 1 }^
         }
     }
     
-    let noOp = StateDispatcher<Any, Int, TestAction>.pure { _ in .modify(id) }
+    let noOp = StateDispatcher<Any, Int, TestAction>.workflow { _ in
+        [ EnvIO { _ in IO.pure(.modify(id)^) } ]
+    }
     
     func testDispatcher() {
         let result = run(actions: dispatcher.on(.increment), initial: 0)

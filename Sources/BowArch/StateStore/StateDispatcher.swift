@@ -6,6 +6,29 @@ public typealias EffectStateTDispatcher<Eff: Async & UnsafeRun, M: Monad, E, S, 
 public typealias EffectStateDispatcher<Eff: Async & UnsafeRun, E, S, I> = EffectStateTDispatcher<Eff, ForId, E, S, I>
 
 public extension EffectStateDispatcher {
+    static func pure<S>(
+        _ f: @escaping (I) -> State<S, Void>
+    ) -> EffectDispatcher<Eff, M, E, I>
+    where M == StatePartial<S> {
+        .effectful { input in Kleisli { _ in Eff.pure(f(input)) } }
+    }
+    
+    static func effectful<S>(
+        _ f: @escaping (I) -> Kleisli<Eff, E, State<S, Void>>
+    ) -> EffectDispatcher<Eff, M, E, I>
+    where M == StatePartial<S> {
+        .workflow { input in [f(input)] }
+    }
+    
+    static func workflow<S>(
+        _ f: @escaping (I) -> [Kleisli<Eff, E, State<S, Void>>]
+    ) -> EffectDispatcher<Eff, M, E, I>
+    where M == StatePartial<S> {
+        EffectDispatcher { input in
+            f(input).map { action in action.map(id)^ }
+        }
+    }
+    
     func widen<S1, S2, I2, E2>(
         transformEnvironment f: @escaping (E2) -> E,
         transformState lens: Lens<S2, S1>,

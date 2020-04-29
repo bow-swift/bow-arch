@@ -4,18 +4,6 @@ import BowEffects
 public struct EffectDispatcher<Eff: Async & UnsafeRun, M: Monad, E, I> {
     private let f: (I) -> [Kleisli<Eff, E, Kind<M, Void>>]
     
-    public static func pure(_ f: @escaping (I) -> Kind<M, Void>) -> EffectDispatcher<Eff, M, E, I> {
-        .effectful { input in Kleisli { _ in Eff.pure(f(input)) } }
-    }
-    
-    public static func effectful(_ f: @escaping (I) -> Kleisli<Eff, E, Kind<M, Void>>) -> EffectDispatcher<Eff, M, E, I> {
-        .workflow { input in [f(input)] }
-    }
-    
-    public static func workflow(_ f: @escaping (I) -> [Kleisli<Eff, E, Kind<M, Void>>]) -> EffectDispatcher<Eff, M, E, I> {
-        EffectDispatcher(f)
-    }
-    
     public init(_ f: @escaping (I) -> [Kleisli<Eff, E, Kind<M, Void>>]) {
         self.f = f
     }

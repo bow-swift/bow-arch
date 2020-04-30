@@ -8,26 +8,13 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
     private let initialState: S
     private let environment: E
     private let dispatcher: EffectStateDispatcher<Eff, E, S, I>
-    private let viewBuilder: (S, @escaping (I) -> Void, EffectStateHandler<Eff, S>) -> V
-    
-    public init(
-        initialState: S,
-        environment: E,
-        dispatcher: EffectStateDispatcher<Eff, E, S, I> = .empty(),
-        render: @escaping (S, @escaping (I) -> Void) -> V
-    ) {
-        self.init(
-            initialState: initialState,
-            environment: environment,
-            dispatcher: dispatcher,
-            render: { s, h, _ in render(s, h) })
-    }
+    private let viewBuilder: (S, @escaping (I) -> Void) -> V
     
     public init(
         initialState: S,
         environment: E,
         dispatcher: EffectStateDispatcher<Eff, E, S, I>  = .empty(),
-        render: @escaping (S, @escaping (I) -> Void, EffectStateHandler<Eff, S>) -> V
+        render: @escaping (S, @escaping (I) -> Void) -> V
     ) {
         self.initialState = initialState
         self.environment = environment
@@ -37,7 +24,7 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
             EffectComponent(
                 Store(initialState) { state in
                     UI { handler in
-                        render(state, dispatcher.dispatch(to: handler, environment: environment), handler)
+                        render(state, dispatcher.dispatch(to: handler, environment: environment))
                     }
                 },
                 Pairing.pairStateStore())
@@ -62,11 +49,10 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
                 transformEnvironment: f,
                 transformState: lens,
                 transformInput: prism),
-            render: { state, handle, handler in
+            render: { state, handle in
                 self.viewBuilder(
                     lens.get(state),
-                    prism.reverseGet >>> handle,
-                    handler.narrow(lens))
+                    (prism.reverseGet >>> handle))
             })
     }
     
@@ -146,18 +132,16 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
     }
     
     public func using(
-        dispatcher: EffectStateDispatcher<Eff, E, S, I> = .empty(),
-        handler: EffectStateHandler<Eff, S>
+        _ handle: @escaping (I) -> Void
     ) -> EffectStoreComponent<Eff, E, S, I, V> {
         EffectStoreComponent(
             initialState: self.initialState,
             environment: self.environment,
-            dispatcher: self.dispatcher.combine(dispatcher),
-            render: { state, _, _ in
+            dispatcher: self.dispatcher,
+            render: { state, _ in
                 self.viewBuilder(
                     state,
-                    self.dispatcher.combine(dispatcher).dispatch(to: handler, environment: self.environment),
-                    handler)
+                    handle)
             })
     }
 }
@@ -178,6 +162,6 @@ public extension EffectStoreComponent where E == Any {
             initialState: initialState,
             environment: (),
             dispatcher: dispatcher,
-            render: { s, h, _ in render(s, h) })
+            render: render)
     }
 }

@@ -35,104 +35,9 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
         self.componentView
     }
     
-    public func lift<E2, S2, I2>(
-        initialState: S2,
-        environment: E2,
-        transformEnvironment f: @escaping (E2) -> E,
-        transformState lens: Lens<S2, S>,
+    public func using<I2>(
+        _ handle: @escaping (I2) -> Void,
         transformInput prism: Prism<I2, I>
-    ) -> EffectStoreComponent<Eff, E2, S2, I2, V> {
-        EffectStoreComponent<Eff, E2, S2, I2, V>(
-            initialState: initialState,
-            environment: environment,
-            dispatcher: self.dispatcher.widen(
-                transformEnvironment: f,
-                transformState: lens,
-                transformInput: prism),
-            render: { state, handle in
-                self.viewBuilder(
-                    lens.get(state),
-                    (prism.reverseGet >>> handle))
-            })
-    }
-    
-    public func lift<E2>(
-        environment: E2,
-        transformEnvironment f: @escaping (E2) -> E
-    ) -> EffectStoreComponent<Eff, E2, S, I, V> {
-        self.lift(
-            initialState: self.initialState,
-            environment: environment,
-            transformEnvironment: f,
-            transformState: Lens.identity,
-            transformInput: Prism.identity)
-    }
-    
-    public func lift<S2>(
-        initialState: S2,
-        transformState lens: Lens<S2, S>
-    ) -> EffectStoreComponent<Eff, E, S2, I, V> {
-        self.lift(
-            initialState: initialState,
-            environment: self.environment,
-            transformEnvironment: { $0 },
-            transformState: lens,
-            transformInput: Prism.identity)
-    }
-    
-    public func lift<I2>(
-        transformInput prism: Prism<I2, I>
-    ) -> EffectStoreComponent<Eff, E, S, I2, V> {
-        self.lift(
-            initialState: self.initialState,
-            environment: self.environment,
-            transformEnvironment: { $0 },
-            transformState: Lens.identity,
-            transformInput: prism)
-    }
-    
-    public func lift<E2, S2>(
-        initialState: S2,
-        environment: E2,
-        transformEnvironment f: @escaping (E2) -> E,
-        transformState lens: Lens<S2, S>
-    ) -> EffectStoreComponent<Eff, E2, S2, I, V> {
-        self.lift(
-            initialState: initialState,
-            environment: environment,
-            transformEnvironment: f,
-            transformState: lens,
-            transformInput: Prism.identity)
-    }
-    
-    public func lift<E2, I2>(
-        environment: E2,
-        transformEnvironment f: @escaping (E2) -> E,
-        transformInput prism: Prism<I2, I>
-    ) -> EffectStoreComponent<Eff, E2, S, I2, V> {
-        self.lift(
-            initialState: self.initialState,
-            environment: environment,
-            transformEnvironment: f,
-            transformState: Lens.identity,
-            transformInput: prism)
-    }
-    
-    public func lift<S2, I2>(
-        initialState: S2,
-        transformState lens: Lens<S2, S>,
-        transformInput prism: Prism<I2, I>
-    ) -> EffectStoreComponent<Eff, E, S2, I2, V> {
-        self.lift(
-            initialState: initialState,
-            environment: self.environment,
-            transformEnvironment: { $0 },
-            transformState: lens,
-            transformInput: prism)
-    }
-    
-    public func using(
-        _ handle: @escaping (I) -> Void
     ) -> EffectStoreComponent<Eff, E, S, I, V> {
         EffectStoreComponent(
             initialState: self.initialState,
@@ -141,7 +46,7 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
             render: { state, _ in
                 self.viewBuilder(
                     state,
-                    handle)
+                    { i in handle(prism.reverseGet(i)) } )
             })
     }
 }

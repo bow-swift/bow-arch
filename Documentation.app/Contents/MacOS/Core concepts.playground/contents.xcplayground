@@ -2,8 +2,8 @@
 <playground version='6.0' target-platform='ios' display-mode='raw'>
     <pages>
         <page name='State and Input'/>
-        <page name='Dispatcher'/>
         <page name='View'/>
+        <page name='Dispatcher'/>
         <page name='Component'/>
     </pages>
 </playground>

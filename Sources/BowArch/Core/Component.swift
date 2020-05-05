@@ -97,3 +97,11 @@ public func ==<Eff: Monad, W: Comonad, M: Monad, A>(
 ) -> Bool {
     lhs === rhs
 }
+
+public extension EffectComponent {
+    func store<S>() -> Store<S, UI<Eff, M, A>>
+    where W == StorePartial<S>,
+          M == StatePartial<S> {
+        self.wui^
+    }
+}

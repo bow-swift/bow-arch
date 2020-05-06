@@ -11,13 +11,14 @@ public final class EffectComponent<Eff: Async & UnsafeRun, W: Comonad, M: Monad,
         self.pairing = pairing
     }
     
-    public func explore() -> A {
-        self.explore { c in
+    public func explore(onEffect eff: @escaping (EffectComponent<Eff, W, M, A>) -> Kind<Eff, Void>) -> A {
+        self.explore(write: { c in
             Eff.later(.main) { self.wui = c.wui }
-        }
+                .flatTap { eff(c) }
+        })
     }
     
-    public func explore(_ write: @escaping (EffectComponent<Eff, W, M, A>) -> Kind<Eff, Void>) -> A {
+    public func explore(write: @escaping (EffectComponent<Eff, W, M, A>) -> Kind<Eff, Void>) -> A {
         self.wui.extract().make { base in
             base.flatMap { action in
                 write(EffectComponent(self.pairing.select(action, self.wui.duplicate()), self.pairing))

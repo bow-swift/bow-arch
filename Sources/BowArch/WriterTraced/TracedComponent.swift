@@ -2,8 +2,8 @@ import SwiftUI
 import Bow
 import BowEffects
 
-typealias EffectTracedTComponent<Eff: Async & UnsafeRun, WW: Comonad, MM: Monad, State: Monoid, I, V: View> = EffectComponentView<Eff, TracedTPartial<State, WW>, WriterTPartial<MM, State>, I, V>
-typealias EffectTracedComponent<Eff: Async & UnsafeRun, State: Monoid, I, V: View> = EffectTracedTComponent<Eff, ForId, ForId, State, I, V>
+typealias EffectTracedTComponent<Eff: Async & UnsafeRun, WW: Comonad, MM: Monad, State: Monoid, V: View> = EffectComponentView<Eff, TracedTPartial<State, WW>, WriterTPartial<MM, State>, V>
+typealias EffectTracedComponent<Eff: Async & UnsafeRun, State: Monoid, V: View> = EffectTracedTComponent<Eff, ForId, ForId, State, V>
 
 extension EffectTracedTComponent {
 //    init<Environment, State: Monoid, Input, WW: Comonad & Applicative, MM: Monad>(

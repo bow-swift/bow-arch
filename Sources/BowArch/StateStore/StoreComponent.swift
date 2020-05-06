@@ -4,12 +4,12 @@ import BowEffects
 import BowOptics
 
 public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: View {
-    private let componentView: EffectComponentView<Eff, StorePartial<S>, StatePartial<S>, I, V>
+    @ObservedObject var component: EffectComponent<Eff, StorePartial<S>, StatePartial<S>, V>
     private let initialState: S
     private let environment: E
     private let dispatcher: EffectStateDispatcher<Eff, E, S, I>
     private let viewBuilder: (S, @escaping (I) -> Void) -> V
-    private let onEffect: (EffectComponent<Eff, StorePartial<S>, StatePartial<S>, V>, StateOf<S, Void>) -> Kind<Eff, Void>
+    private let onEffect: (EffectComponent<Eff, StorePartial<S>, StatePartial<S>, V>) -> Kind<Eff, Void>
     
     public init(
         initialState: S,
@@ -21,7 +21,7 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
             environment: environment,
             dispatcher: dispatcher,
             render: render,
-            onEffect: { _, _ in Eff.pure(()) })
+            onEffect: { _ in Eff.lazy() })
     }
     
     private init(
@@ -29,26 +29,24 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
         environment: E,
         dispatcher: EffectStateDispatcher<Eff, E, S, I>  = .empty(),
         render: @escaping (S, @escaping (I) -> Void) -> V,
-        onEffect: @escaping (EffectComponent<Eff, StorePartial<S>, StatePartial<S>, V>, StateOf<S, Void>) -> Kind<Eff, Void>
+        onEffect: @escaping (EffectComponent<Eff, StorePartial<S>, StatePartial<S>, V>) -> Kind<Eff, Void>
     ) {
         self.initialState = initialState
         self.environment = environment
         self.dispatcher = dispatcher
         self.viewBuilder = render
         self.onEffect = onEffect
-        self.componentView = EffectComponentView(
-            EffectComponent(
-                Store(initialState) { state in
-                    UI { handler in
-                        render(state, dispatcher.dispatch(to: handler, environment: environment))
-                    }
-                },
-                Pairing.pairStateStore()).onEffectAction(onEffect)
-        )
+        self.component = EffectComponent(
+            Store(initialState) { state in
+                UI { handler in
+                    render(state, dispatcher.dispatch(to: handler, environment: environment))
+                }
+            },
+            Pairing.pairStateStore())
     }
     
     public var body: some View {
-        self.componentView
+        self.component.explore(onEffect: self.onEffect)
     }
     
     public func using<I2>(
@@ -67,27 +65,21 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
     }
     
     public func onEffect(_ eff: @escaping (EffectComponent<Eff, StorePartial<S>, StatePartial<S>, V>) -> Kind<Eff, Void>) -> EffectStoreComponent<Eff, E, S, I, V> {
-        self.onEffectAction { component, _ in
-            eff(component)
-        }
-    }
-    
-    public func onEffectAction(_ eff: @escaping (EffectComponent<Eff, StorePartial<S>, StatePartial<S>, V>, StateOf<S, Void>) -> Kind<Eff, Void>) -> EffectStoreComponent<Eff, E, S, I, V> {
         EffectStoreComponent(
             initialState: self.initialState,
             environment: self.environment,
             dispatcher: self.dispatcher,
             render: self.viewBuilder,
-            onEffect: { component, action in
-                self.onEffect(component, action)
-                    .followedBy(eff(component, action))
+            onEffect: { component in
+                self.onEffect(component)
+                    .followedBy(eff(component))
             })
     }
 }
 
 public extension EffectStoreComponent {
     func store() -> Store<S, UI<Eff, StatePartial<S>, V>>{
-        self.componentView.component.wui^
+        self.component.wui^
     }
 }
 

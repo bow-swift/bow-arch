@@ -2,7 +2,7 @@ import Bow
 import BowEffects
 import SwiftUI
 
-public typealias ComponentView<W: Comonad, M: Monad, I, V: View> = EffectComponentView<IOPartial<Error>, W, M, I, V>
+public typealias ComponentView<W: Comonad, M: Monad, V: View> = EffectComponentView<IOPartial<Error>, W, M, V>
 
 // MARK: State-Store
 
@@ -23,8 +23,8 @@ typealias WriterHandler<State: Monoid> = EffectWriterHandler<IOPartial<Error>, S
 typealias WriterTDispatcher<M: Monad, E, State: Monoid, Input> = EffectWriterTDispatcher<IOPartial<Error>, M, E, State, Input>
 typealias WriterDispatcher<Environment, E, State: Monoid, Input> = EffectWriterDispatcher<IOPartial<Error>, E, State, Input>
 
-typealias TracedTComponent<W: Comonad, M: Monad, State: Monoid, I, V: View> = EffectTracedTComponent<IOPartial<Error>, W, M, State, I, V>
-typealias TracedComponent<State: Monoid, I, V: View> = EffectTracedComponent<IOPartial<Error>, State, I, V>
+typealias TracedTComponent<W: Comonad, M: Monad, State: Monoid, V: View> = EffectTracedTComponent<IOPartial<Error>, W, M, State, V>
+typealias TracedComponent<State: Monoid, I, V: View> = EffectTracedComponent<IOPartial<Error>, State, V>
 
 // MARK: Action-Moore
 
@@ -32,4 +32,4 @@ typealias ActionHandler<Action> = EffectActionHandler<IOPartial<Error>, Action>
 
 typealias ActionDispatcher<E, Action, Input> = EffectActionDispatcher<IOPartial<Error>, E, Action, Input>
 
-typealias MooreComponent<Action, I, V: View> = EffectMooreComponent<IOPartial<Error>, Action, I, V>
+typealias MooreComponent<Action, V: View> = EffectMooreComponent<IOPartial<Error>, Action, V>

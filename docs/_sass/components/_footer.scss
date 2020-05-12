@@ -1,0 +1,77 @@
+// Footer
+// -----------------------------------------------
+// -----------------------------------------------
+#site-footer {
+  flex: 0 0 0;
+  padding: ($base-point-grid * 10) 0;
+  border-top: 1px solid $line-separator-color;
+
+  .footer-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+
+    .footer-dev {
+      width: $column-4;
+
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    .footer-menu {
+      display: flex;
+
+      li {
+        &:not(:last-child) {
+          margin-right: ($base-point-grid * 4);
+        }
+
+        a {
+          padding-bottom: 4px;
+          font-family: $base-font-family;
+
+          &:hover {
+            text-decoration: none;
+            border-bottom: 2px solid $brand-secondary;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive
+// -----------------------------------------------
+
+@include bp(medium) {
+  #site-footer {
+    .footer-flex {
+      justify-content: center;
+      flex-wrap: wrap;
+
+      .footer-dev,
+      .footer-menu {
+        width: $column-8;
+      }
+
+      .footer-dev {
+        padding-bottom: ($base-point-grid * 4);
+        margin-bottom: ($base-point-grid * 4);
+        text-align: center;
+        border-bottom: 1px solid $line-separator-color;
+      }
+
+      .footer-menu {
+        justify-content: space-evenly;
+
+        li {
+          &:not(:last-child) {
+            margin-right: ($base-point-grid * 2);
+          }
+        }
+      }
+    }
+  }
+}

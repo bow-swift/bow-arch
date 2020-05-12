@@ -11,10 +11,11 @@
 // -----------------------------------------------
 $brand-primary: #1D263F;
 $brand-secondary: #F9C95C;
-$gray-primary: #1D263F;
+$gray-primary: #E3E5E8;
 $white: #fff;
-$link-color: darken($brand-primary, 10%);
-$link-hover: darken($brand-primary, 15%);
+$link-color: $brand-primary;
+$link-hover: darken($gray-primary, 35%);
+$line-separator-color: #E3E5E8;
 $sidebar-active-color: lighten($brand-secondary, 2%);
 $sidebar-head-active-color: lighten($brand-secondary, 4%);
 

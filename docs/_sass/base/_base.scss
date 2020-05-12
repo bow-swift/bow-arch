@@ -41,51 +41,16 @@ h6 {
 }
 
 a {
-  color: $link-color;
+  @include links($link-color, $link-color, $link-color, $link-color);
   text-decoration: none;
   transition: color $base-duration $base-timing;
 
-  &:visited {
-    color: $link-color;
-  }
-
   &:hover {
-    color: $link-hover;
     text-decoration: underline;
-  }
-
-  &:active {
-    color: $link-hover;
   }
 }
 
 hr {
   display: block;
   border: none;
-}
-
-@keyframes bg-gradient {
-  0% {
-    background-position: 50%;
-  }
-
-  36% {
-    background-position: 60%;
-  }
-
-  40% {
-    background-position: 80%;
-  }
-
-  50% {
-    background-position: 40%;
-  }
-
-  66% {
-    background-position: 15%;
-  }
-
-  100% {
-    background-position: 50%;
-  }
 }

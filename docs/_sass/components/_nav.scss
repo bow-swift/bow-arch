@@ -14,7 +14,7 @@
 
   &.nav-scroll {
     padding: ($base-point-grid * 2) 0;
-    background: rgba($gray-primary, 0.95);
+    background: #{$white}e;
   }
 
   .nav-flex {
@@ -40,7 +40,7 @@
       }
 
       .home-title-bold {
-        font-weight: 700;
+        font-weight: $font-bold;
         margin: 0 $base-point-grid;
       }
 

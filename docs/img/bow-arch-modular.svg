@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>bow-arch-modular</title>
+    <desc>Created with Sketch.</desc>
+    <g id="bow-arch-modular" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="icon" transform="translate(10.000000, 4.000000)" stroke="#F9C95C" stroke-width="1.5">
+            <polygon id="path" fill-opacity="0" fill="#000000" points="0 8 13.856 0 27.712 8 13.856 16"></polygon>
+            <polygon id="path" fill-opacity="0" fill="#000000" points="34.64 28 48.496 20 62.352 28 48.496 36"></polygon>
+            <polygon id="path" fill-opacity="0" fill="#000000" points="0 48 13.856 40 27.712 48 13.856 56"></polygon>
+            <polygon id="path" fill-opacity="0" fill="#000000" points="1.12798659e-13 8 1.12798659e-13 24 13.856 32 13.856 16"></polygon>
+            <polygon id="path" fill-opacity="0" fill="#000000" points="34.64 28 34.64 44 48.496 52 48.496 36"></polygon>
+            <polygon id="path" fill-opacity="0.4" fill="#F9C95C" points="1.12798659e-13 48 1.12798659e-13 64 13.856 72 13.856 56"></polygon>
+            <polygon id="path" fill-opacity="0.4" fill="#F9C95C" points="13.856 32 27.712 24 27.712 8 13.856 16"></polygon>
+            <polygon id="path" fill-opacity="0" fill="#000000" points="48.496 52 62.352 44 62.352 28 48.496 36"></polygon>
+            <polygon id="path" fill-opacity="0" fill="#000000" points="13.856 72 27.712 64 27.712 48 13.856 56"></polygon>
+            <line x1="20.784" y1="20" x2="34.64" y2="28" id="path" fill-opacity="0" fill="#000000"></line>
+            <line x1="41.568" y1="40" x2="27.712" y2="48" id="path" fill-opacity="0" fill="#000000"></line>
+        </g>
+    </g>
+</svg>

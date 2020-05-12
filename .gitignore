@@ -72,3 +72,9 @@ vendor/
 
 # fastlane specific
 **/fastlane/report.xml
+
+## Jekyll
+_site
+.sass-cache
+.jekyll-metadata
+.jekyll-cache

@@ -1,0 +1,25 @@
+#-------------------------
+name: bow-arch
+#-------------------------
+title: bow-arch # To be used on meta tags mainly
+#-------------------------
+description: bow-arch
+#-------------------------
+author: 47 Degrees
+keywords: functional-programming, monads, monad-transformers, functional-data-structure, swift, bow, xcode, xcode-playgrounds, playgrounds, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory
+#-------------------------
+github-owner: bow-swift
+github-repo: bow-arch
+#-------------------------
+url: https://arch.bow-swift.io/
+#-------------------------
+markdown: kramdown
+sass:
+    sass_dir: _sass
+    style: compressed
+    sourcemap: never
+#-------------------------
+permalink: pretty
+#-------------------------
+exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor', 'Procfile', 'Rakefile']
+#-------------------------

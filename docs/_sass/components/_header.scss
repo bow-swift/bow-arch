@@ -35,6 +35,8 @@
         color: $white;
         background-color: $brand-secondary;
         border: 2px solid $brand-secondary;
+        border-radius: 2px;
+        font-size: 14px;
         position: relative;
         transition:
           color $base-duration $base-timing,

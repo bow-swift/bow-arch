@@ -50,7 +50,7 @@
 
       .link-item {
         margin-left: ($base-point-grid * 2);
-        
+
         a {
           @include links($brand-secondary, $brand-secondary, $brand-secondary, $brand-secondary);
         }
@@ -71,6 +71,19 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+
+    ul li {
+      list-style: none;
+    }
+
+    ul li::before {
+      content: "\2022";
+      color: $brand-secondary;
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
     }
   }
 
@@ -124,16 +137,12 @@
 
   ol,
   ul {
-    padding-left: ($base-point-grid * 4);
+    padding-left: ($base-point-grid * 2);
     margin-bottom: ($base-point-grid * 2);
   }
 
   ol li {
     list-style: decimal;
-  }
-
-  ul li {
-    list-style: disc;
   }
 
   .header-link {

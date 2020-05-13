@@ -69,6 +69,7 @@
     &.toggled {
       left: 0;
       overflow-y: auto;
+      background-color: $background-code;
     }
 
     .sidebar-toggle {

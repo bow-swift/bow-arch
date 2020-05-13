@@ -24,7 +24,7 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  background: rgba($gray-primary, 0.015);
+  background: $white;
   font-family: $base-font-family;
   line-height: $base-line-height;
 }
@@ -53,4 +53,9 @@ a {
 hr {
   display: block;
   border: none;
+}
+
+.title-bold {
+  font-weight: $font-bold;
+  margin: 0 $base-point-grid;
 }

@@ -1,0 +1,72 @@
+// Variables
+// -----------------------------------------------
+// -----------------------------------------------
+
+// -----------------------------------------------
+// Typography
+// -----------------------------------------------
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Muli:wght@400;600;700&display=swap');
+
+// Colours
+// -----------------------------------------------
+$brand-primary: #1D263F;
+$brand-secondary: #F9C95C;
+$gray-primary: #E3E5E8;
+$white: #fff;
+$link-color: $brand-primary;
+$link-hover: darken($gray-primary, 35%);
+$line-separator-color: #E3E5E8;
+$sidebar-active-color: rgba(29, 38, 63, 0.08);
+$sidebar-head-active-color: lighten($brand-secondary, 4%);
+$background-code: #f5f6f7;
+
+// Typography
+// -----------------------------------------------
+$base-font-family: 'Muli', sans-serif;
+$header-font-family: $base-font-family;
+$code-font-family: 'Fira Code', monospace;
+//-
+$base-font-color: $gray-primary;
+$header-font-color: $gray-primary;
+//-
+$font-regular: 400;
+$font-semibold: 600;
+$font-bold: 700;
+//-
+$base-font-size: 16px;
+$base-line-height: 1.6;
+// Sizes
+// -----------------------------------------------
+$base-point-grid: 8px;
+$doc-top-bar-height: 108px;
+// Animation
+// -----------------------------------------------
+$base-duration: 250ms;
+$base-timing: ease-in-out;
+
+// Breakpoint
+// -----------------------------------------------
+$bp-small: 480px;
+$bp-medium: 768px;
+$bp-large: 992px;
+$bp-xlarge: 1140px;
+
+// Grid
+// -----------------------------------------------
+$column-1: (1/12*100%);
+$column-2: (2/12*100%);
+$column-3: (3/12*100%);
+$column-4: (4/12*100%);
+$column-5: (5/12*100%);
+$column-6: (6/12*100%);
+$column-7: (7/12*100%);
+$column-8: (8/12*100%);
+$column-9: (9/12*100%);
+$column-10: (10/12*100%);
+$column-11: (11/12*100%);
+$column-12: (12/12*100%);
+$gutter-margin: ($base-point-grid * 4);
+
+// Border
+// -----------------------------------------------
+$border-color: rgba($gray-primary, 0.05);

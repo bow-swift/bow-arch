@@ -1,0 +1,9 @@
+nav:
+    - title: Documentation
+      url: /docs
+
+    - title: Github
+      url: https://github.com/bow-swift/bow-arch
+
+    - title: License
+      url: https://github.com/bow-swift/bow-arch/blob/master/LICENSE

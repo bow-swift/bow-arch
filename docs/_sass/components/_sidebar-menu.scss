@@ -1,0 +1,131 @@
+// Sidebar menu
+// -----------------------------------------------
+// -----------------------------------------------
+
+.sidebar-menu {
+  margin-top: $base-point-grid;
+  padding: 0;
+
+  .sidebar-menu-item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 20px;
+      top: 9px;
+      height: 48px;
+      width: 16px;
+      background-image: url("../img/sidebar-bullet.svg");
+      background-repeat: no-repeat;
+      background-position-x: center;
+      background-position-y: center;
+      transition: background-position 0.1s ease;
+    }
+
+    .sub-menu {
+      max-height: 0;
+      transition: max-height 0.3s ease-in-out;
+      overflow: hidden;
+      margin-left: 26px;
+      box-shadow: 1px 0 $line-separator-color inset;
+
+      a {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 13px;
+        font-size: 1rem;
+        line-height: 1.2rem;
+        height: auto;
+        width: 80%;
+        margin-left: $base-point-grid * 2;
+
+        &.active {
+          background-color: $sidebar-active-color;
+        }
+      }
+    }
+
+    a,
+    button {
+      box-sizing: border-box;
+      font-family: $base-font-family;
+      font-size: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $base-point-grid * 3 $base-point-grid * 2 $base-point-grid * 3 56px;
+      line-height: $base-point-grid * 2;
+      text-align: left;
+      width: 100%;
+      color: $white;
+
+      @include links($link-color, $link-color, $link-color, $link-color);
+
+      transition: background $base-duration $base-timing;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .caret {
+      position: absolute;
+      right: ($base-point-grid * 3);
+      top: $base-point-grid * 3;
+      pointer-events: none;
+      transform-origin: 0% 75%;
+      height: 8px;
+      transition: transform 0.2s ease;
+    }
+
+    .caret::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-left: 6px solid #bec3ca;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+    }
+
+    .caret::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      border-left: 4px solid #bec3ca;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+    }
+
+    &.active {
+      &::before {
+        background-image: url("../img/sidebar-bullet-active.svg");
+      }
+    }
+
+    &.open {
+
+      .caret {
+        transform: rotateZ(90deg);
+      }
+
+      .sub-menu {
+        max-height: 1600px; // This will suffice for +20 entries in a submenu tops
+
+        a {
+          // Set hover color in different order just for the submenu links
+          @include links($link-hover, $link-hover, $link-color, $link-color);
+
+          &.active {
+            color: $link-color;
+          }
+        }
+      }
+    }
+  }
+}

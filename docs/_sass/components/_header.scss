@@ -1,0 +1,114 @@
+// Header
+// -----------------------------------------------
+// -----------------------------------------------
+
+#site-header {
+  flex: 1 0 auto;
+  padding: ($base-point-grid * 25) 0 ($base-point-grid * 8) 0;
+
+  .header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 97%;
+
+    .header-text {
+      width: 55%;
+      height: 80%;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+
+      h1 {
+        font-size: 4rem;
+        line-height: 1.2;
+      }
+
+      .header-button {
+        align-self: flex-start;
+        padding: 12px ($base-point-grid * 6);
+        margin-top: 27px;
+        display: inline-block;
+        font-weight: $font-semibold;
+        text-transform: uppercase;
+        color: $white;
+        background-color: $brand-secondary;
+        border: 2px solid $brand-secondary;
+        border-radius: 2px;
+        font-size: 14px;
+        position: relative;
+        transition:
+          color $base-duration $base-timing,
+          background-color $base-duration $base-timing;
+
+        &:visited {
+          color: $white;
+        }
+
+        &:hover {
+          text-decoration: none;
+          color: $brand-secondary;
+          background: $white;
+        }
+
+        &:active {
+          color: $brand-secondary;
+          background: $white;
+        }
+      }
+    }
+
+    .header-image {
+      height: 100%;
+      width: 45%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 92%;
+      }
+    }
+  }
+}
+
+// Responsive
+// -----------------------------------------------
+
+@include bp(large) {
+  #site-header {
+    .header-flex {
+      .header-text {
+        h1 {
+          font-size: 2.9rem;
+        }
+      }
+    }
+  }
+}
+
+@include bp(medium) {
+  #site-header {
+    .header-flex {
+      .header-text {
+        height: 300px;
+        text-align: center;
+        width: $column-12;
+
+        .header-button {
+          align-self: center;
+        }
+
+        h1 {
+          font-size: 2.5rem;
+        }
+      }
+
+      .header-image {
+        display: none;
+      }
+    }
+  }
+}

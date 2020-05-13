@@ -60,6 +60,8 @@ _site
 /docs/.bundle/
 /docs/vendor/
 /lib/bundler/man/
+docs/docs/*
+/docs/_data/sidebar.yml
 
 ## nef
 **/*/nef
@@ -72,3 +74,9 @@ vendor/
 
 # fastlane specific
 **/fastlane/report.xml
+
+## Jekyll
+_site
+.sass-cache
+.jekyll-metadata
+.jekyll-cache

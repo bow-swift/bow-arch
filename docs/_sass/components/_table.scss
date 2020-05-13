@@ -1,0 +1,33 @@
+table {
+  font-size: 1rem;
+  text-align: left;
+  overflow-x: auto;
+
+  thead {
+    background-color: $background-code;
+  }
+
+  th {
+    font-weight: $font-semibold;
+    border: 1px solid $line-separator-color;
+  }
+
+  th,
+  td {
+    padding: 11px $base-point-grid * 3;
+
+    &:first-of-type {
+      padding-left: $base-point-grid * 2;
+    }
+
+    &:last-of-type {
+      padding-right: $base-point-grid * 2;
+    }
+  }
+
+  tbody {
+    td {
+      border: 1px solid $line-separator-color;
+    }
+  }
+}

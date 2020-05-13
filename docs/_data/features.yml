@@ -1,0 +1,16 @@
+content:
+    - title: Modular
+      description: Build cohesive components that can be reused.
+      icon: img/bow-arch-modular.svg
+
+    - title: Composable
+      description: Divide your application into manageable pieces that can be composed.
+      icon: img/bow-arch-composable.svg
+
+    - title: Testable
+      description: Verify the correct behavior of each part of your application in different scenarios.
+      icon: img/bow-arch-testable.svg
+
+    - title: Declarative
+      description: Write your user interfaces with the power of SwiftUI.
+      icon: img/bow-arch-declarative.svg

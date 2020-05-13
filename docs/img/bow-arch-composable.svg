@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>bow-arch-composable</title>
+    <desc>Created with Sketch.</desc>
+    <g id="bow-arch-composable" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="icon" transform="translate(5.000000, 6.000000)" stroke="#F9C95C" stroke-width="1.5">
+            <polygon id="Path" fill-opacity="0.4" fill="#F9C95C" points="6.928 8 20.784 0 34.644 8 20.784 16"></polygon>
+            <polygon id="Path" points="41.572 20 55.428 12 69.284 20 55.428 28"></polygon>
+            <polygon id="Path" fill-opacity="0.4" fill="#F9C95C" points="41.572 20 41.572 60 55.428 68 55.428 28"></polygon>
+            <polygon id="Path" points="34.644 8 34.644 48 20.784 56 20.784 16"></polygon>
+            <polygon id="Path" points="69.284 20 69.284 60 55.428 68 55.428 28"></polygon>
+            <line x1="20.784" y1="8" x2="48.5" y2="24" id="Path"></line>
+            <line x1="27.716" y1="20" x2="48.5" y2="32" id="Path"></line>
+            <line x1="20.784" y1="24" x2="62.356" y2="48" id="Path"></line>
+            <line x1="0" y1="20" x2="48.5" y2="48" id="Path"></line>
+            <line x1="13.856" y1="36" x2="48.5" y2="56" id="Path"></line>
+        </g>
+    </g>
+</svg>

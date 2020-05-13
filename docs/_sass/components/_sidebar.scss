@@ -65,11 +65,11 @@
   .site-sidebar {
     left: -100%;
     width: 100%;
+    background-color: $background-code;
 
     &.toggled {
       left: 0;
       overflow-y: auto;
-      background-color: $background-code;
     }
 
     .sidebar-toggle {

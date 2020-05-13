@@ -3,20 +3,18 @@ table {
   text-align: left;
   overflow-x: auto;
 
-  th {
-    border-bottom: 3px solid rgba($brand-primary, 0.3);
-    border-radius: 0;
-    font-weight: $font-semibold;
+  thead {
+    background-color: $background-code;
   }
 
-  tr {
-    border-bottom: 1px solid rgba($brand-primary, 0.3);
-    border-radius: 0;
+  th {
+    font-weight: $font-semibold;
+    border: 1px solid $line-separator-color;
   }
 
   th,
   td {
-    padding: $base-point-grid $base-point-grid * 4;
+    padding: 11px $base-point-grid * 3;
 
     &:first-of-type {
       padding-left: $base-point-grid * 2;
@@ -24,6 +22,12 @@ table {
 
     &:last-of-type {
       padding-right: $base-point-grid * 2;
+    }
+  }
+
+  tbody {
+    td {
+      border: 1px solid $line-separator-color;
     }
   }
 }

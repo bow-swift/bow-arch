@@ -131,14 +131,6 @@
             &:not(:last-child) {
               margin-right: 0;
             }
-
-            a {
-              color: $white;
-
-              &:hover {
-                border-bottom-color: $white;
-              }
-            }
           }
         }
       }

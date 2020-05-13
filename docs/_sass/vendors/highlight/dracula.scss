@@ -38,8 +38,8 @@ $dt-blue: #6272a4;       // Comment
 $dt-cyan: $brand-secondary;
 $dt-green: $brand-primary;
 $dt-orange: lighten($brand-secondary, 35);
-$dt-pink: lighten($brand-primary, 45);
-$dt-purple: lighten($brand-secondary, 15);
+$dt-pink: lighten($brand-primary, 30);
+$dt-purple: darken($brand-secondary, 20);
 $dt-red: darken($brand-secondary, 20);
 $dt-yellow: $brand-primary;
 

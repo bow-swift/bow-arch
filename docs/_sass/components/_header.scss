@@ -91,7 +91,11 @@
 
 @include bp(medium) {
   #site-header {
+    padding-top: 100px;
+    
     .header-flex {
+      flex-direction: column-reverse;
+
       .header-text {
         height: 300px;
         text-align: center;
@@ -107,7 +111,7 @@
       }
 
       .header-image {
-        display: none;
+        width: 80%;
       }
     }
   }

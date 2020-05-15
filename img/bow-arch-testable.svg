@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>bow-arch-testable</title>
+    <desc>Created with Sketch.</desc>
+    <g id="bow-arch-testable" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="icon" transform="translate(9.000000, 6.000000)" stroke="#F9C95C" stroke-width="1.5">
+            <polygon id="Path" points="62.352 20 34.64 36 34.64 68 52.004 57.976 62.352 52"></polygon>
+            <polygon id="Path" fill-opacity="0.4" fill="#F9C95C" points="62.352 20 55.424 16 27.712 32 27.712 64 34.64 68 34.64 36"></polygon>
+            <line x1="34.64" y1="36" x2="27.712" y2="32" id="Path"></line>
+            <polygon id="Path" fill-opacity="0.4" fill="#F9C95C" points="34.64 4 27.712 0 7.04858394e-12 16 6.928 20"></polygon>
+            <polygon id="Path" points="7.27595761e-12 16 7.27595761e-12 48 6.928 52 6.928 20"></polygon>
+            <polyline id="Path" points="34.64 4 34.64 36 6.928 52"></polyline>
+            <polygon id="Path" points="48.496 12 41.568 8 13.856 24 20.784 28"></polygon>
+            <polyline id="Path" points="13.856 24 13.856 56 20.784 60 20.784 28"></polyline>
+            <line x1="55.424" y1="32" x2="41.568" y2="40" id="Path"></line>
+            <line x1="55.424" y1="40" x2="41.568" y2="48" id="Path"></line>
+            <line x1="55.424" y1="48" x2="41.568" y2="56" id="Path"></line>
+            <line x1="48.496" y1="12" x2="48.496" y2="20" id="Path"></line>
+            <line x1="20.784" y1="60" x2="27.712" y2="56" id="Path"></line>
+        </g>
+    </g>
+</svg>

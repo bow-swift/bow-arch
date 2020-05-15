@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="64px" viewBox="0 0 48 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>bow-arch-brand</title>
+    <desc>Created with Sketch.</desc>
+    <g id="bow-arch-brand" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0" stroke-linecap="round" stroke-linejoin="round">
+        <g id="brand" transform="translate(3.000000, 2.000000)" fill="#000000" stroke="#F9C95C" stroke-width="1.5">
+            <polygon id="path" points="20.784 0 -3.41060513e-13 12 -3.41060513e-13 48 20.784 60 41.568 48 41.568 36 31.176 30 41.568 24 41.568 12"></polygon>
+            <polyline id="path" points="-1.66533454e-13 12 10.392 18 20.784 12"></polyline>
+            <polyline id="path" points="10.392 6 31.176 18 41.568 12"></polyline>
+            <line x1="31.176" y1="18" x2="31.176" y2="30" id="path"></line>
+            <polyline id="path" points="31.176 30 10.392 42 20.784 48 41.568 36"></polyline>
+            <line x1="10.392" y1="18" x2="10.392" y2="54" id="path"></line>
+            <line x1="20.784" y1="12" x2="20.784" y2="36" id="path"></line>
+            <line x1="20.784" y1="48" x2="20.784" y2="60" id="path"></line>
+            <line x1="20.784" y1="24" x2="31.176" y2="30" id="path"></line>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+
+    
+
+    <title>bow-arch: State and Input</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="bow-arch">
+    <meta name="keywords" content="functional-programming, monads, monad-transformers, functional-data-structure, swift, bow, xcode, xcode-playgrounds, playgrounds, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory, architecture, mobile, apps, application, ios, macos">
+
+    <meta property="og:image" content="/img/poster.png" />
+    <meta property="og:title" content="bow-arch: State and Input" />
+    <meta property="og:site_name" content="bow-arch: State and Input" />
+    <meta property="og:url" content="https://arch.bow-swift.io/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="bow-arch" />
+    <meta property="og:keywords" content="functional-programming, monads, monad-transformers, functional-data-structure, swift, bow, xcode, xcode-playgrounds, playgrounds, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory, architecture, mobile, apps, application, ios, macos" />
+
+    <meta name="twitter:text:description" content="bow-arch" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@bow_swift">
+    <meta name="twitter:creator" content="@bow_swift">
+    <meta name="twitter:image" content="/img/poster.png" />
+
+    <meta property="github-info" data-github-owner="bow-swift" data-github-repo="bow-arch" />
+
+    <script defer src="/js/docs.js"></script>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <!-- Docs css -->
+    <link rel="stylesheet" type="text/css" href="/css/docs.css">
+</head>
+
+    <body>
+        <div id="site-sidebar" class="site-sidebar">
+  <div class="sidebar-brand">
+    <a href="/" class="brand" title="Bow-arch">
+      <img
+        src="/img/bow-arch-brand.svg"
+        alt="Bow-arch"
+        class="brand-wrapper"
+      />
+      <span class="title-bold">Bow</span>
+      <span>Arch</span>
+    </a>
+    <button
+      id="main-toggle"
+      type="button"
+      title="Close"
+      class="button sidebar-toggle"
+    >
+      <span class="close"></span>
+    </button>
+  </div>
+  <div class="sidebar-menu">
+    
+      
+
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+
+      
+
+    <div class="sidebar-menu-item  ">
+       
+      <button
+        type="button"
+        title="Open Quick start"
+        class="button drop-nested"
+      >
+        Quick start
+      </button>
+      
+
+      <div class="sub-menu">
+        
+        
+        
+        <a
+          class=""
+          href="/docs/quick-start/getting-started/"
+          title="Getting started"
+        >
+          Getting started
+        </a>
+        
+        
+        
+        <a
+          class=""
+          href="/docs/quick-start/resources/"
+          title="Resources"
+        >
+          Resources
+        </a>
+        
+      </div>
+      
+    </div>
+    
+
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+
+      
+
+    <div class="sidebar-menu-item  ">
+       
+      <button
+        type="button"
+        title="Open Background"
+        class="button drop-nested"
+      >
+        Background
+      </button>
+      
+
+      <div class="sub-menu">
+        
+        
+        
+        <a
+          class=""
+          href="/docs/background/overview/"
+          title="Overview"
+        >
+          Overview
+        </a>
+        
+        
+        
+        <a
+          class=""
+          href="/docs/background/monads-and-comonads/"
+          title="Monads and Comonads"
+        >
+          Monads and Comonads
+        </a>
+        
+        
+        
+        <a
+          class=""
+          href="/docs/background/pairings/"
+          title="Pairings"
+        >
+          Pairings
+        </a>
+        
+        
+        
+        <a
+          class=""
+          href="/docs/background/comonadic-uis/"
+          title="Comonadic UIs"
+        >
+          Comonadic UIs
+        </a>
+        
+      </div>
+      
+    </div>
+    
+
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+
+      
+
+    <div class="sidebar-menu-item active open">
+       
+      <button
+        type="button"
+        title="Open Core concepts"
+        class="button drop-nested"
+      >
+        Core concepts
+      </button>
+      
+
+      <div class="sub-menu">
+        
+        
+        
+        <a
+          class="active"
+          href="/docs/core-concepts/state-and-input/"
+          title="State and Input"
+        >
+          State and Input
+        </a>
+        
+        
+        
+        <a
+          class=""
+          href="/docs/core-concepts/view/"
+          title="View"
+        >
+          View
+        </a>
+        
+        
+        
+        <a
+          class=""
+          href="/docs/core-concepts/dispatcher/"
+          title="Dispatcher"
+        >
+          Dispatcher
+        </a>
+        
+        
+        
+        <a
+          class=""
+          href="/docs/core-concepts/component/"
+          title="Component"
+        >
+          Component
+        </a>
+        
+      </div>
+      
+    </div>
+    
+
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+
+      
+
+    <div class="sidebar-menu-item  ">
+       
+      <button
+        type="button"
+        title="Open Patterns"
+        class="button drop-nested"
+      >
+        Patterns
+      </button>
+      
+
+      <div class="sub-menu">
+        
+        
+        
+        <a
+          class=""
+          href="/docs/patterns/creating-a-single-component/"
+          title="Creating a single component"
+        >
+          Creating a single component
+        </a>
+        
+        
+        
+        <a
+          class=""
+          href="/docs/patterns/creating-nested-components/"
+          title="Creating nested components"
+        >
+          Creating nested components
+        </a>
+        
+      </div>
+      
+    </div>
+    
+
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+
+      
+
+    <div class="sidebar-menu-item  ">
+       
+      <button
+        type="button"
+        title="Open Legal"
+        class="button drop-nested"
+      >
+        Legal
+      </button>
+      
+
+      <div class="sub-menu">
+        
+        
+        
+        <a
+          class=""
+          href="/docs/legal/credits/"
+          title="Credits"
+        >
+          Credits
+        </a>
+        
+        
+        
+        <a
+          class=""
+          href="/docs/legal/license/"
+          title="License"
+        >
+          License
+        </a>
+        
+      </div>
+      
+    </div>
+    
+    
+  </div>
+</div>
+
+        <main id="site-doc" class="site-doc">
+    <div class="doc-header">
+      <button
+        id="menu-toggle"
+        type="button"
+        class="button doc-toggle"
+        title="Toggle">
+          <img src="/img/sidebar-icon-open.svg" alt="Toggle" title="Toggle">
+      </button>
+
+      <div class="link-container">
+        <div class="link-item">
+          <a href="https://github.com/bow-swift/bow-arch" title="GitHub repo" target="_blank" rel="noopener noreferrer">
+            <span class="strong">GitHub</span>
+            <span id="stars-count"></span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+    <div class="doc-content">
+        <h1 id="state-and-input">State and Input</h1>
+
+<p>Bow Arch encourages a strong modeling of the problem domain to capture the state and inputs of a component into immutable data structures, that are usually designed as Algebraic Data Types.</p>
+
+<p>How you model state and inputs is very dependent on your particular project. However, as a general guideline, state is usually modeled using a product type, and inputs are usually modeled as a sum type.</p>
+
+<p>Product types in Swift can be represented using structs, tuples or classes, and while being isomorphic, each one of them have different semantics and/or ergonomics:</p>
+
+<ul>
+  <li>Structs: provide value semantics, are final (no inheritance allowed), and mutability has to be marked explicitly.</li>
+  <li>Classes: provide reference semantics, can be extended, and mutability is not explicit.</li>
+  <li>Tuples: provide value semantics, but are not nominal types; therefore, we cannot add methods to them in an extension.</li>
+</ul>
+
+<p>Typically, modeling state with structs will be our preferred choice.</p>
+
+<p>As for Sum types, Swift provides enums to represent them. Swift enums can have associated values that will be the companion data we need to perform an action for the input they represent.</p>
+
+<h2 id="parent-child-relationships">Parent-child relationships</h2>
+
+<p>Both state and input of a given component need to be captured in its parent state and input. That is, the parent state should have a field representing the child state; similarly, the parent input should have a case representing the child input.</p>
+
+<h2 id="accessing-and-modifying-immutable-data">Accessing and modifying immutable data</h2>
+
+<p>We have made a strong emphasis in modeling state and input as immutable data structures. How should you access and modify them? The answer is optics.</p>
+
+<p><a href="https://bow-swift.io/next/docs/optics/optics-overview/">Optics</a> are algebraic structures that let us work with immutable data structures in a functional way, and are highly composable. In particular, the optics that we will need are:</p>
+
+<ul>
+  <li><strong>Lenses</strong>: they are optics to work with product types that let us view and modify a part of a data structure.</li>
+  <li><strong>Prisms</strong>: they are optics to work with sum types that let us extract or embed a case of a data structure.</li>
+</ul>
+
+<p>You can use Bow Optics to <a href="https://bow-swift.io/next/docs/optics/writing-your-own-optics/">write your own lenses and prisms</a>, or <a href="https://bow-swift.io/next/docs/optics/automatic-derivation/">get them automatically generated</a>, to work with your data structures.</p>
+
+<h2 id="example">Example</h2>
+
+<p>Consider an app that renders a home screen with a user profile and a list of articles. Tapping on the user profile goes to a new screen to show a detail of the user profile, where we can perform editions.</p>
+
+<p>We can model state as:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">UserProfile</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">picture</span><span class="p">:</span> <span class="kt">URL</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">Article</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">content</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">publicationDate</span><span class="p">:</span> <span class="kt">Date</span>
+    <span class="k">let</span> <span class="nv">isFavorite</span><span class="p">:</span> <span class="kt">Bool</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>State is then grouped into the parent state:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">HomeScreen</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">profile</span><span class="p">:</span> <span class="kt">UserProfile</span>
+    <span class="k">let</span> <span class="nv">articles</span><span class="p">:</span> <span class="p">[</span><span class="kt">Article</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Similarly, we can model inputs as:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">UserProfileInput</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nf">changePicture</span><span class="p">(</span><span class="kt">URL</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nf">changeName</span><span class="p">(</span><span class="kt">String</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">enum</span> <span class="kt">ArticleInput</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nf">markFavorite</span><span class="p">(</span><span class="kt">Article</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Inputs can also be grouped into a parent input:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">HomeScreenInput</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nf">userProfile</span><span class="p">(</span><span class="kt">UserProfileInput</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nf">article</span><span class="p">(</span><span class="kt">ArticleInput</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We can write a lens to access the user profile from a home screen:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">userProfileLens</span> <span class="o">=</span> <span class="kt">Lens</span><span class="o">&lt;</span><span class="kt">HomeScreen</span><span class="p">,</span> <span class="kt">UserProfile</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="nv">get</span><span class="p">:</span> <span class="p">{</span> <span class="n">home</span> <span class="k">in</span> <span class="n">home</span><span class="o">.</span><span class="n">profile</span> <span class="p">},</span>
+    <span class="nv">set</span><span class="p">:</span> <span class="p">{</span> <span class="n">home</span><span class="p">,</span> <span class="n">newProfile</span> <span class="k">in</span> <span class="kt">HomeScreen</span><span class="p">(</span><span class="nv">profile</span><span class="p">:</span> <span class="n">newProfile</span><span class="p">,</span> <span class="nv">articles</span><span class="p">:</span> <span class="n">home</span><span class="o">.</span><span class="n">articles</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Likewise, we can write a prism to access the user profile input from a home screen input:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">userProfilePrism</span> <span class="o">=</span> <span class="kt">Prism</span><span class="o">&lt;</span><span class="kt">HomeScreenInput</span><span class="p">,</span> <span class="kt">UserProfileInput</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="nv">extract</span><span class="p">:</span> <span class="p">{</span> <span class="n">homeInput</span> <span class="k">in</span>
+        <span class="k">guard</span> <span class="k">case</span> <span class="kd">let</span> <span class="o">.</span><span class="nf">userProfile</span><span class="p">(</span><span class="n">input</span><span class="p">)</span> <span class="o">=</span> <span class="n">homeInput</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">nil</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">input</span>
+    <span class="p">},</span>
+    <span class="nv">embed</span><span class="p">:</span> <span class="kt">HomeScreenInput</span><span class="o">.</span><span class="n">userProfile</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+    </div>
+</main>
+
+    </body>
+</html>

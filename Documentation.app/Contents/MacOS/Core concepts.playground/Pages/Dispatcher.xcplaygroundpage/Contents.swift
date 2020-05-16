@@ -63,7 +63,7 @@ let stepperDispatcher = StepperDispatcher.pure { input in
     }
 }
 /*:
- ## Effectful Dispatcher
+ ### Effectful Dispatcher
  
  Rolling a die is a side-effectful action, as it includes randomness. We can capture randomness in a dependency:
  */

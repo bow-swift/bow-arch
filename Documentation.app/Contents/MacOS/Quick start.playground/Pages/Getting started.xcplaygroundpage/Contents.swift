@@ -61,7 +61,7 @@ struct StepperView: View {
     }
 }
 /*:
- ## 🔨 Dispatcher
+ ## 🔨 Dispatcher
  
  Inputs new to be transformed into actions that modify the state. This is done at the Dispatcher. Dispatchers are pure functions that receive inputs and produce actions:
  */

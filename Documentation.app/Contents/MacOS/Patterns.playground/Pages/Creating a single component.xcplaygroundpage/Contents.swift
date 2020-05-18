@@ -4,6 +4,11 @@
  title: Creating a single component
  */
 // nef:end
+// nef:begin:hidden
+import Bow
+import BowEffects
+import BowArch
+// nef:end
 /*:
  # Creating a single component
  
@@ -77,7 +82,7 @@
      }
  }
  /*:
-  ## 📦 Component
+  ## 🧩 Component
   
   Finally, we can put everything together as a component:
   */
@@ -90,3 +95,4 @@
  /*:
   Components already conform to SwuiftUI `View`, so they can be used as part of other views, or assigned as the root view of a `UIHostingController`.
   */
+let controller = UIHostingController(rootView: stepperComponent)

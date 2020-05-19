@@ -73,7 +73,7 @@ With state and input defined, we can render a view using SwiftUI. SwiftUI is a d
 
 We can describe the view as a function of its state, and use a function to receive inputs:
 
-```
+```swift
 import SwiftUI
 
 struct StepperView: View {

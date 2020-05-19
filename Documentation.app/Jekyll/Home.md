@@ -16,7 +16,7 @@ Using SwiftUI, we can create user interfaces in a declarative manner, that are a
 
 ## 🚧 Clear separation of concerns
 
-The core concepts int the library are state, action, dispatcher, view, and component. Each one of them deals with a specific concern, and lets us separate how our code deals with different aspects of application development.
+The core concepts in the library are state, input, dispatcher, view, and component. Each one of them deals with a specific concern, and lets us separate how our code deals with different aspects of application development.
 
 ## 📦 Modularity
 

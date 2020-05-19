@@ -151,7 +151,7 @@ extension Store {
         )
     }
 }
-//
+// nef:end
 /*:
  Our `view` function has the same shape as the `render` function in Store, and we can restore state handling using the `state` property of Store. Therefore, we can put everything together as:
  

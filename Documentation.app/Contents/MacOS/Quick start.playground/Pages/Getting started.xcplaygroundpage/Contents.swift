@@ -11,9 +11,19 @@ import BowArch
 /*:
  # Getting started
  
- Bow Arch lets you architect your application in terms of components that can be reused across applications. Let's go over what you need to create in order to build a stepper component.
+ This is an overview of the steps you need to follow to create your first component in Bow Arch.
+ 
+ ## 📦 Adding Bow Arch as a dependency
+ 
+ Bow Arch is available through Swift Package Manager, integrated in Xcode. You only need to use the repository URL on GitHub and the version or branch you would like to use. Alternatively, you can describe this dependency in your `Package.swift` file by adding the line:
+ 
+ ```swift
+ .package(url: "https://github.com/bow-swift/bow-arch.git", from: "{version}")
+ ```
  
  ## 📋 State
+ 
+ Bow Arch lets you architect your application in terms of components that can be reused across applications. Let's go over what you need to create in order to build a stepper component.
  
  A component should have a state that is rendered in its view. State is usually modeled using an immutable data structure, typically a `struct`.
  
@@ -61,7 +71,7 @@ struct StepperView: View {
     }
 }
 /*:
- ## 🔨 Dispatcher
+ ## 🔨 Dispatcher
  
  Inputs new to be transformed into actions that modify the state. This is done at the Dispatcher. Dispatchers are pure functions that receive inputs and produce actions:
  */
@@ -81,7 +91,7 @@ let stepperDispatcher = StepperDispatcher.pure { input in
     }
 }
 /*:
- ## 📦 Component
+ ## 🧩 Component
  
  Finally, we can put everything together as a component:
  */

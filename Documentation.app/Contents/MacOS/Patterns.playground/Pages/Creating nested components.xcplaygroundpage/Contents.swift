@@ -33,7 +33,7 @@ struct ParentState {
     let childState: ChildState
     
     static var childLens: Lens<ParentState, ChildState> = Lens(
-        get: { $0.childState }, set: { ParentState(childState: $1) })
+        get:  \.childState, set: { ParentState(childState: $1) })
 }
 
 enum ParentInput: AutoPrism {

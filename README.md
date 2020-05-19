@@ -100,7 +100,7 @@ struct StepperView: View {
 
 Inputs new to be transformed into actions that modify the state. This is done at the Dispatcher. Dispatchers are pure functions that receive inputs and produce actions:
 
-```
+```swift
 typealias StepperDispatcher = StateDispatcher<Any, StepperState, StepperInput>
 
 let stepperDispatcher = StepperDispatcher.pure { input in

@@ -82,6 +82,7 @@
       >
         Quick start
       </button>
+      <div class="caret"></div>
       
 
       <div class="sub-menu">
@@ -133,6 +134,7 @@
       >
         Background
       </button>
+      <div class="caret"></div>
       
 
       <div class="sub-menu">
@@ -204,6 +206,7 @@
       >
         Core concepts
       </button>
+      <div class="caret"></div>
       
 
       <div class="sub-menu">
@@ -275,6 +278,7 @@
       >
         Patterns
       </button>
+      <div class="caret"></div>
       
 
       <div class="sub-menu">
@@ -326,6 +330,7 @@
       >
         Legal
       </button>
+      <div class="caret"></div>
       
 
       <div class="sub-menu">
@@ -381,18 +386,9 @@
     <div class="doc-content">
         <h1 id="getting-started">Getting started</h1>
 
-<p>This is an overview of the steps you need to follow to create your first component in Bow Arch.</p>
-
-<h2 id="-adding-bow-arch-as-a-dependency">📦 Adding Bow Arch as a dependency</h2>
-
-<p>Bow Arch is available through Swift Package Manager, integrated in Xcode. You only need to use the repository URL on GitHub and the version or branch you would like to use. Alternatively, you can describe this dependency in your <code class="highlighter-rouge">Package.swift</code> file by adding the line:</p>
-
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/bow-swift/bow-arch.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"{version}"</span><span class="p">)</span>
-</code></pre></div></div>
+<p>Bow Arch lets you architect your application in terms of components that can be reused across applications. Let’s go over what you need to create in order to build a stepper component.</p>
 
 <h2 id="-state">📋 State</h2>
-
-<p>Bow Arch lets you architect your application in terms of components that can be reused across applications. Let’s go over what you need to create in order to build a stepper component.</p>
 
 <p>A component should have a state that is rendered in its view. State is usually modeled using an immutable data structure, typically a <code class="highlighter-rouge">struct</code>.</p>
 
@@ -443,7 +439,7 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h2 id="-dispatcher">🔨 Dispatcher</h2>
+<p>## 🔨 Dispatcher</p>
 
 <p>Inputs new to be transformed into actions that modify the state. This is done at the Dispatcher. Dispatchers are pure functions that receive inputs and produce actions:</p>
 
@@ -464,7 +460,7 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h2 id="-component">🧩 Component</h2>
+<h2 id="-component">📦 Component</h2>
 
 <p>Finally, we can put everything together as a component:</p>
 

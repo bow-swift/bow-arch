@@ -5,14 +5,14 @@
 
     
 
-    <title>bow-arch: Credits</title>
+    <title>bow-arch: Overview</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="bow-arch">
     <meta name="keywords" content="functional-programming, monads, monad-transformers, functional-data-structure, swift, bow, xcode, xcode-playgrounds, playgrounds, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory, architecture, mobile, apps, application, ios, macos">
 
     <meta property="og:image" content="/img/poster.png" />
-    <meta property="og:title" content="bow-arch: Credits" />
-    <meta property="og:site_name" content="bow-arch: Credits" />
+    <meta property="og:title" content="bow-arch: Overview" />
+    <meta property="og:site_name" content="bow-arch: Overview" />
     <meta property="og:url" content="https://arch.bow-swift.io/" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="bow-arch" />
@@ -124,7 +124,7 @@
 
       
 
-    <div class="sidebar-menu-item  ">
+    <div class="sidebar-menu-item active open">
        
       <button
         type="button"
@@ -140,7 +140,7 @@
         
         
         <a
-          class=""
+          class="active"
           href="/docs/background/overview/"
           title="Overview"
         >
@@ -317,7 +317,7 @@
 
       
 
-    <div class="sidebar-menu-item active open">
+    <div class="sidebar-menu-item  ">
        
       <button
         type="button"
@@ -333,7 +333,7 @@
         
         
         <a
-          class="active"
+          class=""
           href="/docs/legal/credits/"
           title="Credits"
         >
@@ -379,15 +379,23 @@
 
     </div>
     <div class="doc-content">
-        <h1 id="credits">Credits</h1>
+        <h1 id="theoretical-background">Theoretical background</h1>
 
-<p>2020 - © The Bow Authors</p>
+<p>This section describes the theoretical background behind Bow Arch. This library is based on concepts from a branch of Mathematics called Category Theory, which provides solid grounds to Functional Programming through a number of abstractions that obey a set of rules, and help us reason about our code.</p>
 
-<p>For a comprehensive list of contributors, <a href="https://github.com/bow-swift/bow-arch/graphs/contributors">visit the repository</a> on GitHub.</p>
+<p>In particular, this library is based on the work done in PureScript by Phil Freeman - <a href="https://functorial.com/the-future-is-comonadic/main.pdf">Declarative UIs are the Future, and the Future is Comonadic!</a> - and Arthur Xavier - <a href="https://github.com/arthurxavierx/purescript-comonad-rss/blob/master/RealWorldAppComonadicUI.pdf">A Real World Application with a Comonadic User Interface</a>. Some of the abstractions are also inspired by the <a href="https://hackage.haskell.org/package/comonad">Haskell Comonads package</a>, developed by Edward Kmett. To all of them, we want to express our deepest gratitude.</p>
 
-<p>We want to thank Arthur Xavier, Phil Freeman, and Edward Kmett, for their previous work on Comonads and Comonadic UIs in the PureScript and Haskell languages. Their work has inspired the creation of this library.</p>
+<p>As you could guess, implementing these abstractions is not trivial, especially considering that Swift does not have Higher Kinded Types, nor existential quantifiers. These limitations have been partially overcome using emulation of HKTs in <a href="https://bow-swift.io">Bow</a>. The core abstractions - the Comonad package - are included in that library, as they can serve to other purposes; whereas their composition to create architectural components are included in Bow Arch.</p>
 
-<p>Bow Arch is supported by <a href="https://www.47deg.com">47 Degrees</a>.</p>
+<h2 id="why-should-i-bother-learning-this">Why should I bother learning this?</h2>
+
+<p>Understanding the theory behind the library is interesting and will give you a new perspective of its power, and the possibilities behind it. However, this is not necessary to be able to use the library to build complex applications.</p>
+
+<p>Software engineers have come up with many proposals to architect frontend applications in a functional manner. Examples of these are <a href="https://redux.js.org/">Redux</a> or <a href="https://guide.elm-lang.org/architecture/">Elm</a>, or in the Swift community, <a href="https://github.com/pointfreeco/swift-composable-architecture">The Composable Architecture</a>.</p>
+
+<p>Comonadic UIs are a generalization over these architectures, showing that most of the ideas that have appeared from intuition, actually have a solid background that support their validity. The aim of Bow Arch is to show these ideas in action, and how using different Comonads yields new ways of architecting applications, that are better suited for certain interaction patterns.</p>
+
+<p>As stated above, learning about Comonadic UIs is not necessary to be proficient at using Bow Arch or any other architectural library, but it will broaden your understanding of the architectural decisions that you are making, and you will be able to make more solid decisions when designing your applications.</p>
 
     </div>
 </main>

@@ -93,6 +93,6 @@ import BowArch
      dispatcher: stepperDispatcher,
      render: StepperView.init)
  /*:
-  Components already conform to SwuiftUI `View`, so they can be used as part of other views, or assigned as the root view of a `UIHostingController`.
+  Components already conform to SwiftUI `View`, so they can be used as part of other views, or assigned as the root view of a `UIHostingController`.
   */
 let controller = UIHostingController(rootView: stepperComponent)

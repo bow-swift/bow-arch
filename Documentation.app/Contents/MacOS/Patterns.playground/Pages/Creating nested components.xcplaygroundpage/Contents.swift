@@ -4,11 +4,13 @@
  title: Creating nested components
  */
 // nef:end
+// nef:begin:hidden
 import SwiftUI
 import Bow
 import BowEffects
 import BowOptics
 import BowArch
+// nef:end
 /*:
  # Creating nested components
  

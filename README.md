@@ -6,15 +6,19 @@
 </a>
 
 <a href="https://gitter.im/bowswift/bow">
-<img src="https://img.shields.io/badge/Gitter-Bow%20Arch-red" alt="Gitter">
+<img src="https://img.shields.io/badge/Gitter-Bow%20Arch-yellow" alt="Gitter">
 </a>
 
 <img src="https://img.shields.io/badge/platform-macOS%20%7C%20iOS-yellow">
+
+<img src="https://github.com/bow-swift/bow-arch/workflows/Deploy%20docs/badge.svg?branch=master">
 </p>
 
-# 🏹 Bow Arch 🏛
+Welcome to Bow Arch!
 
 **Bow Arch** is a library to [architect applications in pure Functional Programming](https://arch.bow-swift.io/docs/quick-start/getting-started/), based on the notion of [Comonadic User Interfaces](https://arch.bow-swift.io/docs/background/comonadic-uis/). Please, refer to the [project website](https://arch.bow-swift.io) for extensive documentation.
+
+&nbsp;
 
 ## 👩‍🏫 Principles
 
@@ -30,6 +34,8 @@
 
 🧮 **Mathematical background**: Bow Arch is based on concepts from Category Theory, which brings soundness to the reasoning we can do about our code. Nonetheless, the API of the library hides the complexity of these concepts and users do not need to be experts in this topic to use the library in their applications.
 
+&nbsp;
+
 ## 💻 How to get it
 
 Bow Arch is available through Swift Package Manager, integrated in Xcode. You only need to use the repository URL on GitHub and the version or branch you would like to use. Alternatively, you can describe this dependency in your `Package.swift` file by adding the line:
@@ -37,6 +43,8 @@ Bow Arch is available through Swift Package Manager, integrated in Xcode. You on
  ```swift
  .package(url: "https://github.com/bow-swift/bow-arch.git", from: "{version}")
  ```
+
+&nbsp;
 
 ## 👨‍💻 Usage
 
@@ -137,11 +145,15 @@ Components already conform to SwuiftUI `View`, so they can be used as part of ot
 let controller = UIHostingController(rootView: stepperComponent)
 ```
 
+&nbsp;
+
 ## 👏 Acknowledgements
 
 We want to thank [Arthur Xavier](https://github.com/arthurxavierx/purescript-comonad-rss/blob/master/RealWorldAppComonadicUI.pdf), [Phil Freeman](https://functorial.com/the-future-is-comonadic/main.pdf), and [Edward Kmett](https://hackage.haskell.org/package/comonad), for their previous work on Comonads and Comonadic UIs in the PureScript and Haskell languages. Their work has inspired the creation of this library.
 
-# ⚖️ License
+&nbsp;
+
+## ⚖️ License
 
     Copyright (C) 2020 The Bow Authors
 

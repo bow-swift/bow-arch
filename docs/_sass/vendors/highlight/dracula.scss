@@ -32,16 +32,17 @@
 // $dt-yellow: #f1fa8c;
 
 $dt-gray-dark: $background-code;  // Background
-$dt-gray: $brand-primary;       // Current Line & Selection
-$dt-gray-light: $brand-primary; // Foreground
-$dt-blue: #6272a4;       // Comment
-$dt-cyan: $brand-secondary;
-$dt-green: $brand-primary;
-$dt-orange: lighten($brand-secondary, 35);
-$dt-pink: lighten($brand-primary, 30);
-$dt-purple: darken($brand-secondary, 20);
-$dt-red: darken($brand-secondary, 20);
-$dt-yellow: $brand-primary;
+$dt-gray: #fff;       // Current Line & Selection
+$dt-gray-light: #fff; // Foreground
+$dt-blue: #6272a4;    // Comment
+$dt-cyan: $brand-secondary; // code
+
+$dt-green: #fff;
+$dt-orange: #fff;
+$dt-pink: lighten($brand-secondary, 20);
+$dt-purple: $brand-secondary;
+$dt-red: #fff;
+$dt-yellow: lighten($brand-secondary, 5);
 
 /*
  * Styles

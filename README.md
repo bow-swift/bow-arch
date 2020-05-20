@@ -12,7 +12,7 @@
 <img src="https://img.shields.io/badge/platform-macOS%20%7C%20iOS-yellow">
 </p>
 
-# 🏹 Bow Arch 🏛
+# 🏹 Bow Arch 🏛
 
 **Bow Arch** is a library to [architect applications in pure Functional Programming](https://arch.bow-swift.io/docs/quick-start/getting-started/), based on the notion of [Comonadic User Interfaces](https://arch.bow-swift.io/docs/background/comonadic-uis/). Please, refer to the [project website](https://arch.bow-swift.io) for extensive documentation.
 

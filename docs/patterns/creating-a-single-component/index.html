@@ -5,14 +5,14 @@
 
     
 
-    <title>bow-arch: Getting started</title>
+    <title>bow-arch: Creating a single component</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="bow-arch">
     <meta name="keywords" content="functional-programming, monads, monad-transformers, functional-data-structure, swift, bow, xcode, xcode-playgrounds, playgrounds, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory, architecture, mobile, apps, application, ios, macos">
 
     <meta property="og:image" content="/img/poster.png" />
-    <meta property="og:title" content="bow-arch: Getting started" />
-    <meta property="og:site_name" content="bow-arch: Getting started" />
+    <meta property="og:title" content="bow-arch: Creating a single component" />
+    <meta property="og:site_name" content="bow-arch: Creating a single component" />
     <meta property="og:url" content="https://arch.bow-swift.io/" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="bow-arch" />
@@ -73,7 +73,7 @@
 
       
 
-    <div class="sidebar-menu-item active open">
+    <div class="sidebar-menu-item  ">
        
       <button
         type="button"
@@ -89,7 +89,7 @@
         
         
         <a
-          class="active"
+          class=""
           href="/docs/quick-start/getting-started/"
           title="Getting started"
         >
@@ -266,7 +266,7 @@
 
       
 
-    <div class="sidebar-menu-item  ">
+    <div class="sidebar-menu-item active open">
        
       <button
         type="button"
@@ -282,7 +282,7 @@
         
         
         <a
-          class=""
+          class="active"
           href="/docs/patterns/creating-a-single-component/"
           title="Creating a single component"
         >
@@ -379,28 +379,19 @@
 
     </div>
     <div class="doc-content">
-        <h1 id="getting-started">Getting started</h1>
-
-<p>This is an overview of the steps you need to follow to create your first component in Bow Arch.</p>
-
-<h2 id="-adding-bow-arch-as-a-dependency">📦 Adding Bow Arch as a dependency</h2>
-
-<p>Bow Arch is available through Swift Package Manager, integrated in Xcode. You only need to use the repository URL on GitHub and the version or branch you would like to use. Alternatively, you can describe this dependency in your <code class="highlighter-rouge">Package.swift</code> file by adding the line:</p>
-
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/bow-swift/bow-arch.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"{version}"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<h2 id="-state">📋 State</h2>
+        <h1 id="creating-a-single-component">Creating a single component</h1>
 
 <p>Bow Arch lets you architect your application in terms of components that can be reused across applications. Let’s go over what you need to create in order to build a stepper component.</p>
+
+<h2 id="-state">📋 State</h2>
 
 <p>A component should have a state that is rendered in its view. State is usually modeled using an immutable data structure, typically a <code class="highlighter-rouge">struct</code>.</p>
 
 <p>For our stepper component, we can model our state as:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">StepperState</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span>
-<span class="p">}</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">struct</span> <span class="kt">StepperState</span> <span class="p">{</span>
+     <span class="k">let</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span>
+ <span class="p">}</span>
 </code></pre></div></div>
 
 <h2 id="-input">📲 Input</h2>
@@ -409,10 +400,10 @@
 
 <p>In our ongoing example, the component can receive two inputs, corresponding to tapping on the decrement or increment buttons. These can be modeled as:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">StepperInput</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="n">tapDecrement</span>
-    <span class="k">case</span> <span class="n">tapIncrement</span>
-<span class="p">}</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">enum</span> <span class="kt">StepperInput</span> <span class="p">{</span>
+     <span class="k">case</span> <span class="n">tapDecrement</span>
+     <span class="k">case</span> <span class="n">tapIncrement</span>
+ <span class="p">}</span>
 </code></pre></div></div>
 
 <h2 id="-view">🎨 View</h2>
@@ -421,64 +412,65 @@
 
 <p>We can describe the view as a function of its state, and use a function to receive inputs:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">SwiftUI</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">import</span> <span class="kt">SwiftUI</span>
 
-<span class="kd">struct</span> <span class="kt">StepperView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">StepperState</span>
-    <span class="k">let</span> <span class="nv">handle</span><span class="p">:</span> <span class="p">(</span><span class="kt">StepperInput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span>
-    
-    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
-        <span class="kt">HStack</span> <span class="p">{</span>
-            <span class="kt">Button</span><span class="p">(</span><span class="s">"-"</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">self</span><span class="o">.</span><span class="nf">handle</span><span class="p">(</span><span class="o">.</span><span class="n">tapDecrement</span><span class="p">)</span>
-            <span class="p">}</span>
-            
-            <span class="kt">Text</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">state</span><span class="o">.</span><span class="n">count</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
-            
-            <span class="kt">Button</span><span class="p">(</span><span class="s">"+"</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">self</span><span class="o">.</span><span class="nf">handle</span><span class="p">(</span><span class="o">.</span><span class="n">tapIncrement</span><span class="p">)</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+ <span class="kd">struct</span> <span class="kt">StepperView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+     <span class="k">let</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">StepperState</span>
+     <span class="k">let</span> <span class="nv">handle</span><span class="p">:</span> <span class="p">(</span><span class="kt">StepperInput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span>
+     
+     <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+         <span class="kt">HStack</span> <span class="p">{</span>
+             <span class="kt">Button</span><span class="p">(</span><span class="s">"-"</span><span class="p">)</span> <span class="p">{</span>
+                 <span class="k">self</span><span class="o">.</span><span class="nf">handle</span><span class="p">(</span><span class="o">.</span><span class="n">tapDecrement</span><span class="p">)</span>
+             <span class="p">}</span>
+             
+             <span class="kt">Text</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">state</span><span class="o">.</span><span class="n">count</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+             
+             <span class="kt">Button</span><span class="p">(</span><span class="s">"+"</span><span class="p">)</span> <span class="p">{</span>
+                 <span class="k">self</span><span class="o">.</span><span class="nf">handle</span><span class="p">(</span><span class="o">.</span><span class="n">tapIncrement</span><span class="p">)</span>
+             <span class="p">}</span>
+         <span class="p">}</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
 </code></pre></div></div>
 
 <h2 id="-dispatcher">🔨 Dispatcher</h2>
 
 <p>Inputs new to be transformed into actions that modify the state. This is done at the Dispatcher. Dispatchers are pure functions that receive inputs and produce actions:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">typealias</span> <span class="kt">StepperDispatcher</span> <span class="o">=</span> <span class="kt">StateDispatcher</span><span class="o">&lt;</span><span class="kt">Any</span><span class="p">,</span> <span class="kt">StepperState</span><span class="p">,</span> <span class="kt">StepperInput</span><span class="o">&gt;</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">typealias</span> <span class="kt">StepperDispatcher</span> <span class="o">=</span> <span class="kt">StateDispatcher</span><span class="o">&lt;</span><span class="kt">Any</span><span class="p">,</span> <span class="kt">StepperState</span><span class="p">,</span> <span class="kt">StepperInput</span><span class="o">&gt;</span>
 
-<span class="k">let</span> <span class="nv">stepperDispatcher</span> <span class="o">=</span> <span class="kt">StepperDispatcher</span><span class="o">.</span><span class="n">pure</span> <span class="p">{</span> <span class="n">input</span> <span class="k">in</span>
-    <span class="k">switch</span> <span class="n">input</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="o">.</span><span class="nv">tapDecrement</span><span class="p">:</span>
-        <span class="k">return</span> <span class="o">.</span><span class="n">modify</span> <span class="p">{</span> <span class="n">state</span> <span class="k">in</span>
-            <span class="kt">StepperState</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="p">}</span><span class="o">^</span>
-    
-    <span class="k">case</span> <span class="o">.</span><span class="nv">tapIncrement</span><span class="p">:</span>
-        <span class="k">return</span> <span class="o">.</span><span class="n">modify</span> <span class="p">{</span><span class="err"> </span><span class="n">state</span> <span class="k">in</span>
-            <span class="kt">StepperState</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="p">}</span><span class="o">^</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+ <span class="k">let</span> <span class="nv">stepperDispatcher</span> <span class="o">=</span> <span class="kt">StepperDispatcher</span><span class="o">.</span><span class="n">pure</span> <span class="p">{</span> <span class="n">input</span> <span class="k">in</span>
+     <span class="k">switch</span> <span class="n">input</span> <span class="p">{</span>
+     <span class="k">case</span> <span class="o">.</span><span class="nv">tapDecrement</span><span class="p">:</span>
+         <span class="k">return</span> <span class="o">.</span><span class="n">modify</span> <span class="p">{</span> <span class="n">state</span> <span class="k">in</span>
+             <span class="kt">StepperState</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+         <span class="p">}</span><span class="o">^</span>
+     
+     <span class="k">case</span> <span class="o">.</span><span class="nv">tapIncrement</span><span class="p">:</span>
+         <span class="k">return</span> <span class="o">.</span><span class="n">modify</span> <span class="p">{</span><span class="err"> </span><span class="n">state</span> <span class="k">in</span>
+             <span class="kt">StepperState</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+         <span class="p">}</span><span class="o">^</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
 </code></pre></div></div>
 
 <h2 id="-component">🧩 Component</h2>
 
 <p>Finally, we can put everything together as a component:</p>
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">typealias</span> <span class="kt">StepperComponent</span> <span class="o">=</span> <span class="kt">StoreComponent</span><span class="o">&lt;</span><span class="kt">Any</span><span class="p">,</span> <span class="kt">StepperState</span><span class="p">,</span> <span class="kt">StepperInput</span><span class="p">,</span> <span class="kt">StepperView</span><span class="o">&gt;</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">typealias</span> <span class="kt">StepperComponent</span> <span class="o">=</span> <span class="kt">StoreComponent</span><span class="o">&lt;</span><span class="kt">Any</span><span class="p">,</span> <span class="kt">StepperState</span><span class="p">,</span> <span class="kt">StepperInput</span><span class="p">,</span> <span class="kt">StepperView</span><span class="o">&gt;</span>
 
-<span class="k">let</span> <span class="nv">stepperComponent</span> <span class="o">=</span> <span class="kt">StepperComponent</span><span class="p">(</span>
-    <span class="nv">initialState</span><span class="p">:</span> <span class="kt">StepperState</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="mi">0</span><span class="p">),</span>
-    <span class="nv">dispatcher</span><span class="p">:</span> <span class="n">stepperDispatcher</span><span class="p">,</span>
-    <span class="nv">render</span><span class="p">:</span> <span class="kt">StepperView</span><span class="o">.</span><span class="kd">init</span><span class="p">)</span>
+ <span class="k">let</span> <span class="nv">stepperComponent</span> <span class="o">=</span> <span class="kt">StepperComponent</span><span class="p">(</span>
+     <span class="nv">initialState</span><span class="p">:</span> <span class="kt">StepperState</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="mi">0</span><span class="p">),</span>
+     <span class="nv">dispatcher</span><span class="p">:</span> <span class="n">stepperDispatcher</span><span class="p">,</span>
+     <span class="nv">render</span><span class="p">:</span> <span class="kt">StepperView</span><span class="o">.</span><span class="kd">init</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Components already conform to SwuiftUI <code class="highlighter-rouge">View</code>, so they can be used as part of other views, or assigned as the root view of a <code class="highlighter-rouge">UIHostingController</code>.</p>
 
-<p>This is a quick walkthrough of the main concepts used in the library. There is more to each of them; refer to each specific documentation page to learn more about them.</p>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">controller</span> <span class="o">=</span> <span class="kt">UIHostingController</span><span class="p">(</span><span class="nv">rootView</span><span class="p">:</span> <span class="n">stepperComponent</span><span class="p">)</span>
+</code></pre></div></div>
 
     </div>
 </main>

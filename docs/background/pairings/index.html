@@ -5,14 +5,14 @@
 
     
 
-    <title>bow-arch: Credits</title>
+    <title>bow-arch: Pairings</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="bow-arch">
     <meta name="keywords" content="functional-programming, monads, monad-transformers, functional-data-structure, swift, bow, xcode, xcode-playgrounds, playgrounds, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory, architecture, mobile, apps, application, ios, macos">
 
     <meta property="og:image" content="/img/poster.png" />
-    <meta property="og:title" content="bow-arch: Credits" />
-    <meta property="og:site_name" content="bow-arch: Credits" />
+    <meta property="og:title" content="bow-arch: Pairings" />
+    <meta property="og:site_name" content="bow-arch: Pairings" />
     <meta property="og:url" content="https://arch.bow-swift.io/" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="bow-arch" />
@@ -124,7 +124,7 @@
 
       
 
-    <div class="sidebar-menu-item  ">
+    <div class="sidebar-menu-item active open">
        
       <button
         type="button"
@@ -160,7 +160,7 @@
         
         
         <a
-          class=""
+          class="active"
           href="/docs/background/pairings/"
           title="Pairings"
         >
@@ -317,7 +317,7 @@
 
       
 
-    <div class="sidebar-menu-item active open">
+    <div class="sidebar-menu-item  ">
        
       <button
         type="button"
@@ -333,7 +333,7 @@
         
         
         <a
-          class="active"
+          class=""
           href="/docs/legal/credits/"
           title="Credits"
         >
@@ -379,15 +379,46 @@
 
     </div>
     <div class="doc-content">
-        <h1 id="credits">Credits</h1>
+        <h1 id="pairings">Pairings</h1>
 
-<p>2020 - © The Bow Authors</p>
+<p>Monads and Comonads are dual structures in Category Theory, and their connection can go even beyond that. Specific instances of Monads and Comonads can have a relationship between each other that will yield interesting results. That relationship is known as Pairing, and let us combine a Monad and its corresponding Comonad.</p>
 
-<p>For a comprehensive list of contributors, <a href="https://github.com/bow-swift/bow-arch/graphs/contributors">visit the repository</a> on GitHub.</p>
+<p>We have mentioned that Comonads represent a space of options, from which one of these options is selected at a given moment. On the other hand, Monads model actions that produce a new context. A Pairing is a combination of a Monad and a Comonad in such a way that we can use values of the Monad to somehow navigate the space represented by the Comonad. This is done by implementing a function with the following signature:</p>
 
-<p>We want to thank Arthur Xavier, Phil Freeman, and Edward Kmett, for their previous work on Comonads and Comonadic UIs in the PureScript and Haskell languages. Their work has inspired the creation of this library.</p>
+<p><code class="highlighter-rouge">pair: (F&lt;A&gt;, G&lt;B&gt;, (A, B) -&gt; C) -&gt; C</code></p>
 
-<p>Bow Arch is supported by <a href="https://www.47deg.com">47 Degrees</a>.</p>
+<p>That is, given a Monad <code class="highlighter-rouge">F</code> producing values of type <code class="highlighter-rouge">A</code>, a Comonad <code class="highlighter-rouge">G</code> producing values of type <code class="highlighter-rouge">B</code>, and a way of combining <code class="highlighter-rouge">A</code> and <code class="highlighter-rouge">B</code> into <code class="highlighter-rouge">C</code>, the pair function can somehow extract the values of <code class="highlighter-rouge">A</code> and <code class="highlighter-rouge">B</code> from their corresponding Monad and Comonad, and combine them. Notice that this is not always possible; it implies that there must be some sort of relationship between <code class="highlighter-rouge">F</code> and <code class="highlighter-rouge">G</code> to be able to do this.</p>
+
+<h3 id="example">Example</h3>
+
+<p>By now this should look very abstract to you, so let’s try to illustrate it with an example, using State and Store.</p>
+
+<p>If we look at State, it represents a function <code class="highlighter-rouge">(S) -&gt; (S, A)</code>; therefore, we cannot extract an <code class="highlighter-rouge">A</code> from it by only using what we have inside it. However, if we pair it with a Store, we can use the <code class="highlighter-rouge">state</code> value stored in the Store to run the State function, obtain an <code class="highlighter-rouge">A</code> value, and render the new state to obtain a <code class="highlighter-rouge">B</code> value.</p>
+
+<p>With this, the implementation of <code class="highlighter-rouge">pair</code> for State and Store could look like:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">A</span><span class="p">,</span> <span class="kt">B</span><span class="p">,</span> <span class="kt">C</span><span class="p">,</span> <span class="kt">S</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">fa</span><span class="p">:</span> <span class="kt">State</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">,</span> <span class="kt">A</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">_</span> <span class="nv">gb</span><span class="p">:</span> <span class="kt">Store</span><span class="o">&lt;</span><span class="kt">S</span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">_</span> <span class="nv">f</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">A</span><span class="p">,</span> <span class="kt">B</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">C</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">C</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="p">(</span><span class="nv">newS</span><span class="p">,</span> <span class="nv">a</span><span class="p">)</span> <span class="o">=</span> <span class="n">fa</span><span class="o">.</span><span class="nf">run</span><span class="p">(</span><span class="n">gb</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="n">gb</span><span class="o">.</span><span class="nf">render</span><span class="p">(</span><span class="n">newS</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>As you can see, we have taken the current state of the Store, and used State to transition it to a new state, that is then rendered. Therefore, this shows we can use values of State to perform actions that navigate the space described by Store.</p>
+
+<h2 id="existing-pairings">Existing Pairings</h2>
+
+<p>Besides the State-Store pairing, there are others that can be found. Examples of these are Writer-Traced or Reader-Env, and you can take a look at their implementation in the Bow repository.</p>
+
+<p>Is it always possible to write a Pairing for a Monad and a Comonad? It turns out that there is an important result that shows that for a given Comonad, there is always a Monad that pairs with it. However, the reverse is not necessarily true; that is, given a Monad, there may not be a Comonad that pairs with it.</p>
+
+<p>In the cases we have seen so far, for Comonads Store, Traced and Env, their corresponding pairing Monads exist and are well known. However, there are Comonads whose pairing Monads may not be so well known. How can we pair them?</p>
+
+<p>There is an interesting type known as <code class="highlighter-rouge">Co</code>, or <code class="highlighter-rouge">Transition</code>, which, given any Comonad, it will yield its corresponding pairing Monad. Even in the cases we already know, like Store, we could get a Co-Store that will behave exactly like State.</p>
 
     </div>
 </main>

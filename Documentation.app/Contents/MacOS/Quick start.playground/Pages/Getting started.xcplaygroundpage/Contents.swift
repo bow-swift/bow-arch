@@ -102,7 +102,7 @@ let stepperComponent = StepperComponent(
     dispatcher: stepperDispatcher,
     render: StepperView.init)
 /*:
- Components already conform to SwuiftUI `View`, so they can be used as part of other views, or assigned as the root view of a `UIHostingController`.
+ Components already conform to SwiftUI `View`, so they can be used as part of other views, or assigned as the root view of a `UIHostingController`.
  
  This is a quick walkthrough of the main concepts used in the library. There is more to each of them; refer to each specific documentation page to learn more about them.
  */

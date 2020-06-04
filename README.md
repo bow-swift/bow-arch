@@ -149,7 +149,7 @@ let controller = UIHostingController(rootView: stepperComponent)
 
 ## 👏 Acknowledgements
 
-We want to thank [Arthur Xavier](https://github.com/arthurxavierx/purescript-comonad-rss/blob/master/RealWorldAppComonadicUI.pdf), [Phil Freeman](https://functorial.com/the-future-is-comonadic/main.pdf), and [Edward Kmett](https://hackage.haskell.org/package/comonad), for their previous work on Comonads and Comonadic UIs in the PureScript and Haskell languages. Their work has inspired the creation of this library.
+We want to thank [Arthur Xavier](https://github.com/arthurxavierx/purescript-comonad-rss/blob/master/RealWorldAppComonadicUI.pdf), [Phil Freeman](https://functorial.com/the-future-is-comonadic/main.pdf), and [Edward Kmett](https://hackage.haskell.org/package/comonad), for their previous work on Comonads and Comonadic UIs in the PureScript and Haskell languages. The usage of optics to break down and compose components is inspired by the use of index and case paths in the [Swift Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture) by Stephen Cellis and Brandon Williams. Their work has inspired the creation of this library.
 
 &nbsp;
 

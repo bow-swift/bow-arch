@@ -46,7 +46,7 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
     }
     
     public var body: some View {
-        self.component.explore(onEffect: self.onEffect)
+        component.explore(onEffect: self.onEffect)
     }
     
     public func using<I2>(
@@ -78,7 +78,7 @@ public struct EffectStoreComponent<Eff: Async & UnsafeRun, E, S, I, V: View>: Vi
 }
 
 public extension EffectStoreComponent {
-    func store() -> Store<S, UI<Eff, StatePartial<S>, V>>{
+    func store() -> Store<S, UI<Eff, StatePartial<S>, V>> {
         self.component.wui^
     }
 }
@@ -94,5 +94,22 @@ public extension EffectStoreComponent where E == Any {
             environment: (),
             dispatcher: dispatcher,
             render: render)
+    }
+}
+
+public extension EffectStoreComponent {
+    static var stateLens: Lens<EffectStoreComponent, S> {
+        .init(
+            get: { storeComponent in
+                storeComponent.store().state
+            },
+            set: { storeComponent, state in
+                .init(initialState: state,
+                      environment: storeComponent.environment,
+                      dispatcher: storeComponent.dispatcher,
+                      render: storeComponent.viewBuilder,
+                      onEffect: storeComponent.onEffect)
+            }
+        )
     }
 }

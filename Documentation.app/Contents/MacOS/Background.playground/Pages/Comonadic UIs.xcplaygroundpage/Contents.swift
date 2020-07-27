@@ -222,7 +222,7 @@ class Component<S, V>: ObservableObject {
 /*:
  Despite how abstract these concepts are, the process is not very complex. Finally, in order to make sure our SwiftUI rendering updates every time a state transition occurs, we can make:
  */
-struct ComponentView<S, V>: View {
+struct ComponentView<S, V: View>: View {
     @ObservedObject var component: Component<S, V>
     
     var body: some View {

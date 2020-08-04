@@ -1,17 +1,11 @@
 ![Bow Arch](assets/header-bow-arch.png)
 
 <p align="center">
-<a href="https://github.com/bow-swift/nef">
-<img src="https://img.shields.io/badge/Dependency%20Manager-Swift%20PM-orange" alt="SPM compatible">
-</a>
-
-<a href="https://gitter.im/bowswift/bow">
-<img src="https://img.shields.io/badge/Gitter-Bow%20Arch-yellow" alt="Gitter">
-</a>
-
-<img src="https://img.shields.io/badge/platform-macOS%20%7C%20iOS-yellow">
-
 <img src="https://github.com/bow-swift/bow-arch/workflows/Deploy%20docs/badge.svg?branch=master">
+<img src="https://img.shields.io/badge/platform-macOS%20%7C%20iOS-yellow">
+<a href="https://gitter.im/bowswift/bow">
+<img src="https://img.shields.io/badge/Gitter-Bow%20Arch-yellow" alt="Gitter"></a>
+<a href="https://badge.bow-swift.io/recipe?name=bow-arch&description=Functional%20Architecture%20in%20Swift%20using%20Bow&url=https://github.com/bow-swift/bow-arch&owner=bow-swift&avatar=https://avatars3.githubusercontent.com/u/44965417?v=4&tag=0.1.0"><img src="https://raw.githubusercontent.com/bow-swift/bow-art/master/badges/nef-playgrounds-badge.svg" alt="bow-arch Playground" style="height:20px"></a>
 </p>
 
 Welcome to Bow Arch!
